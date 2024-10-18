@@ -1,13 +1,13 @@
 export class Sda {
-  private _UUIdSda: string;
-  private _UUIdCurriculum: string;
-  private _UUIdCentre: string;
+  private _UUIdSdaValue: string;
+  private _UUIdPlantillaPl: string;
+  private _UUIdGroup: string;
   private _year: number;
 
   constructor() {
-    this._UUIdSda = '';
-    this._UUIdCurriculum = '';
-    this._UUIdCentre = '';
+    this._UUIdSdaValue = '';
+    this._UUIdPlantillaPl = '';
+    this._UUIdGroup = '';
     this._year = 0;
   }
 }
