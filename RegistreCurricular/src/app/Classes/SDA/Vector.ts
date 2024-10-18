@@ -17,3 +17,14 @@ export class Vectors {
     this._vectors = [];
   }
 }
+
+export class VectorPlantilla {
+  private _UUIdVectorPlantilla: string;
+  private _UUIdPlantilla: string;
+  private _VecotrsDescriptionPlantilla: string;
+  constructor() {
+    this._UUIdVectorPlantilla = '';
+    this._UUIdPlantilla = '';
+    this._VecotrsDescriptionPlantilla = '';
+  }
+}
