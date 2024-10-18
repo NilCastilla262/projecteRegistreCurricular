@@ -15,14 +15,14 @@ export class Sabers {
   criteris: Saber[] = [];
 }
 
-export class CriteriPlantilla {
-  private _UUIdCriteriPlantilla: string;
-  private _UUIdCompetenciaDescripcioPlantilla: string;
+export class SaberCriteriPlantilla {
+  private _UUIdSaberCriteriPlantilla: string;
+  private _UUIdSabersDescripcioPlantilla: string;
   private _descripcio: string;
 
   constructor() {
-    this._UUIdCriteriPlantilla = '';
-    this._UUIdCompetenciaDescripcioPlantilla = '';
+    this._UUIdSaberCriteriPlantilla = '';
+    this._UUIdSabersDescripcioPlantilla = '';
     this._descripcio = '';
   }
 }
