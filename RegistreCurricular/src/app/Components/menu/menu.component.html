@@ -1,1 +1,8 @@
-<p>menu works!</p>
+@for(item of navBar;track $index){ @if(this.userNumber == 0 && item.userNum ==0
+){
+<p>{{ item.description }}</p>
+}@else if(this.userNumber == 1 && item.userNum ==1){
+<p>{{ item.description }}</p>
+} @else if(this.userNumber == 2 && item.userNum ==2){
+<p>{{ item.description }}</p>
+} }
