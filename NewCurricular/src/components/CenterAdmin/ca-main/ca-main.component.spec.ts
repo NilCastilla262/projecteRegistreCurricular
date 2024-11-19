@@ -46,4 +46,12 @@ describe('CaMainComponent', () => {
 
     expect(navigateSpy).toHaveBeenCalledWith(['/ca-manage-users']);
   });
+  it('should navigate to ca-manage-resume when the third button is clicked', () => {
+    const navigateSpy = spyOn(router, 'navigate');
+
+    const buttons = fixture.debugElement.queryAll(By.css('button'));
+    buttons[2].triggerEventHandler('click', null);
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/ca-manage-resume']);
+  });
 });
