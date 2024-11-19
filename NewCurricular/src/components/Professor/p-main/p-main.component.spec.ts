@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { PMainComponent } from './p-main.component';
 import { By } from '@angular/platform-browser';
+import { RouterLinkWithHref } from '@angular/router';
+import { routes } from '../../../app/app.routes';
+import { DebugElement } from '@angular/core';
 
 describe('PMainComponent', () => {
   let component: PMainComponent;
@@ -11,9 +14,7 @@ describe('PMainComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterModule.forRoot([
-          { path: 'manage-sda', component: PMainComponent }
-        ]),
+        RouterModule.forRoot(routes),
         PMainComponent
       ]
     }).compileComponents();
@@ -24,26 +25,27 @@ describe('PMainComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('Navigates to /pmanage-sda option', async () => {
+    fixture.detectChanges();
+    const linkDebugs: DebugElement[] = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
+
+    const link: HTMLAnchorElement = linkDebugs[0].nativeElement as HTMLAnchorElement;
+
+    link.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(router.url).toBe('/pmanage-sda');
   });
 
-  it('should navigate to manage-sda when the first button is clicked', () => {
-    const navigateSpy = spyOn(router, 'navigate');
+  it('Navigates to /pmanage-resume option', async () => {
+    fixture.detectChanges();
+    const linkDebugs: DebugElement[] = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
 
-    const button = fixture.debugElement.query(By.css('button'));
-    button.triggerEventHandler('click', null);
+    const link: HTMLAnchorElement = linkDebugs[1].nativeElement as HTMLAnchorElement;
 
-    expect(navigateSpy).toHaveBeenCalledWith(['/manage-sda']);
-  });
-
-
-  it('should navigate to manage-resume when the second button is clicked', () => {
-    const navigateSpy = spyOn(router, 'navigate');
-
-    const buttons = fixture.debugElement.queryAll(By.css('button'));
-    buttons[1].triggerEventHandler('click', null);
-
-    expect(navigateSpy).toHaveBeenCalledWith(['/manage-resume']);
+    link.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(router.url).toBe('/pmanage-resume');
   });
 });
