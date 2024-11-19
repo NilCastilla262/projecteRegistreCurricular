@@ -26,5 +26,16 @@ describe('LoginComponent', () => {
     expect(component.loginForm.contains('password')).toBeTruthy();
   });
 
+  it('should make the email and password fields required', () => {
+    const email = component.loginForm.get('email')!;
+    email.setValue('');
+    expect(email.valid).toBeFalsy();
+    
+    const password = component.loginForm.get('password')!;
+    password.setValue('');
+    expect(password.valid).toBeFalsy();
+  });
+  
+  
   
 });
