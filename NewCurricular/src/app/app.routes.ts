@@ -8,16 +8,21 @@ import { CaManageUsersComponent } from '../components/CenterAdmin/ca-manage-user
 import { SaManageUsersComponent } from '../components/SuperAdmin/sa-manage-users/sa-manage-users.component';
 import { SaManageCurriculumComponent } from '../components/SuperAdmin/sa-manage-curriculum/sa-manage-curriculum.component';
 import { SaManageCenterComponent } from '../components/SuperAdmin/sa-manage-center/sa-manage-center.component';
+import { SaMainComponent } from '../components/SuperAdmin/sa-main/sa-main.component';
 
 export const routes: Routes = [
-  {
-    path: '**',
-    redirectTo: 'home',
+   {
+    path: '',
+    redirectTo: 'sa-main',
     pathMatch: 'full',
-  },
+  }, 
   {
     path: 'home',
     component: MainAppComponent,
+  },
+  {
+    path: 'sa-main',
+    component: SaMainComponent,
   },
   {
     path: 'camanage-resume',

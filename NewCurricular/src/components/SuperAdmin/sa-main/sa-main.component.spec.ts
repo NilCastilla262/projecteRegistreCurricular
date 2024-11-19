@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { SaMainComponent } from './sa-main.component';
 import { By } from '@angular/platform-browser';
+import { RouterLinkWithHref } from '@angular/router';
+import { routes } from '../../../app/app.routes';
 
 describe('SaMainComponent', () => {
   let component: SaMainComponent;
@@ -11,12 +13,8 @@ describe('SaMainComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterModule.forRoot([
-          { path: 'manage-center', component: SaMainComponent },
-          { path: 'manage-users', component: SaMainComponent },
-          { path: 'manage-curriculum', component: SaMainComponent }
-        ]),
-        SaMainComponent
+        RouterModule.forRoot(routes), 
+        SaMainComponent 
       ]
     }).compileComponents();
 
@@ -26,32 +24,45 @@ describe('SaMainComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should navigate to /samanage-center when the first button is clicked', async () => {
+    fixture.detectChanges();
+
+    const linkDebugs = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
+
+    const link: HTMLAnchorElement = linkDebugs[0].nativeElement as HTMLAnchorElement;
+
+    link.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(router.url).toBe('/samanage-center');
   });
 
-  it('should navigate to manage-center when the first button is clicked', () => {
-    const navigateSpy = spyOn(router, 'navigate');
+  it('should navigate to /samanage-users when the second button is clicked', async () => {
+    fixture.detectChanges();
 
-    const button = fixture.debugElement.queryAll(By.css('button'))[0];
-    button.triggerEventHandler('click', null);
+    const linkDebugs = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
 
-    expect(navigateSpy).toHaveBeenCalledWith(['/manage-center']);
+    const link: HTMLAnchorElement = linkDebugs[1].nativeElement as HTMLAnchorElement;
+
+    link.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(router.url).toBe('/samanage-users');
   });
-  it('should navigate to manage-users when the second button is clicked', () => {
-    const navigateSpy = spyOn(router, 'navigate');
 
-    const button = fixture.debugElement.queryAll(By.css('button'))[1];
-    button.triggerEventHandler('click', null);
+  it('should navigate to /samanage-curriculum when the third button is clicked', async () => {
+    fixture.detectChanges();
 
-    expect(navigateSpy).toHaveBeenCalledWith(['/manage-users']);
-  });
-  it('should navigate to manage-curriculum when the third button is clicked', () => {
-    const navigateSpy = spyOn(router, 'navigate');
+    const linkDebugs = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
 
-    const button = fixture.debugElement.queryAll(By.css('button'))[2];
-    button.triggerEventHandler('click', null);
+    const link: HTMLAnchorElement = linkDebugs[2].nativeElement as HTMLAnchorElement;
 
-    expect(navigateSpy).toHaveBeenCalledWith(['/manage-curriculum']);
+    link.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(router.url).toBe('/samanage-curriculum');
   });
 });

@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, RouterModule } from '@angular/router';
 import { CaMainComponent } from './ca-main.component';
 import { By } from '@angular/platform-browser';
+import { RouterLinkWithHref } from '@angular/router';
+import { routes } from '../../../app/app.routes';
+import { DebugElement } from '@angular/core';
 
 describe('CaMainComponent', () => {
   let component: CaMainComponent;
@@ -11,11 +14,8 @@ describe('CaMainComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterModule.forRoot([
-          { path: 'ca-manage-sda', component: CaMainComponent },
-          { path: 'ca-manage-users', component: CaMainComponent }
-        ]),
-        CaMainComponent // Afegim CaMainComponent aquí perquè és standalone
+        RouterModule.forRoot(routes),
+        CaMainComponent
       ]
     }).compileComponents();
 
@@ -25,33 +25,39 @@ describe('CaMainComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('Navigates to /camanage-sda option', async () => {
+    fixture.detectChanges();
+    const linkDebugs: DebugElement[] = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
+
+    const link: HTMLAnchorElement = linkDebugs[0].nativeElement as HTMLAnchorElement;
+
+    link.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(router.url).toBe('/camanage-sda');
   });
 
-  it('should navigate to ca-manage-sda when the first button is clicked', () => {
-    const navigateSpy = spyOn(router, 'navigate');
+  it('Navigates to /camanage-users option', async () => {
+    fixture.detectChanges();
+    const linkDebugs: DebugElement[] = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
 
-    const button = fixture.debugElement.query(By.css('button'));
-    button.triggerEventHandler('click', null);
+    const link: HTMLAnchorElement = linkDebugs[1].nativeElement as HTMLAnchorElement;
 
-    expect(navigateSpy).toHaveBeenCalledWith(['/ca-manage-sda']);
+    link.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(router.url).toBe('/camanage-users');
   });
 
-  it('should navigate to ca-manage-users when the second button is clicked', () => {
-    const navigateSpy = spyOn(router, 'navigate');
+  it('Navigates to /camanage-resume option', async () => {
+    fixture.detectChanges();
+    const linkDebugs: DebugElement[] = fixture.debugElement.queryAll(By.directive(RouterLinkWithHref));
 
-    const buttons = fixture.debugElement.queryAll(By.css('button'));
-    buttons[1].triggerEventHandler('click', null);
+    const link: HTMLAnchorElement = linkDebugs[2].nativeElement as HTMLAnchorElement;
 
-    expect(navigateSpy).toHaveBeenCalledWith(['/ca-manage-users']);
-  });
-  it('should navigate to ca-manage-resume when the third button is clicked', () => {
-    const navigateSpy = spyOn(router, 'navigate');
-
-    const buttons = fixture.debugElement.queryAll(By.css('button'));
-    buttons[2].triggerEventHandler('click', null);
-
-    expect(navigateSpy).toHaveBeenCalledWith(['/ca-manage-resume']);
+    link.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(router.url).toBe('/camanage-resume');
   });
 });
