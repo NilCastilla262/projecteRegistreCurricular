@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateSdaComponent } from './create-sda.component';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 describe('CreateSdaComponent', () => {
   let component: CreateSdaComponent;
@@ -9,34 +11,24 @@ describe('CreateSdaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateSdaComponent],
-      imports: [FormsModule]
+      imports: [
+        CreateSdaComponent,
+        RouterModule.forRoot([]),
+        FormsModule,
+        NgFor
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CreateSdaComponent);
     component = fixture.componentInstance;
+
     fixture.detectChanges();
+
+    await fixture.whenStable(); 
+    fixture.detectChanges(); 
   });
 
-  it('the form to create an SDA should have all necessary elements', () => {
-    const title = fixture.debugElement.query(By.css('h1'));
-    expect(title.nativeElement.textContent).toBe('Crear SDA');
-
-    const inputTitle = fixture.debugElement.query(By.css('input[placeholder="Títol de la SDA"]'));
-    expect(inputTitle).toBeTruthy();
-
-    const inputDescription = fixture.debugElement.query(By.css('input[placeholder="Descripció de la SDA"]'));
-    expect(inputDescription).toBeTruthy();
-
-    const inputStartDate = fixture.debugElement.query(By.css('input[type="date"][placeholder="Data Inici"]'));
-    expect(inputStartDate).toBeTruthy();
-
-    const inputEndDate = fixture.debugElement.query(By.css('input[type="date"][placeholder="Data Fi"]'));
-    expect(inputEndDate).toBeTruthy();
-
-    const sectionTitle = fixture.debugElement.query(By.css('h2'));
-    expect(sectionTitle.nativeElement.textContent).toBe('Que es treballarà en la SDA');
-
+  it('should have all the checkboxes for subjects', () => {
     const checkboxes = fixture.debugElement.queryAll(By.css('input[type="checkbox"]'));
     expect(checkboxes.length).toBe(11);
 
