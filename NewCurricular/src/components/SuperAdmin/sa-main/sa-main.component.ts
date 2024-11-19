@@ -13,4 +13,7 @@ export class SaMainComponent {
   navigateToManageCenter() {
     this.router.navigate(['/manage-center']);
   }
+  navigateToManageUsers() {
+    this.router.navigate(['/manage-users']);
+  }
 }
