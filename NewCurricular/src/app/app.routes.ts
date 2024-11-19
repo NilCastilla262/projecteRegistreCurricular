@@ -9,6 +9,7 @@ import { SaManageUsersComponent } from '../components/SuperAdmin/sa-manage-users
 import { SaManageCurriculumComponent } from '../components/SuperAdmin/sa-manage-curriculum/sa-manage-curriculum.component';
 import { SaManageCenterComponent } from '../components/SuperAdmin/sa-manage-center/sa-manage-center.component';
 import { SaMainComponent } from '../components/SuperAdmin/sa-main/sa-main.component';
+import { ShowSdaComponent } from '../components/show-sda/show-sda.component';
 
 export const routes: Routes = [
    {
@@ -59,8 +60,13 @@ export const routes: Routes = [
   {
     path: 'samanage-curriculum',
     component: SaManageCurriculumComponent,
-  },  {
+  },  
+  {
     path: 'samanage-center',
     component: SaManageCenterComponent,
-  }
+  },  
+  {
+    path: 'show-sda',
+    component: ShowSdaComponent,
+  },
 ];
