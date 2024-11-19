@@ -13,6 +13,18 @@ async function getAllCompetencyTypesPl() {
     throw error;
   }
 }
+async function getAllCompetencyDescriptionPlById(id) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .query(`SELECT * FROM CompetencyDescription_Pl where uuid= '${id}'`);
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
 async function getAllCompetencyNamesPl() {
   try {
     const pool = await poolPromise;
@@ -82,5 +94,5 @@ module.exports = {
   getAllCompetencyTypesVal,
   getAllCompetencyNamesVal,
   getAllCompetencyDescriptionsVal,
+  getAllCompetencyDescriptionPlById,
 };
- 

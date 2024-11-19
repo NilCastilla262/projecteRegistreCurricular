@@ -56,6 +56,16 @@ async function getAllCompetencyNamesVal(req, res) {
     res.status(500).json({ error: "Failed to retrieve Competency Val " });
   }
 }
+async function getAllCompetencyDescriptionsPlById(req, res) {
+  const { id } = req.params;
+  try {
+    const competencies =
+      await competencyQueries.getAllCompetencyDescriptionPlById(id);
+    res.json(competencies);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve Competency Val " });
+  }
+}
 
 module.exports = {
   getAllCompetencyTypesPl,
@@ -64,4 +74,5 @@ module.exports = {
   getAllCompetencyTypesVal,
   getAllCompetencyNamesVal,
   getAllCompetencyDescriptionsVal,
+  getAllCompetencyDescriptionsPlById,
 };
