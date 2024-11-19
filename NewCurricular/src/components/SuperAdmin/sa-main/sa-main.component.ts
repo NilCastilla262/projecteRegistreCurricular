@@ -16,4 +16,7 @@ export class SaMainComponent {
   navigateToManageUsers() {
     this.router.navigate(['/manage-users']);
   }
+  navigateToManageCurriculum() {
+    this.router.navigate(['/manage-curriculum']);
+  }
 }
