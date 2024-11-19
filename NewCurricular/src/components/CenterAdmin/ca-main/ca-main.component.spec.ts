@@ -12,9 +12,10 @@ describe('CaMainComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterModule.forRoot([
-          { path: 'ca-manage-sda', component: CaMainComponent }
+          { path: 'ca-manage-sda', component: CaMainComponent },
+          { path: 'ca-manage-users', component: CaMainComponent }
         ]),
-        CaMainComponent
+        CaMainComponent // Afegim CaMainComponent aquí perquè és standalone
       ]
     }).compileComponents();
 
@@ -35,5 +36,14 @@ describe('CaMainComponent', () => {
     button.triggerEventHandler('click', null);
 
     expect(navigateSpy).toHaveBeenCalledWith(['/ca-manage-sda']);
+  });
+
+  it('should navigate to ca-manage-users when the second button is clicked', () => {
+    const navigateSpy = spyOn(router, 'navigate');
+
+    const buttons = fixture.debugElement.queryAll(By.css('button'));
+    buttons[1].triggerEventHandler('click', null);
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/ca-manage-users']);
   });
 });
