@@ -51,4 +51,15 @@ describe('CreateSdaComponent', () => {
       expect(checkbox).toBeTruthy();
     });
   });
+  it('should disable the button if no checkbox is checked', () => {
+    const button = fixture.debugElement.query(By.css('button'));
+    expect(button.nativeElement.disabled).toBeTrue();
+  
+    const checkbox = fixture.debugElement.query(By.css('input[type="checkbox"]'));
+    checkbox.nativeElement.checked = true;
+    checkbox.nativeElement.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+  
+    expect(button.nativeElement.disabled).toBeFalse();
+  });  
 });
