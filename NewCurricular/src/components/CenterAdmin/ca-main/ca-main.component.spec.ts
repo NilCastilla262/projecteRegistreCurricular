@@ -13,9 +13,9 @@ describe('CaMainComponent', () => {
       imports: [
         RouterModule.forRoot([
           { path: 'ca-manage-sda', component: CaMainComponent }
-        ])
-      ],
-      declarations: [CaMainComponent],
+        ]),
+        CaMainComponent
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CaMainComponent);
