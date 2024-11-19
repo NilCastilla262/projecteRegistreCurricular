@@ -36,4 +36,14 @@ describe('PMainComponent', () => {
 
     expect(navigateSpy).toHaveBeenCalledWith(['/manage-sda']);
   });
+
+
+  it('should navigate to manage-resume when the second button is clicked', () => {
+    const navigateSpy = spyOn(router, 'navigate');
+
+    const buttons = fixture.debugElement.queryAll(By.css('button'));
+    buttons[1].triggerEventHandler('click', null);
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/manage-resume']);
+  });
 });
