@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ca-main',
   standalone: true,
-  imports: [],
   templateUrl: './ca-main.component.html',
-  styleUrl: './ca-main.component.css'
+  styleUrls: ['./ca-main.component.css']
 })
 export class CaMainComponent {
+  constructor(private router: Router) {}
 
+  navigateToManageSda() {
+    this.router.navigate(['/ca-manage-sda']);
+  }
+
+  navigateToManageUsers() {
+    this.router.navigate(['/ca-manage-users']);
+  }
 }
