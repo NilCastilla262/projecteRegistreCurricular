@@ -25,6 +25,14 @@ export const routes: Routes = [
     component: SaMainComponent,
   },
   {
+    path: 'ca-main',
+    component: SaMainComponent,
+  }, 
+  {
+    path: 'pa-main',
+    component: SaMainComponent,
+  },
+  {
     path: 'camanage-resume',
     component: CaManageResumeComponent,
   },
