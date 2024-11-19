@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -8,16 +8,23 @@ describe('LoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginComponent]
-    })
-    .compileComponents();
+      declarations: [LoginComponent],
+      imports: [ReactiveFormsModule]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the login component', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have a form with email and password fields', () => {
+    expect(component.loginForm.contains('email')).toBeTruthy();
+    expect(component.loginForm.contains('password')).toBeTruthy();
+  });
+
+  
 });
