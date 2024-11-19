@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-ca-main',
   standalone: true,
-  imports: [],
   templateUrl: './ca-main.component.html',
   styleUrls: ['./ca-main.component.css']
 })
@@ -13,5 +12,9 @@ export class CaMainComponent {
 
   navigateToManageSda() {
     this.router.navigate(['/ca-manage-sda']);
+  }
+
+  navigateToManageUsers() {
+    this.router.navigate(['/ca-manage-users']);
   }
 }
