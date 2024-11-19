@@ -13,4 +13,7 @@ export class PMainComponent {
   navigateToManageSda() {
     this.router.navigate(['/manage-sda']);
   }
+  navigateToManageResume() {
+    this.router.navigate(['/manage-resume']);
+  }
 }
