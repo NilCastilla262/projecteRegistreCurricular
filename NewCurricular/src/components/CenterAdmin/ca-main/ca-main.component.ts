@@ -17,4 +17,7 @@ export class CaMainComponent {
   navigateToManageUsers() {
     this.router.navigate(['/ca-manage-users']);
   }
+  navigateToManageResume() {
+    this.router.navigate(['/ca-manage-resume']);
+  }
 }
