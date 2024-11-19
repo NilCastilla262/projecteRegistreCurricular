@@ -38,4 +38,12 @@ describe('SaMainComponent', () => {
 
     expect(navigateSpy).toHaveBeenCalledWith(['/manage-center']);
   });
+  it('should navigate to manage-users when the second button is clicked', () => {
+    const navigateSpy = spyOn(router, 'navigate');
+
+    const button = fixture.debugElement.queryAll(By.css('button'))[1]; // Segon botó
+    button.triggerEventHandler('click', null);
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/manage-users']);
+  });
 });
