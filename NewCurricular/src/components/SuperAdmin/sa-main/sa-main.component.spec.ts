@@ -41,9 +41,17 @@ describe('SaMainComponent', () => {
   it('should navigate to manage-users when the second button is clicked', () => {
     const navigateSpy = spyOn(router, 'navigate');
 
-    const button = fixture.debugElement.queryAll(By.css('button'))[1]; // Segon botó
+    const button = fixture.debugElement.queryAll(By.css('button'))[1];
     button.triggerEventHandler('click', null);
 
     expect(navigateSpy).toHaveBeenCalledWith(['/manage-users']);
+  });
+  it('should navigate to manage-curriculum when the third button is clicked', () => {
+    const navigateSpy = spyOn(router, 'navigate');
+
+    const button = fixture.debugElement.queryAll(By.css('button'))[2];
+    button.triggerEventHandler('click', null);
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/manage-curriculum']);
   });
 });
