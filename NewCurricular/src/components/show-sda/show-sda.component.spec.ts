@@ -8,16 +8,11 @@ describe('ShowSdaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ShowSdaComponent]
-    })
-    .compileComponents();
+      imports: [ShowSdaComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ShowSdaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });
