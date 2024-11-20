@@ -15,9 +15,9 @@ export class CreateSdaComponent {
     description: '',
     startDate: '',
     endDate: '',
-    selectedSubjects: []
+    selectedSubjects: [] as string[]
   };
-
+  
   subjects = [
     'Llengua catalana i castellana',
     'Llengua estrangera, 1a',
@@ -31,4 +31,32 @@ export class CreateSdaComponent {
     'Competència digital (CD)',
     'Competència personal, social i d\'apendre a aprendre (CPSAA)'
   ];
+
+  onCheckboxChange(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    const value = checkbox.value;
+  
+    if (checkbox.checked) {
+      this.sda.selectedSubjects.push(value);
+    } else {
+      const index = this.sda.selectedSubjects.indexOf(value);
+      if (index > -1) {
+        this.sda.selectedSubjects.splice(index, 1);
+      }
+    }
+  }
+
+  isFormValid(): boolean {
+    const { title, description, startDate, endDate, selectedSubjects } = this.sda;
+
+    const isTitleValid = title && title.trim().length > 0;
+    const isDescriptionValid = description && description.trim().length > 0;
+    const isStartDateValid = startDate && startDate.trim().length > 0;
+    const isEndDateValid = endDate && endDate.trim().length > 0;
+    const areSubjectsSelected = selectedSubjects.length > 0;
+
+    const isValid = isTitleValid && isDescriptionValid && isStartDateValid && isEndDateValid && areSubjectsSelected;
+    
+    return isValid as boolean;
+  }
 }
