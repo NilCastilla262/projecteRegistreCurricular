@@ -88,8 +88,8 @@ describe('CreateSdaComponent', () => {
   
     expect(button.nativeElement.disabled).toBeFalse();
   });
-  it('should call the createSda function and return true when the button is clicked', () => {
-    spyOn(component, 'createSda').and.returnValue(true);
+  it('should call the createSda function, return true, and display the success message when the button is clicked', () => {
+    spyOn(component, 'createSda').and.returnValue(true); // Espia la funció
   
     // Omplim tots els camps del formulari
     const inputTitle = fixture.debugElement.query(By.css('input[placeholder="Títol de la SDA"]'));
@@ -114,7 +114,6 @@ describe('CreateSdaComponent', () => {
   
     fixture.detectChanges();
   
-    // Simulem el clic al botó
     const button = fixture.debugElement.query(By.css('button'));
     expect(button).toBeTruthy();
     expect(button.nativeElement.disabled).toBeFalse();
@@ -124,7 +123,11 @@ describe('CreateSdaComponent', () => {
   
     expect(component.createSda).toHaveBeenCalled(); 
     expect(component.createSda()).toBeTrue();
+  
+    const successMessage = fixture.debugElement.query(By.css('.alert-success'));
+    expect(successMessage).toBeTruthy();
+    expect(successMessage.nativeElement.textContent).toContain('SDA Creat correctament');
   });
   
-  
+
 });
