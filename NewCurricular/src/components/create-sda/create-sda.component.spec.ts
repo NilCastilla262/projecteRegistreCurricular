@@ -87,5 +87,44 @@ describe('CreateSdaComponent', () => {
     fixture.detectChanges();
   
     expect(button.nativeElement.disabled).toBeFalse();
-  });  
+  });
+  it('should call the createSda function and return true when the button is clicked', () => {
+    spyOn(component, 'createSda').and.returnValue(true);
+  
+    // Omplim tots els camps del formulari
+    const inputTitle = fixture.debugElement.query(By.css('input[placeholder="Títol de la SDA"]'));
+    inputTitle.nativeElement.value = 'Títol de prova';
+    inputTitle.nativeElement.dispatchEvent(new Event('input'));
+  
+    const inputDescription = fixture.debugElement.query(By.css('input[placeholder="Descripció de la SDA"]'));
+    inputDescription.nativeElement.value = 'Descripció de prova';
+    inputDescription.nativeElement.dispatchEvent(new Event('input'));
+  
+    const inputStartDate = fixture.debugElement.query(By.css('input[type="date"]#startDate'));
+    inputStartDate.nativeElement.value = '2024-01-01';
+    inputStartDate.nativeElement.dispatchEvent(new Event('input'));
+  
+    const inputEndDate = fixture.debugElement.query(By.css('input[type="date"]#endDate'));
+    inputEndDate.nativeElement.value = '2024-01-31';
+    inputEndDate.nativeElement.dispatchEvent(new Event('input'));
+  
+    const checkbox = fixture.debugElement.query(By.css('input[type="checkbox"]'));
+    checkbox.nativeElement.checked = true;
+    checkbox.nativeElement.dispatchEvent(new Event('change'));
+  
+    fixture.detectChanges();
+  
+    // Simulem el clic al botó
+    const button = fixture.debugElement.query(By.css('button'));
+    expect(button).toBeTruthy();
+    expect(button.nativeElement.disabled).toBeFalse();
+  
+    button.nativeElement.click();
+    fixture.detectChanges();
+  
+    expect(component.createSda).toHaveBeenCalled(); 
+    expect(component.createSda()).toBeTrue();
+  });
+  
+  
 });
