@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -10,4 +8,8 @@ import { FormsModule } from '@angular/forms';
 export class LoginComponent {
   email: string = '';
   password: string = '';
+
+  isFormValid(): boolean {
+    return this.email.trim() !== '' && this.password.trim() !== '';
+  }
 }
