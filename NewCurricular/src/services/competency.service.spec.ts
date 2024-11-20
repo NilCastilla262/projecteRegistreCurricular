@@ -66,4 +66,25 @@ describe('CompetencyService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(dummyData);
   });
+  it('Should get competency Type by id ', () => {
+    const dummyData = [
+      {
+        UUID: '979755EF-21AC-4A70-A746-66E18879E914',
+        UUID_Plantilla: '1DA7BEDB-AFE3-4BFB-9E21-CA400409B458',
+        Description: 'COMPETÈNCIES TRANSVERSALS ',
+      },
+    ];
+    service
+      .getAllCompetencyTypeById('979755EF-21AC-4A70-A746-66E18879E914')
+      .subscribe((data) => {
+        expect(data).toEqual(dummyData);
+      });
+
+    const req = httpTestingController.expectOne(
+      'http://localhost:3000/api/Competency/competencyTypePl/979755EF-21AC-4A70-A746-66E18879E914'
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(dummyData);
+  });
 });
