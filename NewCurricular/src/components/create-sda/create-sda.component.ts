@@ -10,6 +10,9 @@ import { NgFor } from '@angular/common';
   styleUrls: ['./create-sda.component.css']
 })
 export class CreateSdaComponent {
+
+  sdaCreationMessage: string = ''; 
+  
   sda = {
     title: '',
     description: '',
@@ -31,6 +34,7 @@ export class CreateSdaComponent {
     'Competència digital (CD)',
     'Competència personal, social i d\'apendre a aprendre (CPSAA)'
   ];
+  
 
   onCheckboxChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
@@ -61,8 +65,8 @@ export class CreateSdaComponent {
   }
 
   createSda(): boolean {
-    console.log('SDA creada correctament.');
+    this.sdaCreationMessage = 'SDA Creat correctament';
     return true;
   }
-  
+ 
 }
