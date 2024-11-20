@@ -17,8 +17,8 @@ export class ShowSdaComponent {
 
   ngOnInit(): void {}
 
-  getCompetencyDescriptionById(id: string) {
-    this.competencyService.getCompetencyDescriptionById(id).subscribe({
+  getAllCompetencyDescription() {
+    this.competencyService.getAllCompetencyDescription().subscribe({
       next: (data: any[]) => {
         this.competencyDescriptionList = data; // Assign data to the local variable
       },
