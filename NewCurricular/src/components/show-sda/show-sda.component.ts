@@ -15,19 +15,7 @@ export class ShowSdaComponent {
   CriteriesList: any[] = [];
   competencyService = inject(CompetencyService);
 
-  ngOnInit(): void {
-    this.getAllCompetencyDescriptions();
-  }
-  getAllCompetencyDescriptions() {
-    this.competencyService.getAllCompetencyDescription().subscribe({
-      next: (data: any[]) => {
-        this.competencyDescriptionList = data; // Assign data to the local variable
-      },
-      error: (error) => {
-        console.error('Error fetching competencies:', error); // Handle errors
-      },
-    });
-  }
+  ngOnInit(): void {}
 
   getCompetencyDescriptionById(id: string) {
     this.competencyService.getCompetencyDescriptionById(id).subscribe({

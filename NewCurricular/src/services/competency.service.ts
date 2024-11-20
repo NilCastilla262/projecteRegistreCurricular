@@ -38,6 +38,18 @@ export class CompetencyService {
   ////////////////////////////////////
   ////////////////////////////////////
   ////////////////////////////////////
+  getAllCompetencyType(): Observable<any> {
+    return this.http.get<any>(
+      environment.api_url_Competency +
+        Constant.API_Competency_END_POINT.get_All_CompetencyType
+    );
+  }
+  getAllCompetencyName(): Observable<any> {
+    return this.http.get<any>(
+      environment.api_url_Competency +
+        Constant.API_Competency_END_POINT.get_All_CompetencyName
+    );
+  }
   getAllCompetencyDescription(): Observable<any> {
     return this.http.get<any>(
       environment.api_url_Competency +
