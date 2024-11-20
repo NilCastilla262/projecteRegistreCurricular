@@ -29,4 +29,14 @@ export class ShowSdaComponent {
       }
     );
   }
+  getAllCompetencyDescriptionById(id: string) {
+    this.competencyService.getAllCompetencyDescriptionById(id).subscribe(
+      (data: any[]) => {
+        this.competencyDescriptionList = data; // Assign data to the local variable
+      },
+      (error) => {
+        console.error('Error fetching competencies:', error); // Handle errors
+      }
+    );
+  }
 }
