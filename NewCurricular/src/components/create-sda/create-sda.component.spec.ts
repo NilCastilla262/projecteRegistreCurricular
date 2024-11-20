@@ -51,10 +51,36 @@ describe('CreateSdaComponent', () => {
       expect(checkbox).toBeTruthy();
     });
   });
-  it('should disable the button if no checkbox is checked', () => {
+  it('should disable the button if no data in any field of the form', () => {
     const button = fixture.debugElement.query(By.css('button'));
+    expect(button).toBeTruthy();
     expect(button.nativeElement.disabled).toBeTrue();
   
+    // Omple el camp de títol
+    const inputTitle = fixture.debugElement.query(By.css('input[placeholder="Títol de la SDA"]'));
+    inputTitle.nativeElement.value = 'Títol de prova';
+    inputTitle.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    // Omple el camp de descripció
+    const inputDescription = fixture.debugElement.query(By.css('input[placeholder="Descripció de la SDA"]'));
+    inputDescription.nativeElement.value = 'Descripció de prova';
+    inputDescription.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    // Omple el camp de data d'inici
+    const inputStartDate = fixture.debugElement.query(By.css('input[type="date"]#startDate'));
+    inputStartDate.nativeElement.value = '2024-01-01';
+    inputStartDate.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    // Omple el camp de data de fi
+    const inputEndDate = fixture.debugElement.query(By.css('input[type="date"]#endDate'));
+    inputEndDate.nativeElement.value = '2024-01-31';
+    inputEndDate.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    // Marca un checkbox
     const checkbox = fixture.debugElement.query(By.css('input[type="checkbox"]'));
     checkbox.nativeElement.checked = true;
     checkbox.nativeElement.dispatchEvent(new Event('change'));
