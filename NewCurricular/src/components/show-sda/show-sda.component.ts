@@ -29,7 +29,7 @@ export class ShowSdaComponent {
     });
   }
 
-  getAllCompetencyDescriptionById(id: string) {
+  getCompetencyDescriptionById(id: string) {
     this.competencyService.getCompetencyDescriptionById(id).subscribe({
       next: (data: any[]) => {
         this.competencyDescriptionList = data; // Assign data to the local variable
