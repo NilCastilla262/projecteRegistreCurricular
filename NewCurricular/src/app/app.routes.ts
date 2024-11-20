@@ -11,24 +11,17 @@ import { SaManageCenterComponent } from '../components/SuperAdmin/sa-manage-cent
 import { LoginComponent } from '../components/login/login.component';
 import { SaMainComponent } from '../components/SuperAdmin/sa-main/sa-main.component';
 import { ShowSdaComponent } from '../components/show-sda/show-sda.component';
+import { CreateSdaComponent } from '../components/create-sda/create-sda.component';
 
 export const routes: Routes = [
-   {
+  {
     path: '',
-    redirectTo: 'sa-main',
-   },
-   {
-    path: '',
-    redirectTo: 'home',
+    redirectTo: 'create-sda',
     pathMatch: 'full',
-  }, 
+  },
   {
     path: 'home',
     component: MainAppComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
   },
   {
     path: 'sa-main',
@@ -37,7 +30,7 @@ export const routes: Routes = [
   {
     path: 'ca-main',
     component: SaMainComponent,
-  }, 
+  },
   {
     path: 'pa-main',
     component: SaMainComponent,
@@ -69,13 +62,21 @@ export const routes: Routes = [
   {
     path: 'samanage-curriculum',
     component: SaManageCurriculumComponent,
-  },  
+  },
   {
     path: 'samanage-center',
     component: SaManageCenterComponent,
-  },  
+  },
   {
     path: 'show-sda',
     component: ShowSdaComponent,
+  },
+  {
+    path: 'create-sda',
+    component: CreateSdaComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
 ];
