@@ -26,6 +26,20 @@ async function getAllCompetencyNamePlById(req, res) {
   }
 }
 
+async function getAllCompetencyTypesPlById(req, res) {
+  const { id } = req.params;
+
+  try {
+    const competencies = await competencyQueries.getAllCompetencyTypesPlById(
+      id
+    );
+    res.json(competencies);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve Competency Types by id  Pl" });
+  }
+}
 ////////////////////////////////////
 ////////////////////////////////////
 ////////////////////////////////////
@@ -109,4 +123,5 @@ module.exports = {
   getAllCompetencyDescriptionsVal,
   getAllCompetencyDescriptionsPlById,
   getAllCompetencyNamePlById,
+  getAllCompetencyTypesPlById,
 };

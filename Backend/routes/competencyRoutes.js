@@ -10,6 +10,10 @@ router.get(
   "/competencyDescriptionPl/:id",
   competencyController.getAllCompetencyDescriptionsPlById
 );
+router.get(
+  "/competencyTypePl/:id",
+  competencyController.getAllCompetencyTypesPlById
+);
 
 ////////////////////////////////////
 ////////////////////////////////////
