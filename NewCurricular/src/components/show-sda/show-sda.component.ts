@@ -37,4 +37,14 @@ export class ShowSdaComponent {
       },
     });
   }
+  getAllCompetencyType() {
+    this.competencyService.getAllCompetencyType().subscribe({
+      next: (data: any[]) => {
+        this.competencyTypesList = data; // Assign data to the local variable
+      },
+      error: (error) => {
+        console.error('Error fetching competencies:', error); // Handle errors
+      },
+    });
+  }
 }
