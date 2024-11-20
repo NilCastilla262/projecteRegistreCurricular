@@ -32,7 +32,7 @@ describe('CompetencyService', () => {
       },
     ];
     service
-      .getAllCompetencyDescriptionById('BEFFDAA8-FF0D-4BB6-9BE8-038FBE462535')
+      .getCompetencyDescriptionById('BEFFDAA8-FF0D-4BB6-9BE8-038FBE462535')
       .subscribe((data) => {
         expect(data).toEqual(dummyData);
       });

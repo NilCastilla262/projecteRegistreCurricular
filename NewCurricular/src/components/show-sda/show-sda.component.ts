@@ -18,25 +18,25 @@ export class ShowSdaComponent {
   ngOnInit(): void {
     this.getAllCompetencyDescriptions();
   }
-
   getAllCompetencyDescriptions() {
-    this.competencyService.getAllCompetencyDescription().subscribe(
-      (data: any[]) => {
+    this.competencyService.getAllCompetencyDescription().subscribe({
+      next: (data: any[]) => {
         this.competencyDescriptionList = data; // Assign data to the local variable
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching competencies:', error); // Handle errors
-      }
-    );
+      },
+    });
   }
+
   getAllCompetencyDescriptionById(id: string) {
-    this.competencyService.getAllCompetencyDescriptionById(id).subscribe(
-      (data: any[]) => {
+    this.competencyService.getCompetencyDescriptionById(id).subscribe({
+      next: (data: any[]) => {
         this.competencyDescriptionList = data; // Assign data to the local variable
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching competencies:', error); // Handle errors
-      }
-    );
+      },
+    });
   }
 }
