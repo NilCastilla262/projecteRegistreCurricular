@@ -19,8 +19,10 @@ describe('LoginComponent', () => {
   });
 
   it('should disable the submit button when fields are empty', () => {
-    const submitButton = fixture.debugElement.query(By.css('button[type="submit"]'));
-    expect(submitButton.nativeElement.disabled).toBeTrue();
+    
+    fixture.detectChanges();
+    const submitButton = fixture.debugElement.query(By.css('button[type="submit"]')).nativeElement;
+    expect(submitButton.disabled).toBeTrue();
   });
 
   it('should enable the submit button when the form is valid', () => {

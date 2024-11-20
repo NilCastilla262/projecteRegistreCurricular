@@ -7,8 +7,6 @@ import { NgForm } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-
-
 export class LoginComponent {
   email: string = '';
   password: string = '';
