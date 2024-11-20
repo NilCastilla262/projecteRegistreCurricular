@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
@@ -9,7 +10,7 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      imports: [ReactiveFormsModule]
+      imports: [FormsModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
@@ -17,34 +18,25 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create the login component', () => {
-    expect(component).toBeTruthy();
+  it('should disable the submit button when fields are empty', () => {
+    
+    fixture.detectChanges();
+    const submitButton = fixture.debugElement.query(By.css('button[type="submit"]')).nativeElement;
+    expect(submitButton.disabled).toBeTrue();
   });
 
-  it('should have a form with email and password fields', () => {
-    expect(component.loginForm.contains('email')).toBeTruthy();
-    expect(component.loginForm.contains('password')).toBeTruthy();
+  it('should enable the submit button when the form is valid', () => {
+    const emailInput = fixture.debugElement.query(By.css('input[name="email"]')).nativeElement;
+    const passwordInput = fixture.debugElement.query(By.css('input[name="password"]')).nativeElement;
+
+    
+    emailInput.value = 'test@example.com';
+    passwordInput.value = 'password123';
+    emailInput.dispatchEvent(new Event('input'));
+    passwordInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    const submitButton = fixture.debugElement.query(By.css('button[type="submit"]'));
+    expect(submitButton.nativeElement.disabled).toBeFalse();
   });
-
-  it('should make the email and password fields required', () => {
-    const email = component.loginForm.get('email')!;
-    email.setValue('');
-    expect(email.valid).toBeFalsy();
-
-    const password = component.loginForm.get('password')!;
-    password.setValue('');
-    expect(password.valid).toBeFalsy();
-  });
-  
-  it('should call onSubmit when the form is submitted', () => {
-  spyOn(component, 'onSubmit');
-  component.loginForm.setValue({ email: 'test@example.com', password: 'password123' });
-  fixture.detectChanges();
-  // Simulate form submission
-  const form = fixture.nativeElement.querySelector('form');
-  form.dispatchEvent(new Event('submit'));
-  expect(component.onSubmit).toHaveBeenCalled();
-});
-
-  
 });
