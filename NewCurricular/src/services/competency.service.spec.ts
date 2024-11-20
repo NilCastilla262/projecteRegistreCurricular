@@ -44,4 +44,26 @@ describe('CompetencyService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(dummyData);
   });
+  it('Should get competency Name by id ', () => {
+    const dummyData = [
+      {
+        UUID: 'F368AA61-9781-4632-8DC3-24792C2266F0',
+        UUID_CompetencyType: 'F1D28FEB-9507-4CA1-875D-DA9A995C76D1',
+        Description: 'Llengua estrangera, 1a',
+        Tipo: null,
+      },
+    ];
+    service
+      .getAllCompetencyNameById('F368AA61-9781-4632-8DC3-24792C2266F0')
+      .subscribe((data) => {
+        expect(data).toEqual(dummyData);
+      });
+
+    const req = httpTestingController.expectOne(
+      'http://localhost:3000/api/Competency/competencyNamePl/F368AA61-9781-4632-8DC3-24792C2266F0'
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(dummyData);
+  });
 });
