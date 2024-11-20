@@ -1,6 +1,39 @@
 // controllers/competencyController.js
 const competencyQueries = require("../models/competencyQueries");
 
+async function getAllCompetencyDescriptionsPlById(req, res) {
+  const { id } = req.params;
+  try {
+    const competencies =
+      await competencyQueries.getAllCompetencyDescriptionPlById(id);
+    res.json(competencies);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve Competency Description by id pl " });
+  }
+}
+
+async function getAllCompetencyNamePlById(req, res) {
+  const { id } = req.params;
+  try {
+    const competencies = await competencyQueries.getAllCompetencyNamePlById(id);
+    res.json(competencies);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve Competency Name by id  pl " });
+  }
+}
+
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+
 async function getAllCompetencyTypesPl(req, res) {
   try {
     const competencies = await competencyQueries.getAllCompetencyTypesPl();
@@ -75,4 +108,5 @@ module.exports = {
   getAllCompetencyNamesVal,
   getAllCompetencyDescriptionsVal,
   getAllCompetencyDescriptionsPlById,
+  getAllCompetencyNamePlById,
 };

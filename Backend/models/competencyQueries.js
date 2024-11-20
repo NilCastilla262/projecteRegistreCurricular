@@ -1,24 +1,45 @@
 // models/competencyQueries.js
 const { poolPromise } = require("../config/db");
 
-async function getAllCompetencyTypesPl() {
-  try {
-    const pool = await poolPromise;
-    const result = await pool
-      .request()
-      .query("SELECT * FROM CompetencyType_Pl");
-    return result.recordset;
-  } catch (error) {
-    console.error("Query failed:", error.message);
-    throw error;
-  }
-}
 async function getAllCompetencyDescriptionPlById(id) {
   try {
     const pool = await poolPromise;
     const result = await pool
       .request()
       .query(`SELECT * FROM CompetencyDescription_Pl where uuid= '${id}'`);
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
+
+async function getAllCompetencyNamePlById(id) {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .query(`SELECT * FROM CompetencyName_Pl where uuid= '${id}'`);
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
+
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+////////////////////////////////////
+async function getAllCompetencyTypesPl() {
+  try {
+    const pool = await poolPromise;
+    const result = await pool
+      .request()
+      .query("SELECT * FROM CompetencyType_Pl");
     return result.recordset;
   } catch (error) {
     console.error("Query failed:", error.message);
@@ -95,4 +116,5 @@ module.exports = {
   getAllCompetencyNamesVal,
   getAllCompetencyDescriptionsVal,
   getAllCompetencyDescriptionPlById,
+  getAllCompetencyNamePlById,
 };
