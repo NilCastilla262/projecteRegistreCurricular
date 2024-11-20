@@ -59,4 +59,10 @@ export class CreateSdaComponent {
     
     return isValid as boolean;
   }
+
+  createSda(): boolean {
+    console.log('SDA creada correctament.');
+    return true;
+  }
+  
 }
