@@ -1,26 +1,20 @@
-<form #loginForm="ngForm">
+<form >
     <div>
       <input 
         type="email" 
         name="email" 
-        [(ngModel)]="email" 
-        #emailField="ngModel" 
-        required 
-        email
+        
+        
         placeholder="Email" />
     </div>
     <div>
       <input 
         type="password" 
-        name="password" 
-        [(ngModel)]="password" 
-        #passwordField="ngModel" 
-        required 
-        minlength="6" 
+        name="password"  
         placeholder="Password" />
     </div>
     <div>
-      <button type="submit" [disabled]="loginForm.invalid">Login</button>
+      <button type="submit" [disabled]="">Login</button>
     </div>
   </form>
   

@@ -2,41 +2,53 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { LoginComponent } from './login.component';
-
-describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let compiled: HTMLElement;
+function getNthInput(index:number) {
+  return compiled.querySelectorAll("input")[index];
+}
 
+function getInputFromDiv(inputIndex:number) {
+  return getNthInput(inputIndex)!.querySelector("input");
+}
+describe('LoginComponent', () => {
+  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoginComponent],
-      imports: [FormsModule],
-    }).compileComponents();
+      imports: [LoginComponent]
+    })
+    .compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    compiled=fixture.nativeElement as HTMLElement;
   });
 
-  it('should disable the submit button when fields are empty', () => {
+
+  it('Button is disabled', () => {
+    expect(compiled.querySelector("button")!.disabled).toBeTruthy();
+  });
+
+  it('Enable button if all data is correct', () => {
     
-    fixture.detectChanges();
-    const submitButton = fixture.debugElement.query(By.css('button[type="submit"]')).nativeElement;
-    expect(submitButton.disabled).toBeTrue();
-  });
-
-  it('should enable the submit button when the form is valid', () => {
-    const emailInput = fixture.debugElement.query(By.css('input[name="email"]')).nativeElement;
-    const passwordInput = fixture.debugElement.query(By.css('input[name="password"]')).nativeElement;
+    const inputEmail:HTMLInputElement = getInputFromDiv(0)!;
+    const inputPassword:HTMLInputElement = getInputFromDiv(1)!;
+    const button:HTMLButtonElement = compiled.querySelector("button")!;
 
     
-    emailInput.value = 'test@example.com';
-    passwordInput.value = 'password123';
-    emailInput.dispatchEvent(new Event('input'));
-    passwordInput.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
+    inputEmail.value="maria@gmail.com";
+    inputPassword.value="Patata123";
 
-    const submitButton = fixture.debugElement.query(By.css('button[type="submit"]'));
-    expect(submitButton.nativeElement.disabled).toBeFalse();
-  });
+    
+
+    
+    inputEmail.dispatchEvent(new Event("input"));
+    inputPassword.dispatchEvent(new Event("input"));
+
+    fixture.detectChanges();
+    expect(button.disabled).toBeFalse();
+
+  })
 });
