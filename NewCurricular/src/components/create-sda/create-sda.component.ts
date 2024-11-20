@@ -11,7 +11,7 @@ import { NgFor } from '@angular/common';
 })
 export class CreateSdaComponent {
 
-  sdaCreationMessage: string = ''; 
+  sdaCreated: boolean = false; 
   
   sda = {
     title: '',
@@ -65,7 +65,7 @@ export class CreateSdaComponent {
   }
 
   createSda(): boolean {
-    this.sdaCreationMessage = 'SDA Creat correctament';
+    this.sdaCreated = true;
     return true;
   }
  

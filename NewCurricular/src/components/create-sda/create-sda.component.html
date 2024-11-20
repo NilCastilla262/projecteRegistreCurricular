@@ -74,9 +74,9 @@
   (click)="createSda()">
   Crear SDA
   </button>
-  @if(sdaCreationMessage){
-  <div  class="alert alert-success">
-    {{ sdaCreationMessage }}
-  </div>
-}
+  @if(this.sdaCreated){
+    <div  class="alert alert-success">
+      <p>SDA Creat correctament</p>
+    </div>
+  }
 </div>
