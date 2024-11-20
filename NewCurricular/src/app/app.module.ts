@@ -5,7 +5,7 @@ import { LoginComponent } from '../components/login/login.component';
 
 @NgModule({
   declarations: [
-    LoginComponent  // Declare LoginComponent here
+    LoginComponent
   ],
   imports: [
     BrowserModule,
