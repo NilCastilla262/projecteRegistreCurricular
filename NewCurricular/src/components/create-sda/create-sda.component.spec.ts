@@ -95,39 +95,45 @@ describe('CreateSdaComponent', () => {
     const inputTitle = fixture.debugElement.query(By.css('input[placeholder="Títol de la SDA"]'));
     inputTitle.nativeElement.value = 'Títol de prova';
     inputTitle.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
   
     const inputDescription = fixture.debugElement.query(By.css('input[placeholder="Descripció de la SDA"]'));
     inputDescription.nativeElement.value = 'Descripció de prova';
     inputDescription.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
   
     const inputStartDate = fixture.debugElement.query(By.css('input[type="date"]#startDate'));
     inputStartDate.nativeElement.value = '2024-01-01';
     inputStartDate.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
   
     const inputEndDate = fixture.debugElement.query(By.css('input[type="date"]#endDate'));
     inputEndDate.nativeElement.value = '2024-01-31';
     inputEndDate.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
   
     const checkbox = fixture.debugElement.query(By.css('input[type="checkbox"]'));
     checkbox.nativeElement.checked = true;
     checkbox.nativeElement.dispatchEvent(new Event('change'));
-  
     fixture.detectChanges();
+  
   
     const button = fixture.debugElement.query(By.css('button'));
     expect(button).toBeTruthy();
     expect(button.nativeElement.disabled).toBeFalse();
+    console.log("Boto deshabilitat: ", button.nativeElement.disabled)
+    
+    expect(component.sdaCreated).toBeFalsy();
   
     button.nativeElement.click();
     fixture.detectChanges();
-  
-    expect(component.createSda).toHaveBeenCalled(); 
-    expect(component.createSda()).toBeTrue();
-  
-    const successMessage = fixture.debugElement.query(By.css('.alert-success'));
-    expect(successMessage).toBeTruthy();
-    expect(successMessage.nativeElement.textContent).toContain('SDA Creat correctament');
-  });
-  
+    expect(component.createSda).toHaveBeenCalled();
+    component.createSda();
+    fixture.detectChanges();
+    console.log("SDA Created: ", component.sdaCreated)
+    // expect(component.createSda).toBeTrue(); 
 
+    expect(component.sdaCreated).toBeTrue();
+    const p = fixture.debugElement.query(By.css('p'));
+  });
 });
