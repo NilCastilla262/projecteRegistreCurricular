@@ -65,9 +65,7 @@ export class CreateSdaComponent {
   }
 
   createSda(): boolean {
-    console.log("S'ha fet click en el boto")
     this.sdaCreated = true;
-    console.log("SdaCreated: " + this.sdaCreated)
     return true;
   }
  

@@ -121,7 +121,6 @@ describe('CreateSdaComponent', () => {
     const button = document.querySelector('button') as HTMLButtonElement;
     expect(button).toBeTruthy();
     expect(button.disabled).toBeFalse();
-    console.log("Boto deshabilitat: ", button.disabled);
     
     expect(component.sdaCreated).toBeFalsy();
   
