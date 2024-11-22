@@ -180,5 +180,45 @@ describe('CreateSdaComponent', () => {
     const errorMessage = document.querySelector('p'); 
     expect(errorMessage?.textContent).toContain('Error al crear l\'SDA');
   });
+  it('should disable the button after creating an SDA', () => {
+    spyOn(component, 'createSda').and.callThrough();
+  
+    // Omplim tots els camps del formulari
+    const inputTitle = fixture.nativeElement.querySelector('input[placeholder="Títol de la SDA"]');
+    inputTitle.value = 'Títol de prova';
+    inputTitle.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    const inputDescription = fixture.nativeElement.querySelector('input[placeholder="Descripció de la SDA"]');
+    inputDescription.value = 'Descripció de prova';
+    inputDescription.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    const inputStartDate = fixture.nativeElement.querySelector('input[type="date"]#startDate');
+    inputStartDate.value = '2024-01-01';
+    inputStartDate.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    const inputEndDate = fixture.nativeElement.querySelector('input[type="date"]#endDate');
+    inputEndDate.value = '2024-01-31';
+    inputEndDate.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    const checkbox = fixture.nativeElement.querySelector('input[type="checkbox"]');
+    checkbox.checked = true;
+    checkbox.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+  
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button).toBeTruthy();
+    expect(button.disabled).toBeFalse();
+  
+    button.click();
+    fixture.detectChanges();
+  
+    expect(component.sdaCreated).toBeTrue();
+  
+    expect(button.disabled).toBeTrue();
+  });
   
 });

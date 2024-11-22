@@ -66,7 +66,6 @@ export class CreateSdaComponent {
 
   createSda(): void {
     const success = this.performCreateSda();
-    console.log("assasasa",success);
     this.sdaCreated = success;
   }
 
