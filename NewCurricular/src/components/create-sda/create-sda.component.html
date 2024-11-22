@@ -76,5 +76,7 @@
   </button>
   @if(this.sdaCreated){
       <p>SDA Creat correctament</p>
+  }@else if(!sdaCreated && sdaCreated !== undefined) {
+    <p>Error al crear l'SDA</p>
   }
 </div>
