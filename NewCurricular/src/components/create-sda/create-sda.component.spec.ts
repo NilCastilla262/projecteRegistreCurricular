@@ -134,4 +134,46 @@ describe('CreateSdaComponent', () => {
     expect(successMessage).toBeTruthy();
     expect(successMessage?.textContent).toContain('SDA Creat correctament');
   });
+  it('should display an error message when the button click fails', () => {
+    // Simula que la funció 'createSda' retorna false
+    spyOn(component, 'createSda').and.returnValue(false);
+  
+    // Omplim tots els camps del formulari
+    const inputTitle = document.querySelector('input[placeholder="Títol de la SDA"]') as HTMLInputElement;
+    inputTitle.value = 'Títol de prova';
+    inputTitle.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    const inputDescription = document.querySelector('input[placeholder="Descripció de la SDA"]') as HTMLInputElement;
+    inputDescription.value = 'Descripció de prova';
+    inputDescription.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    const inputStartDate = document.querySelector('input[type="date"]#startDate') as HTMLInputElement;
+    inputStartDate.value = '2024-01-01';
+    inputStartDate.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    const inputEndDate = document.querySelector('input[type="date"]#endDate') as HTMLInputElement;
+    inputEndDate.value = '2024-01-31';
+    inputEndDate.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    const checkbox = document.querySelector('input[type="checkbox"]') as HTMLInputElement;
+    checkbox.checked = true;
+    fixture.detectChanges();
+  
+    const button = document.querySelector('button') as HTMLButtonElement;
+    expect(button).toBeTruthy();
+
+  
+    button.click();
+    fixture.detectChanges();
+    
+    const errorMessage = document.querySelector('p');
+    expect(errorMessage).toBeTruthy();
+    expect(errorMessage?.textContent).toContain("Error al crear l'SDA");
+  });
+  
+  
 });
