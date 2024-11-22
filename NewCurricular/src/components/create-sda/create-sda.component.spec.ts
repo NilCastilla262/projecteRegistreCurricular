@@ -8,8 +8,8 @@ describe('CreateSdaComponent', () => {
   let component: CreateSdaComponent;
   let fixture: ComponentFixture<CreateSdaComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         CreateSdaComponent,
         RouterModule.forRoot([]),
@@ -17,17 +17,16 @@ describe('CreateSdaComponent', () => {
         NgFor
       ]
     }).compileComponents();
-
     fixture = TestBed.createComponent(CreateSdaComponent);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
 
-    await fixture.whenStable(); 
-    fixture.detectChanges(); 
   });
 
   it('should have all the checkboxes for subjects', () => {
+
+
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     expect(checkboxes.length).toBe(11);
 
@@ -52,6 +51,8 @@ describe('CreateSdaComponent', () => {
   });
 
   it('should disable the button if no data in any field of the form', () => {
+
+
     const button = document.querySelector('button');
     expect(button).toBeTruthy();
     expect(button?.getAttribute('disabled')).toBeDefined();
@@ -90,7 +91,9 @@ describe('CreateSdaComponent', () => {
   });
 
   it('should call the createSda function, return true, and display the success message when the button is clicked', () => {
-    spyOn(component, 'createSda').and.callThrough(); // Espia la funció
+
+
+    spyOn(component, 'createSda').and.callThrough();
   
     // Omplim tots els camps del formulari
     const inputTitle = document.querySelector('input[placeholder="Títol de la SDA"]') as HTMLInputElement;
@@ -135,9 +138,8 @@ describe('CreateSdaComponent', () => {
     expect(successMessage?.textContent).toContain('SDA Creat correctament');
   });
   it('should display an error message when the button click fails', () => {
-    // Simula que la funció 'createSda' retorna false
-    spyOn(component, 'createSda').and.returnValue(false);
-  
+    spyOn(component, 'performCreateSda').and.returnValue(false);
+    
     // Omplim tots els camps del formulari
     const inputTitle = document.querySelector('input[placeholder="Títol de la SDA"]') as HTMLInputElement;
     inputTitle.value = 'Títol de prova';
@@ -161,19 +163,22 @@ describe('CreateSdaComponent', () => {
   
     const checkbox = document.querySelector('input[type="checkbox"]') as HTMLInputElement;
     checkbox.checked = true;
+    checkbox.dispatchEvent(new Event('change'));
     fixture.detectChanges();
   
     const button = document.querySelector('button') as HTMLButtonElement;
     expect(button).toBeTruthy();
-
+    expect(button.disabled).toBeFalse();
+    
+    expect(component.sdaCreated).toBeFalsy();
   
     button.click();
     fixture.detectChanges();
-    
-    const errorMessage = document.querySelector('p');
-    expect(errorMessage).toBeTruthy();
-    expect(errorMessage?.textContent).toContain("Error al crear l'SDA");
-  });
   
+    expect(component.sdaCreated).toBeFalse();
+  
+    const errorMessage = document.querySelector('p'); 
+    expect(errorMessage?.textContent).toContain('Error al crear l\'SDA');
+  });
   
 });
