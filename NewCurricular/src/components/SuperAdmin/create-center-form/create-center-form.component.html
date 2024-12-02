@@ -37,7 +37,7 @@
         required
       >
         <option value="" disabled selected>Selecciona un municipi</option>
-        @for(let municipality of municipalities) {
+        @for(municipality of municipalities; track municipality ) {
           <option [value]="municipality">{{ municipality }}</option>
         }
       </select>
