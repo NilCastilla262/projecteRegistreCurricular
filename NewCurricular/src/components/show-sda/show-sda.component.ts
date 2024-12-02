@@ -15,7 +15,11 @@ export class ShowSdaComponent {
   CriteriesList: any[] = [];
   competencyService = inject(CompetencyService);
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getAllCompetencyDescription();
+    this.getAllCompetencyName();
+    this.getAllCompetencyType();
+  }
 
   getAllCompetencyDescription() {
     this.competencyService.getAllCompetencyDescription().subscribe({
@@ -37,6 +41,28 @@ export class ShowSdaComponent {
       },
     });
   }
+  getAllCompetencyNameById(id: string) {
+    this.competencyService.getAllCompetencyNameById(id).subscribe({
+      next: (data: any[]) => {
+        this.competencyNamesList = data; // Assign data to the local variable
+      },
+      error: (error) => {
+        console.error('Error fetching competencies:', error); // Handle errors
+      },
+    });
+  }
+
+  filterCompetencyNameById(typeId: string) {
+    return this.competencyNamesList.filter(
+      (item) => item.UUID_CompetencyType === typeId
+    );
+  }
+  filterCompetencyDescriptionById(NameId: string) {
+    return this.competencyDescriptionList.filter(
+      (item) => item.UUID_CompetencyName === NameId
+    );
+  }
+
   getAllCompetencyType() {
     this.competencyService.getAllCompetencyType().subscribe({
       next: (data: any[]) => {
