@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors"); // Import CORS middleware
-
+const bodyParser = require('body-parser');
 const app = express();
 app.use(express.json());
 
@@ -22,8 +22,12 @@ const userRoutes = require("./routes/userRoutes");
 const groupTableRoutes = require("./routes/groupTableRoutes");
 const plantillaRoutes = require("./routes/plantillaRoutes");
 const vectorsRoutes = require("./routes/vectorsRoutes");
+ */
+const authRoutes = require('./routes/authRoutes');
+app.use(bodyParser.json());
+app.use('/api/auth', authRoutes);
 
-// Query Routes
+/*/ // Query Routes
 app.use("/api/Criteria", CriteriaRoutes);
 app.use("/api/Curs", cursRoutes);
 app.use("/api/User", userRoutes);
