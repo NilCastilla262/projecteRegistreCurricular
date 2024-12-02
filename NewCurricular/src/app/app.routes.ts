@@ -12,6 +12,7 @@ import { LoginComponent } from '../components/login/login.component';
 import { SaMainComponent } from '../components/SuperAdmin/sa-main/sa-main.component';
 import { ShowSdaComponent } from '../components/show-sda/show-sda.component';
 import { CreateSdaComponent } from '../components/create-sda/create-sda.component';
+import { CreateCenterFormComponent } from '../components/SuperAdmin/create-center-form/create-center-form.component';
 
 export const routes: Routes = [
   {
@@ -78,5 +79,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'create-center-form',
+    component: CreateCenterFormComponent,
   },
 ];
