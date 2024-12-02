@@ -54,23 +54,25 @@
   <h2>Que es treballarà en la SDA</h2>
   
   <div class="checkbox-group">
-    <div *ngFor="let subject of subjects">
-      <label>
-        <input
-          type="checkbox"
-          [value]="subject"
-          (change)="onCheckboxChange($event)"
-        />
-        {{ subject }}
-      </label>
-    </div>
+      @for(subject of subjects; track subject){
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              [value]="subject"
+              (change)="onCheckboxChange($event)"
+            />
+            {{ subject }}
+          </label>
+        </div>
+      } 
   </div>
   
 
   <button 
   type="button" 
   class="btn btn-primary" 
-  [disabled]="!isFormValid()"
+  [disabled]="!isFormValid() || sdaCreated"
   (click)="createSda()">
   Crear SDA
   </button>

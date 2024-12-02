@@ -64,15 +64,14 @@ export class CreateSdaComponent {
     return isValid as boolean;
   }
 
-  createSda(): boolean {
+  createSda(): void {
     const success = this.performCreateSda();
-    console.log("assasasa",this.sdaCreated)
     this.sdaCreated = success;
-    return success;
   }
 
   performCreateSda(): boolean {
-    return true
+    let created = true;
+    return created;
   }
  
 }

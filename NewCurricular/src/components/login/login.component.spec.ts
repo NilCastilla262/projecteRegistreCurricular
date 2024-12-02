@@ -47,4 +47,17 @@ describe('LoginComponent', () => {
     // Assert the button is enabled
     expect(button.disabled).toBeFalse();
   });
+  
+  it('should call login with correct credentials', () => {
+    const authServiceSpy = spyOn(component['authService'], 'login').and.callThrough();
+  
+    component.email = 'maria@gmail.com';
+    component.password = 'Patata123';
+  
+    fixture.detectChanges();
+    const form: HTMLFormElement = compiled.querySelector('form')!;
+    form.dispatchEvent(new Event('submit'));
+  
+    expect(authServiceSpy).toHaveBeenCalledWith('maria@gmail.com', 'Patata123');
+  });
 });

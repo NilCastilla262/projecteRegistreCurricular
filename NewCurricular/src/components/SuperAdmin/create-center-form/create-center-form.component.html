@@ -1,0 +1,60 @@
+<div class="create-center-container">
+    <h1>Crear Centre</h1>
+    
+    <div class="form-group">
+      <label for="centerName">Nom del Centre:</label>
+      <input
+        type="text"
+        id="centerName"
+        name="centerName"
+        placeholder="Nom del Centre"
+        class="form-control"
+        [(ngModel)]="center.name"
+        required
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="adminEmail">Correu Electrònic de l'Administrador:</label>
+      <input
+        type="email"
+        id="adminEmail"
+        name="adminEmail"
+        placeholder="Correu Electrònic"
+        class="form-control"
+        [(ngModel)]="center.adminEmail"
+        required
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="municipality">Municipi:</label>
+      <select
+        id="municipality"
+        name="municipality"
+        class="form-control"
+        [(ngModel)]="center.municipality"
+        required
+      >
+        <option value="" disabled selected>Selecciona un municipi</option>
+        @for(municipality of municipalities; track municipality ) {
+          <option [value]="municipality">{{ municipality }}</option>
+        }
+      </select>
+    </div>
+  
+    <button 
+      type="button" 
+      class="btn btn-primary" 
+      [disabled]="!isFormValid() || centerCreated"
+      (click)="createCenter()">
+      Crear Centre
+    </button>
+  
+    @if(centerCreated){
+      <p class="alert alert-success">Centre creat correctament!</p>
+    } @else if(!centerCreated && centerCreated !== undefined) {
+      <p class="alert alert-danger">Error al crear el centre. Revisa les dades.</p>
+    }
+  </div>
+  
