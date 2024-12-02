@@ -41,6 +41,10 @@ export class CreateCenterFormComponent {
   }
 
   isFormValid(): boolean {
-    return true;
+    return (
+      this.center.name.trim() !== '' &&
+      this.center.adminEmail.trim() !== '' &&
+      this.center.municipality.trim() !== ''
+    );
   }
 }
