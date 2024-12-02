@@ -19,7 +19,7 @@ describe('AuthService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify(); // Verify no pending requests
+    httpMock.verify();
   });
 
   it('should send login request and return a token', () => {
@@ -38,7 +38,7 @@ describe('AuthService', () => {
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({ email, password });
 
-    req.flush(mockResponse); // Simulate server response
+    req.flush(mockResponse);
   });
 
   it('should handle error response', () => {
