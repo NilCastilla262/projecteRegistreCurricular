@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CompetencyService } from '../../services/competency.service';
+import { CriteriaService } from '../../services/criteria.service';
 
 @Component({
   selector: 'app-show-sda',
@@ -14,11 +15,12 @@ export class ShowSdaComponent {
   competencyTypesList: any[] = [];
   CriteriesList: any[] = [];
   competencyService = inject(CompetencyService);
-
+  CriteriaService = inject(CriteriaService);
   ngOnInit(): void {
     this.getAllCompetencyDescription();
     this.getAllCompetencyName();
     this.getAllCompetencyType();
+    this.getAllCriterias();
   }
 
   getAllCompetencyDescription() {
@@ -63,6 +65,11 @@ export class ShowSdaComponent {
       (item) => item.UUID_CompetencyName === NameId
     );
   }
+  filterCriteriaById(DescriptionId: string) {
+    return this.CriteriesList.filter(
+      (item) => item.UUID_CompetencyDescription === DescriptionId
+    );
+  }
 
   getAllCompetencyType() {
     this.competencyService.getAllCompetencyType().subscribe({
@@ -71,6 +78,16 @@ export class ShowSdaComponent {
       },
       error: (error) => {
         console.error('Error fetching competencies:', error); // Handle errors
+      },
+    });
+  }
+  getAllCriterias() {
+    this.CriteriaService.getAllCriteries().subscribe({
+      next: (data: any[]) => {
+        this.CriteriesList = data; // Assign data to the local variable
+      },
+      error: (error) => {
+        console.error('Error fetching criteries:', error); // Handle errors
       },
     });
   }
