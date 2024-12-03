@@ -41,9 +41,11 @@ export class CreateCenterFormComponent {
   }
 
   isFormValid(): boolean {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return (
       this.center.name.trim() !== '' &&
       this.center.adminEmail.trim() !== '' &&
+      emailPattern.test(this.center.adminEmail) &&
       this.center.municipality.trim() !== ''
     );
   }
