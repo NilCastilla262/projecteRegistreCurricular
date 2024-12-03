@@ -3,6 +3,7 @@ export const Constant = {
     get_All_CompetencyType: 'competencyTypePl',
     get_All_CompetencyName: 'competencyNamePl',
     get_All_CompetencyDescription: 'competencyDescriptionPl',
+    get_All_Criteria: 'CriteriesPl',
   },
 };
 
