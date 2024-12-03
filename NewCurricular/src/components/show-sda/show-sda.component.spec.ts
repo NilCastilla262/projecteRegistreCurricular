@@ -45,10 +45,19 @@ describe('ShowSdaComponent', () => {
       },
     ];
 
+    const mockCriteria = [
+      {
+        UUID: 'C5A28A70-7894-4EA9-AD11-34BC9B76C12D',
+        UUID_CompetencyDescription: '044DD590-4B57-439D-9DAF-08B73F86D77D',
+        Description: 'Demonstrate understanding of cultural nuances.',
+      },
+    ];
+
     // Set component data
     component.competencyTypesList = mockCompetencyTypes;
     component.competencyNamesList = mockCompetencyNames;
     component.competencyDescriptionList = mockCompetencyDescriptions;
+    component.CriteriesList = mockCriteria;
 
     // Trigger change detection
     fixture.detectChanges();
@@ -63,19 +72,25 @@ describe('ShowSdaComponent', () => {
     });
 
     // Check competency names under each type
-    const names = compiled.querySelectorAll('h3');
+    const names = compiled.querySelectorAll('h2');
     expect(names.length).toBe(mockCompetencyNames.length);
     mockCompetencyNames.forEach((name, index) => {
       expect(names[index].textContent).toContain(name.Description);
     });
 
     // Check competency descriptions under each name
-    const descriptions = compiled.querySelectorAll('p');
+    const descriptions = compiled.querySelectorAll('h3');
     expect(descriptions.length).toBe(mockCompetencyDescriptions.length);
     mockCompetencyDescriptions.forEach((description, index) => {
       expect(descriptions[index].textContent).toContain(
         description.Descripcion
       );
+    });
+    // Check criteri descriptions under each name
+    const criteries = compiled.querySelectorAll('p');
+    expect(criteries.length).toBe(mockCriteria.length);
+    mockCriteria.forEach((description, index) => {
+      expect(criteries[index].textContent).toContain(description.Description);
     });
   });
 });
