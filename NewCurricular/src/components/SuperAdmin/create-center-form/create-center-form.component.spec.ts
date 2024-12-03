@@ -45,4 +45,62 @@ describe('CreateCenterFormComponent', () => {
 
     expect(button.disabled).toBeFalse();
   });
+
+  it('should toggle button enabled state based on form validity', () => {
+    const button = fixture.nativeElement.querySelector('button');
+    const inputName = fixture.nativeElement.querySelector('input#centerName');
+    const inputEmail = fixture.nativeElement.querySelector('input#adminEmail');
+    const selectMunicipality = fixture.nativeElement.querySelector('select#municipality');
+  
+    expect(button.disabled).toBeTrue();
+  
+    inputName.value = 'Nom Prova';
+    inputName.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    expect(button.disabled).toBeTrue();
+  
+    inputEmail.value = 'admin@prova.com';
+    inputEmail.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    expect(button.disabled).toBeTrue();
+  
+    selectMunicipality.value = component.municipalities[0];
+    selectMunicipality.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+  
+    expect(button.disabled).toBeFalse();
+  
+    inputName.value = '';
+    inputName.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    expect(button.disabled).toBeTrue();
+  });
+  it('should validate email and toggle button state accordingly', () => {
+    const button = fixture.nativeElement.querySelector('button');
+    const inputName = fixture.nativeElement.querySelector('input#centerName');
+    const inputEmail = fixture.nativeElement.querySelector('input#adminEmail');
+    const selectMunicipality = fixture.nativeElement.querySelector('select#municipality');
+  
+    inputName.value = 'Nom Prova';
+    inputName.dispatchEvent(new Event('input'));
+    selectMunicipality.value = component.municipalities[0];
+    selectMunicipality.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+  
+    inputEmail.value = 'admin@prova';
+    inputEmail.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    expect(button.disabled).toBeTrue();
+  
+    inputEmail.value = 'admin@prova.com';
+    inputEmail.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+  
+    expect(button.disabled).toBeFalse();
+  });
+  
 });
