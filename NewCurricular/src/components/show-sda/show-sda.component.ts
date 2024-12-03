@@ -31,6 +31,7 @@ export class ShowSdaComponent {
       },
     });
   }
+
   getAllCompetencyName() {
     this.competencyService.getAllCompetencyName().subscribe({
       next: (data: any[]) => {
