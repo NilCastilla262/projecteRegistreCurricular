@@ -1,4 +1,4 @@
-const criteriaQueries = require("../../models/criteriaQueries");
+const criteriaQueries = require("../models/criteriaQueries");
 
 async function getAllCriteriaPl(req, res) {
   try {
