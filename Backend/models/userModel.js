@@ -1,9 +1,22 @@
-// Simulated user data
-const users = [
-    {
-        username: 'testuser',
-        password: '$2b$10$e/sRXIetjW9BJsyT6cvd8OnT5dd1/YvNj.jLcmkx7dsU1pSH.LG9i' // bcrypt hash of "password123"
-    }
-];
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-module.exports = users;
+const UserSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+}, { timestamps: true });
+
+// Hash the password before saving
+UserSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
+});
+
+// Compare passwords
+UserSchema.methods.comparePassword = async function (password) {
+    return bcrypt.compare(password, this.password);
+};
+
+module.exports = mongoose.model('User', UserSchema);
