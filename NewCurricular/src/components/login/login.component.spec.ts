@@ -60,4 +60,24 @@ describe('LoginComponent', () => {
   
     expect(authServiceSpy).toHaveBeenCalledWith('maria@gmail.com', 'Patata123');
   });
+
+  it('should show a message when no data is provided', () => {
+    const button: HTMLButtonElement = compiled.querySelector('button')!;
+    const message: HTMLParagraphElement = compiled.querySelector('p')!;
+
+    button.click();
+    fixture.detectChanges();
+    expect(message.textContent).toContain('No has introduït les dades');
+    button.click();
+    fixture.detectChanges();
+    expect(message.textContent).toBeFalsy();
+
+    component.email = 'maria@gmail.com';
+    component.password = 'Patata123';
+    fixture.detectChanges();
+    button.click();
+    fixture.detectChanges();
+    expect(message.textContent).toBeFalsy();
+  
+  });
 });
