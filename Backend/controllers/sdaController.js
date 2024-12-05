@@ -10,11 +10,26 @@ async function getAllSdas(req, res) {
 }
 
 async function getSdaByGroupName(req, res) {
-  const { groupValue } = req.params;
-
+  const { groupValue } = req.body;
+  console.log("grp " + groupValue);
   try {
     const competencies = await sdaQueries.getSdaByGroupName(groupValue);
     res.json(competencies);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve sda by id  " });
+  }
+}
+async function newSda(req, res) {
+  const { groupValue, yearValue, curs } = req.body;
+
+  if (!groupValue || !yearValue || !curs) {
+    return res
+      .status(400)
+      .json({ error: "Missing required fields: groupValue, yearValue, curs" });
+  }
+  try {
+    const sdas = await sdaQueries.newSda(groupValue, yearValue, curs, res);
+    res.json(sdas);
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve sda by id  " });
   }
@@ -23,4 +38,5 @@ async function getSdaByGroupName(req, res) {
 module.exports = {
   getAllSdas,
   getSdaByGroupName,
+  newSda,
 };
