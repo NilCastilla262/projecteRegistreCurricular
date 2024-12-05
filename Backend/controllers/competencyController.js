@@ -40,6 +40,7 @@ async function getAllCompetencyTypesPlById(req, res) {
       .json({ error: "Failed to retrieve Competency Types by id  Pl" });
   }
 }
+
 ////////////////////////////////////
 ////////////////////////////////////
 ////////////////////////////////////
@@ -114,6 +115,45 @@ async function getAllCompetencyDescriptionsPlById(req, res) {
   }
 }
 
+async function newCompetencyDescriptionVal(req, res) {
+  const { sdaNom, UUID_CompetencyDescriptionPl } = req.body;
+
+  if (!sdaNom || !UUID_CompetencyDescriptionPl) {
+    return res
+      .status(400)
+      .json({ error: "Missing required fields: groupValue, yearValue, curs" });
+  }
+  try {
+    const sdas = await competencyQueries.newCompetencyDescriptionVal(
+      sdaNom,
+      UUID_CompetencyDescriptionPl,
+      res
+    );
+    res.json(sdas);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve sda by id  " });
+  }
+}
+async function NewCriteriVal(req, res) {
+  const { sdaNom, UUID_CompetencyDescriptionPl } = req.body;
+
+  if (!sdaNom || !UUID_CompetencyDescriptionPl) {
+    return res
+      .status(400)
+      .json({ error: "Missing required fields: groupValue, yearValue, curs" });
+  }
+  try {
+    const sdas = await competencyQueries.newCompetencyDescriptionVal(
+      sdaNom,
+      UUID_CompetencyDescriptionPl,
+      res
+    );
+    res.json(sdas);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve sda by id  " });
+  }
+}
+
 module.exports = {
   getAllCompetencyTypesPl,
   getAllCompetencyNamesPl,
@@ -124,4 +164,6 @@ module.exports = {
   getAllCompetencyDescriptionsPlById,
   getAllCompetencyNamePlById,
   getAllCompetencyTypesPlById,
+  newCompetencyDescriptionVal,
+  NewCriteriVal,
 };
