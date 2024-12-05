@@ -27,6 +27,7 @@ router.post(
   competencyController.newCompetencyDescriptionVal
 );
 router.post("/NewCriteriVal", competencyController.NewCriteriVal);
+router.post("/NewSabersDescription", competencyController.NewCriteriVal);
 
 module.exports = router;
 ////////////////////////////////////

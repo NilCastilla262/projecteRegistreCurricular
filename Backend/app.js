@@ -13,10 +13,10 @@ app.listen(PORT, () => {
 });
 
 const competencyRoutes = require("./routes/competencyRoutes");
-app.use("/api/Competency", competencyRoutes);
 const CriteriaRoutes = require("./routes/criteriaRoutes");
 const SdaRoutes = require("./routes/sdaRoutes");
 
+app.use("/api/Competency", competencyRoutes);
 /* //Routes
 const cursRoutes = require("./routes/cursRoutes");
 const userRoutes = require("./routes/userRoutes");

@@ -119,9 +119,9 @@ async function newCompetencyDescriptionVal(req, res) {
   const { sdaNom, UUID_CompetencyDescriptionPl } = req.body;
 
   if (!sdaNom || !UUID_CompetencyDescriptionPl) {
-    return res
-      .status(400)
-      .json({ error: "Missing required fields: groupValue, yearValue, curs" });
+    return res.status(400).json({
+      error: "Missing required fields: sdaNom, UUID_CompetencyDescriptionPl",
+    });
   }
   try {
     const sdas = await competencyQueries.newCompetencyDescriptionVal(
@@ -135,17 +135,17 @@ async function newCompetencyDescriptionVal(req, res) {
   }
 }
 async function NewCriteriVal(req, res) {
-  const { sdaNom, UUID_CompetencyDescriptionPl } = req.body;
+  const { sdaNom, UUID_CriteriPl } = req.body;
 
-  if (!sdaNom || !UUID_CompetencyDescriptionPl) {
+  if (!sdaNom || !UUID_CriteriPl) {
     return res
       .status(400)
-      .json({ error: "Missing required fields: groupValue, yearValue, curs" });
+      .json({ error: "Missing required fields: sdaNom, UUID_CriteriPl" });
   }
   try {
-    const sdas = await competencyQueries.newCompetencyDescriptionVal(
+    const sdas = await competencyQueries.NewCriteriVal(
       sdaNom,
-      UUID_CompetencyDescriptionPl,
+      UUID_CriteriPl,
       res
     );
     res.json(sdas);
