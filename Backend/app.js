@@ -15,6 +15,7 @@ app.listen(PORT, () => {
 const competencyRoutes = require("./routes/competencyRoutes");
 app.use("/api/Competency", competencyRoutes);
 const CriteriaRoutes = require("./routes/criteriaRoutes");
+const SdaRoutes = require("./routes/sdaRoutes");
 
 /* //Routes
 const cursRoutes = require("./routes/cursRoutes");
@@ -27,6 +28,7 @@ const authRoutes = require("./routes/authRoutes");
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/Criteria", CriteriaRoutes);
+app.use("/api/Sda", SdaRoutes);
 
 /*/ // Query Routes
 app.use("/api/Curs", cursRoutes);
