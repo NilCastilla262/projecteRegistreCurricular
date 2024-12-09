@@ -61,12 +61,9 @@
       required
     >
       <option value="" disabled selected>Selecciona un grup</option>
-      @for (item of items; track $index) {
-        
+      @for (group of groups; track group) {
+        <option>{{ group }}</option>
       }
-      <option *ngFor="let group of groups" [value]="group">
-        {{ group }}
-      </option>
     </select>
   </div>
 

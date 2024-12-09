@@ -10,7 +10,7 @@ describe('CreateSdaComponent', () => {
   let nativeElement: HTMLElement;
 
   // Helper per omplir el formulari
-  const fillForm = (title: string, description: string, startDate: string, endDate: string, checkSubject = true) => {
+  const fillForm = (title: string, description: string, startDate: string, endDate: string, group:string, checkSubject = true) => {
     const inputTitle = nativeElement.querySelector('input[placeholder="Títol de la SDA"]') as HTMLInputElement;
     inputTitle.value = title;
     inputTitle.dispatchEvent(new Event('input'));
@@ -26,6 +26,10 @@ describe('CreateSdaComponent', () => {
     const inputEndDate = nativeElement.querySelector('input[type="date"]#endDate') as HTMLInputElement;
     inputEndDate.value = endDate;
     inputEndDate.dispatchEvent(new Event('input'));
+
+    const selectGroup = nativeElement.querySelector('select#group') as HTMLSelectElement;
+    selectGroup.value = group;
+    selectGroup.dispatchEvent(new Event('change'));
 
     if (checkSubject) {
       const checkbox = nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
@@ -99,14 +103,14 @@ describe('CreateSdaComponent', () => {
     });
 
     it('should enable the button when the form is fully filled', () => {
-      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31');
+      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r A');
       expect(button.disabled).toBeFalse();
     });
 
     it('should disable the button after creating an SDA', () => {
       spyOn(component, 'createSda').and.callThrough();
 
-      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31');
+      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r A');
       expect(button.disabled).toBeFalse();
 
       button.click();
@@ -121,7 +125,7 @@ describe('CreateSdaComponent', () => {
     it('should call the createSda function and display the success message on successful creation', () => {
       spyOn(component, 'createSda').and.callThrough();
 
-      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31');
+      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r A');
 
       const button = nativeElement.querySelector('button') as HTMLButtonElement;
       button.click();
@@ -137,7 +141,7 @@ describe('CreateSdaComponent', () => {
     it('should display an error message when the button click fails', () => {
       spyOn(component, 'performCreateSda').and.returnValue(false);
 
-      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31');
+      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r A');
 
       const button = nativeElement.querySelector('button') as HTMLButtonElement;
       button.click();
