@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+/* const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
@@ -20,3 +20,4 @@ UserSchema.methods.comparePassword = async function (password) {
 };
 
 module.exports = mongoose.model('User', UserSchema);
+ */

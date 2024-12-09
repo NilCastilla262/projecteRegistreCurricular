@@ -20,6 +20,15 @@ router.get(
   "/competencyDescriptionPl",
   competencyController.getAllCompetencyDescriptionsPl
 );
+
+//////////////////////////////////
+router.post(
+  "/NewCompetencyDescriptionVal",
+  competencyController.newCompetencyDescriptionVal
+);
+router.post("/NewCriteriVal", competencyController.NewCriteriVal);
+router.post("/NewSabersDescription", competencyController.NewCriteriVal);
+
 module.exports = router;
 ////////////////////////////////////
 ////////////////////////////////////
