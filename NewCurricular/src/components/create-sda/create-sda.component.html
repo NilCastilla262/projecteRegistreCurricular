@@ -51,6 +51,25 @@
     />
   </div>
 
+  <div class="form-group">
+    <label for="group">Grup:</label>
+    <select
+      id="group"
+      name="group"
+      class="form-control"
+      [(ngModel)]="sda.selectedGroup"
+      required
+    >
+      <option value="" disabled selected>Selecciona un grup</option>
+      @for (item of items; track $index) {
+        
+      }
+      <option *ngFor="let group of groups" [value]="group">
+        {{ group }}
+      </option>
+    </select>
+  </div>
+
   <h2>Que es treballarà en la SDA</h2>
   
   <div class="checkbox-group">
