@@ -18,7 +18,8 @@ export class CreateSdaComponent {
     description: '',
     startDate: '',
     endDate: '',
-    selectedSubjects: [] as string[]
+    selectedSubjects: [] as string[],
+    selectedGroup: ''
   };
   
   subjects = [
@@ -34,7 +35,8 @@ export class CreateSdaComponent {
     'Competència digital (CD)',
     'Competència personal, social i d\'apendre a aprendre (CPSAA)'
   ];
-  
+
+  groups = ['1r A', '2n A', '3r A', '4t A', '5è A', '6è A'];
 
   onCheckboxChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
@@ -51,15 +53,16 @@ export class CreateSdaComponent {
   }
 
   isFormValid(): boolean {
-    const { title, description, startDate, endDate, selectedSubjects } = this.sda;
+    const { title, description, startDate, endDate, selectedSubjects, selectedGroup } = this.sda;
 
     const isTitleValid = title && title.trim().length > 0;
     const isDescriptionValid = description && description.trim().length > 0;
     const isStartDateValid = startDate && startDate.trim().length > 0;
     const isEndDateValid = endDate && endDate.trim().length > 0;
     const areSubjectsSelected = selectedSubjects.length > 0;
+    const isGroupSelected = selectedGroup && selectedGroup.trim().length > 0;
 
-    const isValid = isTitleValid && isDescriptionValid && isStartDateValid && isEndDateValid && areSubjectsSelected;
+    const isValid = isTitleValid && isDescriptionValid && isStartDateValid && isEndDateValid && areSubjectsSelected && isGroupSelected;
     
     return isValid as boolean;
   }

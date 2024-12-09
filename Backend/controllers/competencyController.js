@@ -154,7 +154,47 @@ async function NewCriteriVal(req, res) {
   }
 }
 
+async function NewSabersDescription(req, res) {
+  const { sdaNom, UUID_SabersDescriptionPl } = req.body;
+
+  if (!sdaNom || !UUID_SabersDescriptionPl) {
+    return res.status(400).json({
+      error: "Missing required fields: sdaNom, UUID_SabersDescriptionPl",
+    });
+  }
+  try {
+    const sdas = await competencyQueries.NewSabersDescription(
+      sdaNom,
+      UUID_SabersDescriptionPl,
+      res
+    );
+    res.json(sdas);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve sda by id  " });
+  }
+}
+async function NewSaberCriteri(req, res) {
+  const { sdaNom, UUID_SaberCriteriPl } = req.body;
+
+  if (!sdaNom || !UUID_SaberCriteriPl) {
+    return res
+      .status(400)
+      .json({ error: "Missing required fields: sdaNom, UUID_SaberCriteriPl" });
+  }
+  try {
+    const sdas = await competencyQueries.NewSaberCriteri(
+      sdaNom,
+      UUID_SaberCriteriPl,
+      res
+    );
+    res.json(sdas);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to retrieve sda by id  " });
+  }
+}
+
 module.exports = {
+  NewSaberCriteri,
   getAllCompetencyTypesPl,
   getAllCompetencyNamesPl,
   getAllCompetencyDescriptionsPl,
@@ -166,4 +206,5 @@ module.exports = {
   getAllCompetencyTypesPlById,
   newCompetencyDescriptionVal,
   NewCriteriVal,
+  NewSabersDescription,
 };
