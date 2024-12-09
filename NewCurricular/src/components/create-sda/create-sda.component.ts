@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-create-sda',
   standalone: true,
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule],
   templateUrl: './create-sda.component.html',
   styleUrls: ['./create-sda.component.css'],
 })
