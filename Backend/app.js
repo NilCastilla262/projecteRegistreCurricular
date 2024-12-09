@@ -17,6 +17,12 @@ const CriteriaRoutes = require("./routes/criteriaRoutes");
 const SdaRoutes = require("./routes/sdaRoutes");
 
 app.use("/api/Competency", competencyRoutes);
+const authRoutes = require("./routes/authRoutes");
+app.use(bodyParser.json());
+app.use("/api/auth", authRoutes);
+app.use("/api/Criteria", CriteriaRoutes);
+app.use("/api/Sda", SdaRoutes);
+
 /* //Routes
 const cursRoutes = require("./routes/cursRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -24,12 +30,6 @@ const groupTableRoutes = require("./routes/groupTableRoutes");
 const plantillaRoutes = require("./routes/plantillaRoutes");
 const vectorsRoutes = require("./routes/vectorsRoutes");
  */
-const authRoutes = require("./routes/authRoutes");
-app.use(bodyParser.json());
-app.use("/api/auth", authRoutes);
-app.use("/api/Criteria", CriteriaRoutes);
-app.use("/api/Sda", SdaRoutes);
-
 /*/ // Query Routes
 app.use("/api/Curs", cursRoutes);
 app.use("/api/User", userRoutes);

@@ -32,6 +32,14 @@ router.post("/NewSaberCriteri", competencyController.NewSaberCriteri);
 
 module.exports = router;
 ////////////////////////////////////
+
+router.get(
+  "/getCompetencyDescriptionValById",
+  competencyController.getCompetencyDescriptionValById
+);
+router.get("/getCriteriValById", competencyController.getCriteriValById);
+router.get("/getSabersDescriptionById", competencyController.getSabersDescriptionById);
+
 ////////////////////////////////////
 ////////////////////////////////////
 ////////////////////////////////////

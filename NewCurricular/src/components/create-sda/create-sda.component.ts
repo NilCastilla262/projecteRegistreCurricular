@@ -7,21 +7,20 @@ import { NgFor } from '@angular/common';
   standalone: true,
   imports: [FormsModule, NgFor],
   templateUrl: './create-sda.component.html',
-  styleUrls: ['./create-sda.component.css']
+  styleUrls: ['./create-sda.component.css'],
 })
 export class CreateSdaComponent {
+  sdaCreated?: boolean;
 
-  sdaCreated?: boolean; 
-  
   sda = {
     title: '',
     description: '',
     startDate: '',
     endDate: '',
     selectedSubjects: [] as string[],
-    selectedGroup: ''
+    selectedGroup: '',
   };
-  
+
   subjects = [
     'Llengua catalana i castellana',
     'Llengua estrangera, 1a',
@@ -33,7 +32,7 @@ export class CreateSdaComponent {
     'Competència ciutadana (CC)',
     'Competència emprenedora (CE)',
     'Competència digital (CD)',
-    'Competència personal, social i d\'apendre a aprendre (CPSAA)'
+    "Competència personal, social i d'apendre a aprendre (CPSAA)",
   ];
 
   groups = ['1r A', '2n A', '3r A', '4t A', '5è A', '6è A'];
@@ -41,7 +40,7 @@ export class CreateSdaComponent {
   onCheckboxChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     const value = checkbox.value;
-  
+
     if (checkbox.checked) {
       this.sda.selectedSubjects.push(value);
     } else {
@@ -53,7 +52,14 @@ export class CreateSdaComponent {
   }
 
   isFormValid(): boolean {
-    const { title, description, startDate, endDate, selectedSubjects, selectedGroup } = this.sda;
+    const {
+      title,
+      description,
+      startDate,
+      endDate,
+      selectedSubjects,
+      selectedGroup,
+    } = this.sda;
 
     const isTitleValid = title && title.trim().length > 0;
     const isDescriptionValid = description && description.trim().length > 0;
@@ -62,8 +68,14 @@ export class CreateSdaComponent {
     const areSubjectsSelected = selectedSubjects.length > 0;
     const isGroupSelected = selectedGroup && selectedGroup.trim().length > 0;
 
-    const isValid = isTitleValid && isDescriptionValid && isStartDateValid && isEndDateValid && areSubjectsSelected && isGroupSelected;
-    
+    const isValid =
+      isTitleValid &&
+      isDescriptionValid &&
+      isStartDateValid &&
+      isEndDateValid &&
+      areSubjectsSelected &&
+      isGroupSelected;
+
     return isValid as boolean;
   }
 
@@ -76,5 +88,15 @@ export class CreateSdaComponent {
     let created = true;
     return created;
   }
- 
+
+  createSdaFunction(): void {
+    const uuid_sda = this.createSdaDb(this.sda.title);
+    createSdaWithPlantilla(uuid_sda);
+  }
+
+  createSdaDb(sdaTitle: string): string {
+    return '';
+  }
+
+  createSdaWithPlantilla(sda: string): void {}
 }

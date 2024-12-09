@@ -293,6 +293,37 @@ async function getAllCompetencyDescriptionsVal() {
     throw error;
   }
 }
+async function getCompetencyDescriptionValById(
+  UUID_CompetencyDescription,
+  res
+) {
+  try {
+    const pool = await poolPromise;
+    console.log("test ");
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM CompetencyDescription_Val where  uuid= '${UUID_CompetencyDescription}' `
+      );
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
+async function getCriteriValById(UUID_Criteri, res) {
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool
+      .request()
+      .query(`SELECT * FROM Criteria_Val where  uuid= '${UUID_Criteri}' `);
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
 
 module.exports = {
   getAllCompetencyTypesPl,
@@ -306,4 +337,6 @@ module.exports = {
   NewCriteriVal,
   NewSabersDescription,
   NewSaberCriteri,
+  getCompetencyDescriptionValById,
+  getCriteriValById,
 };
