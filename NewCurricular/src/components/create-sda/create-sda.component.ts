@@ -6,12 +6,11 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './create-sda.component.html',
-  styleUrls: ['./create-sda.component.css']
+  styleUrls: ['./create-sda.component.css'],
 })
 export class CreateSdaComponent {
+  sdaCreated?: boolean;
 
-  sdaCreated?: boolean; 
-  
   sda = {
     title: '',
     description: '',
@@ -21,7 +20,7 @@ export class CreateSdaComponent {
     selectedClass: '',
     selectedGroup: ''
   };
-  
+
   subjects = [
     'Llengua catalana i castellana',
     'Llengua estrangera, 1a',
@@ -33,7 +32,7 @@ export class CreateSdaComponent {
     'Competència ciutadana (CC)',
     'Competència emprenedora (CE)',
     'Competència digital (CD)',
-    'Competència personal, social i d\'apendre a aprendre (CPSAA)'
+    "Competència personal, social i d'apendre a aprendre (CPSAA)",
   ];
 
   courses = ['1r', '2n', '3r', '4t', '5è', '6è'];
@@ -42,7 +41,7 @@ export class CreateSdaComponent {
   onCheckboxChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     const value = checkbox.value;
-  
+
     if (checkbox.checked) {
       this.sda.selectedSubjects.push(value);
     } else {
@@ -63,9 +62,8 @@ export class CreateSdaComponent {
     const areSubjectsSelected = selectedSubjects.length > 0;
     const isGroupSelected = selectedGroup && selectedGroup.trim().length > 0;
     const isClassSelected = selectedClass && selectedClass.trim().length > 0;
-
     const isValid = isTitleValid && isDescriptionValid && isStartDateValid && isEndDateValid && areSubjectsSelected && isGroupSelected && isClassSelected;
-    
+  
     return isValid as boolean;
   }
 
@@ -78,5 +76,15 @@ export class CreateSdaComponent {
     let created = true;
     return created;
   }
- 
+
+  createSdaFunction(): void {
+    const uuid_sda = this.createSdaDb(this.sda.title);
+    this.createSdaWithPlantilla(uuid_sda);
+  }
+
+  createSdaDb(sdaTitle: string): string {
+    return '';
+  }
+
+  createSdaWithPlantilla(sda: string): void {}
 }

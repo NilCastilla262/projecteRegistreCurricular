@@ -192,6 +192,93 @@ async function NewSaberCriteri(req, res) {
     res.status(500).json({ error: "Failed to retrieve sda by id  " });
   }
 }
+/////////////////////////
+async function getCompetencyDescriptionValById(req, res) {
+  const { UUID_CompetencyDescription } = req.body;
+
+  // Validate input
+  if (!UUID_CompetencyDescription) {
+    return res.status(400).json({
+      error: "Missing required field: UUID_CompetencyDescription",
+    });
+  }
+
+  try {
+    // Fetch competency description
+    const competencyDescription =
+      await competencyQueries.getCompetencyDescriptionValById(
+        UUID_CompetencyDescription
+      );
+
+    if (!competencyDescription) {
+      return res
+        .status(404)
+        .json({ error: "Competency description not found" });
+    }
+
+    // Return the result
+    return res.json(competencyDescription);
+  } catch (error) {
+    console.error("Error retrieving competency description by ID:", error);
+    return res
+      .status(500)
+      .json({ error: "Failed to retrieve competency description by ID" });
+  }
+}
+async function getCriteriValById(req, res) {
+  const { UUID_Criteri } = req.body;
+
+  // Validate input
+  if (!UUID_Criteri) {
+    return res.status(400).json({
+      error: "Missing required field: UUID_Criteri",
+    });
+  }
+
+  try {
+    // Fetch competency description
+    const criteri = await competencyQueries.getCriteriValById(UUID_Criteri);
+
+    if (!criteri) {
+      return res.status(404).json({ error: "criteri not found" });
+    }
+
+    // Return the result
+    return res.json(criteri);
+  } catch (error) {
+    console.error("Error retrieving criteri by ID:", error);
+    return res.status(500).json({ error: "Failed to retrieve criteri by ID" });
+  }
+}
+async function getSabersDescriptionById(req, res) {
+  const { UUID_SabersDescription } = req.body;
+
+  // Validate input
+  if (!UUID_SabersDescription) {
+    return res.status(400).json({
+      error: "Missing required field: UUID_SabersDescription",
+    });
+  }
+
+  try {
+    // Fetch competency description
+    const criteri = await competencyQueries.getSabersDescriptionById(
+      UUID_SabersDescription
+    );
+
+    if (!criteri) {
+      return res.status(404).json({ error: "SabersDescription not found" });
+    }
+
+    // Return the result
+    return res.json(criteri);
+  } catch (error) {
+    console.error("Error retrieving criteri by ID:", error);
+    return res.status(500).json({ error: "Failed to retrieve criteri by ID" });
+  }
+}
+
+/////////////////////////
 
 module.exports = {
   NewSaberCriteri,
@@ -207,4 +294,7 @@ module.exports = {
   newCompetencyDescriptionVal,
   NewCriteriVal,
   NewSabersDescription,
+  getCompetencyDescriptionValById,
+  getCriteriValById,
+  getSabersDescriptionById,
 };
