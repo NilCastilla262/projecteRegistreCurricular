@@ -39,6 +39,7 @@ router.get(
 );
 router.get("/getCriteriValById", competencyController.getCriteriValById);
 router.get("/getSabersDescriptionById", competencyController.getSabersDescriptionById);
+router.get("/SaberCriteriaById", competencyController.getSaberCriteriaById);
 
 ////////////////////////////////////
 ////////////////////////////////////
