@@ -277,8 +277,101 @@ async function getSabersDescriptionById(req, res) {
     return res.status(500).json({ error: "Failed to retrieve criteri by ID" });
   }
 }
+async function getSaberCriteriaById(req, res) {
+  const { UUID_SaberCriteri } = req.body;
+
+  // Validate input
+  if (!UUID_SaberCriteri) {
+    return res.status(400).json({
+      error: "Missing required field: UUID_SaberCriteri",
+    });
+  }
+
+  try {
+    // Fetch competency description
+    const SaberCriteria_ = await competencyQueries.getSaberCriteriaById(
+      UUID_SaberCriteri
+    );
+
+    if (!SaberCriteria_) {
+      return res.status(404).json({ error: "SabersDescription not found" });
+    }
+
+    // Return the result
+    return res.json(SaberCriteria_);
+  } catch (error) {
+    console.error("Error retrieving criteri by ID:", error);
+    return res.status(500).json({ error: "Failed to retrieve criteri by ID" });
+  }
+}
 
 /////////////////////////
+
+async function toggleTreballat(req, res) {
+  const { tableName, id } = req.body;
+
+  // Validate input
+  if (!tableName || !id) {
+    return res.status(400).json({
+      error: "Missing required query parameters: tableName or id",
+    });
+  }
+
+  try {
+    // Call the toggle function
+    const updatedRow = await competencyQueries.toggleTreballatByIdAndTable(
+      tableName,
+      id
+    );
+
+    // Return the updated row
+    return res.status(200).json({
+      message: "Successfully toggled treballat field",
+      data: updatedRow,
+    });
+  } catch (error) {
+    console.error("Error toggling treballat:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+async function getValBySdaPl(req, res) {
+  const { UUID_Sda, UUID_CompetencyDescriptionPl, tableName } = req.body;
+
+  // Validate input
+  if (!UUID_CompetencyDescriptionPl || !UUID_Sda || !tableName) {
+    return res.status(400).json({
+      error:
+        "Missing required field:  UUID_CompetencyDescriptionPl , UUID_Sda ,tableName",
+    });
+  }
+
+  try {
+    // Fetch competency description
+    const competencyDescription = await competencyQueries.getValBySdaPl(
+      UUID_Sda,
+      UUID_CompetencyDescriptionPl,
+      tableName
+    );
+
+    if (!competencyDescription) {
+      return res
+        .status(404)
+        .json({ error: "Competency description BY sda and pl  not found" });
+    }
+
+    // Return the result
+    return res.json(competencyDescription);
+  } catch (error) {
+    console.error(
+      "Error retrieving competency description by sda and pl :",
+      error
+    );
+    return res.status(500).json({
+      error: "Failed to retrieve competency description by sda and pl ",
+    });
+  }
+}
 
 module.exports = {
   NewSaberCriteri,
@@ -297,4 +390,7 @@ module.exports = {
   getCompetencyDescriptionValById,
   getCriteriValById,
   getSabersDescriptionById,
+  getSaberCriteriaById,
+  toggleTreballat,
+  getValBySdaPl,
 };

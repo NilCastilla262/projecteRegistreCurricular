@@ -299,7 +299,7 @@ async function getCompetencyDescriptionValById(
 ) {
   try {
     const pool = await poolPromise;
-    console.log("test ");
+
     const result = await pool
       .request()
       .query(
@@ -324,6 +324,87 @@ async function getCriteriValById(UUID_Criteri, res) {
     throw error;
   }
 }
+async function getSabersDescriptionById(UUID_SabersDescription, res) {
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM SabersDescription_Val where  uuid= '${UUID_SabersDescription}' `
+      );
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
+async function getSaberCriteriaById(UUID_SaberCriteri, res) {
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM SaberCriteria_Val where  uuid= '${UUID_SaberCriteri}' `
+      );
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
+
+async function toggleTreballatByIdAndTable(tableName, id) {
+  console.log(`
+    UPDATE ${tableName}
+SET treballat = CASE
+               WHEN treballat = 1 THEN 0
+               ELSE 1
+              END
+WHERE UUID = '${id}'
+
+`);
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool.request().query(
+      `
+         UPDATE ${tableName}
+    SET treballat = CASE
+                    WHEN treballat = 1 THEN 0
+                    ELSE 1
+                   END
+    WHERE UUID = '${id}'
+
+    `
+    );
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
+///////////////////////
+async function getValBySdaPl(
+  UUID_Sda,
+  UUID_CompetencyDescriptionPl,
+  tableName
+) {
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM ${tableName} where  uuid_sda= '${UUID_Sda}' AND UUID_CompetencyDescription_Pl = '${UUID_CompetencyDescriptionPl}'`
+      );
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
 
 module.exports = {
   getAllCompetencyTypesPl,
@@ -339,4 +420,8 @@ module.exports = {
   NewSaberCriteri,
   getCompetencyDescriptionValById,
   getCriteriValById,
+  getSabersDescriptionById,
+  getSaberCriteriaById,
+  toggleTreballatByIdAndTable,
+  getValBySdaPl,
 };

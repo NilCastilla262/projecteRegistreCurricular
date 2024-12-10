@@ -33,7 +33,7 @@ export class CreateSdaComponent {
     'Competència emprenedora (CE)',
     'Competència digital (CD)',
     "Competència personal, social i d'apendre a aprendre (CPSAA)",
-  ];
+  ]
 
   courses = ['1r', '2n', '3r', '4t', '5è', '6è'];
   groups = ['A', 'B', 'C'];

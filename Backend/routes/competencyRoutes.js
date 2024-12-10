@@ -38,10 +38,18 @@ router.get(
   competencyController.getCompetencyDescriptionValById
 );
 router.get("/getCriteriValById", competencyController.getCriteriValById);
-router.get("/getSabersDescriptionById", competencyController.getSabersDescriptionById);
+router.get(
+  "/getSabersDescriptionById",
+  competencyController.getSabersDescriptionById
+);
+router.get("/SaberCriteriaById", competencyController.getSaberCriteriaById);
+////////////////////////////////////
+router.put("/toggle-treballat", competencyController.toggleTreballat);
 
 ////////////////////////////////////
-////////////////////////////////////
+
+router.get("/getValBySdaPl", competencyController.getValBySdaPl);
+
 ////////////////////////////////////
 ////////////////////////////////////
 ////////////////////////////////////
