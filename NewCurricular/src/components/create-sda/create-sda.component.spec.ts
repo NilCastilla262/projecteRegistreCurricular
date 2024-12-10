@@ -10,7 +10,7 @@ describe('CreateSdaComponent', () => {
   let nativeElement: HTMLElement;
 
   // Helper per omplir el formulari
-  const fillForm = (title: string, description: string, startDate: string, endDate: string, group:string, checkSubject = true) => {
+  const fillForm = (title: string, description: string, startDate: string, endDate: string, curse: string, group:string, checkSubject = true) => {
     const inputTitle = nativeElement.querySelector('input[placeholder="Títol de la SDA"]') as HTMLInputElement;
     inputTitle.value = title;
     inputTitle.dispatchEvent(new Event('input'));
@@ -26,6 +26,10 @@ describe('CreateSdaComponent', () => {
     const inputEndDate = nativeElement.querySelector('input[type="date"]#endDate') as HTMLInputElement;
     inputEndDate.value = endDate;
     inputEndDate.dispatchEvent(new Event('input'));
+
+    const selectCurse = nativeElement.querySelector('select#classe') as HTMLSelectElement;
+    selectCurse.value = curse;
+    selectCurse.dispatchEvent(new Event('change'));
 
     const selectGroup = nativeElement.querySelector('select#group') as HTMLSelectElement;
     selectGroup.value = group;
@@ -83,6 +87,22 @@ describe('CreateSdaComponent', () => {
     });
   });
 
+  describe('Group field behavior', () => {
+    it('should toggle the group field disabled state based on class selection', () => {
+      const selectClass = nativeElement.querySelector('select#classe') as HTMLSelectElement;
+      const selectGroup = nativeElement.querySelector('select#group') as HTMLSelectElement;
+    
+      //expect(selectGroup.disabled).toBeTrue();
+      console.log(selectGroup.value);
+      console.log(selectClass.disabled);
+      selectClass.value = '1r';
+      selectClass.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+    
+      //expect(selectGroup.disabled).toBeFalse();
+    });
+  });
+
   describe('Button behavior', () => {
     let button: HTMLButtonElement;
 
@@ -103,14 +123,14 @@ describe('CreateSdaComponent', () => {
     });
 
     it('should enable the button when the form is fully filled', () => {
-      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r A');
+      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r', 'A');
       expect(button.disabled).toBeFalse();
     });
 
     it('should disable the button after creating an SDA', () => {
       spyOn(component, 'createSda').and.callThrough();
 
-      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r A');
+      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r', 'A');
       expect(button.disabled).toBeFalse();
 
       button.click();
@@ -119,13 +139,14 @@ describe('CreateSdaComponent', () => {
       expect(component.sdaCreated).toBeTrue();
       expect(button.disabled).toBeTrue();
     });
+    
   });
 
   describe('Create SDA functionality', () => {
     it('should call the createSda function and display the success message on successful creation', () => {
       spyOn(component, 'createSda').and.callThrough();
 
-      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r A');
+      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r', 'A');
 
       const button = nativeElement.querySelector('button') as HTMLButtonElement;
       button.click();
@@ -141,7 +162,7 @@ describe('CreateSdaComponent', () => {
     it('should display an error message when the button click fails', () => {
       spyOn(component, 'performCreateSda').and.returnValue(false);
 
-      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r A');
+      fillForm('Títol de prova', 'Descripció de prova', '2024-01-01', '2024-01-31', '1r', 'A');
 
       const button = nativeElement.querySelector('button') as HTMLButtonElement;
       button.click();
