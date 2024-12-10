@@ -335,6 +335,44 @@ async function toggleTreballat(req, res) {
   }
 }
 
+async function getValBySdaPl(req, res) {
+  const { UUID_Sda, UUID_CompetencyDescriptionPl, tableName } = req.body;
+
+  // Validate input
+  if (!UUID_CompetencyDescriptionPl || !UUID_Sda || !tableName) {
+    return res.status(400).json({
+      error:
+        "Missing required field:  UUID_CompetencyDescriptionPl , UUID_Sda ,tableName",
+    });
+  }
+
+  try {
+    // Fetch competency description
+    const competencyDescription = await competencyQueries.getValBySdaPl(
+      UUID_Sda,
+      UUID_CompetencyDescriptionPl,
+      tableName
+    );
+
+    if (!competencyDescription) {
+      return res
+        .status(404)
+        .json({ error: "Competency description BY sda and pl  not found" });
+    }
+
+    // Return the result
+    return res.json(competencyDescription);
+  } catch (error) {
+    console.error(
+      "Error retrieving competency description by sda and pl :",
+      error
+    );
+    return res.status(500).json({
+      error: "Failed to retrieve competency description by sda and pl ",
+    });
+  }
+}
+
 module.exports = {
   NewSaberCriteri,
   getAllCompetencyTypesPl,
@@ -354,4 +392,5 @@ module.exports = {
   getSabersDescriptionById,
   getSaberCriteriaById,
   toggleTreballat,
+  getValBySdaPl,
 };

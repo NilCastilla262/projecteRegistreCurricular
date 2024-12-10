@@ -47,6 +47,9 @@ router.get("/SaberCriteriaById", competencyController.getSaberCriteriaById);
 router.put("/toggle-treballat", competencyController.toggleTreballat);
 
 ////////////////////////////////////
+
+router.get("/getValBySdaPl", competencyController.getValBySdaPl);
+
 ////////////////////////////////////
 ////////////////////////////////////
 ////////////////////////////////////

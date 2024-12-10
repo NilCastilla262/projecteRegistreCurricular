@@ -299,7 +299,7 @@ async function getCompetencyDescriptionValById(
 ) {
   try {
     const pool = await poolPromise;
-    console.log("test ");
+
     const result = await pool
       .request()
       .query(
@@ -385,6 +385,26 @@ WHERE UUID = '${id}'
     throw error;
   }
 }
+///////////////////////
+async function getValBySdaPl(
+  UUID_Sda,
+  UUID_CompetencyDescriptionPl,
+  tableName
+) {
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool
+      .request()
+      .query(
+        `SELECT * FROM ${tableName} where  uuid_sda= '${UUID_Sda}' AND UUID_CompetencyDescription_Pl = '${UUID_CompetencyDescriptionPl}'`
+      );
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
 
 module.exports = {
   getAllCompetencyTypesPl,
@@ -403,4 +423,5 @@ module.exports = {
   getSabersDescriptionById,
   getSaberCriteriaById,
   toggleTreballatByIdAndTable,
+  getValBySdaPl,
 };
