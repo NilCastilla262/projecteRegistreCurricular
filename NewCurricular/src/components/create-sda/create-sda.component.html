@@ -52,6 +52,22 @@
   </div>
 
   <div class="form-group">
+    <label for="classes">Classe:</label>
+    <select
+      id="classe"
+      name="classe"
+      class="form-control"
+      [(ngModel)]="sda.selectedClass"
+      required
+    >
+      <option value="" disabled selected>Selecciona un curs</option>
+      @for (course of courses; track course) {
+        <option>{{ course }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="form-group">
     <label for="group">Grup:</label>
     <select
       id="group"
