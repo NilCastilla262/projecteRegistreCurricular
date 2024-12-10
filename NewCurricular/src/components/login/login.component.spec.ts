@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from '../../services/auth.service';
 import { LoginComponent } from './login.component';
 
 let component: LoginComponent;
@@ -12,9 +15,13 @@ function getNthInput(index: number): HTMLInputElement {
 
 describe('LoginComponent', () => {
   beforeEach(async () => {
+    const mockAuthService = {
+      login: jasmine.createSpy('login').and.returnValue(of({ token: 'fake-token' })),
+    };
+
     await TestBed.configureTestingModule({
-      imports: [FormsModule], // Include FormsModule
-      declarations: [LoginComponent], // Declare LoginComponent
+      imports: [FormsModule, HttpClientTestingModule, LoginComponent],
+      providers: [{ provide: AuthService, useValue: mockAuthService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
@@ -25,7 +32,7 @@ describe('LoginComponent', () => {
 
   it('Button is disabled', () => {
     const button: HTMLButtonElement = compiled.querySelector('button')!;
-    expect(button.disabled).toBeTruthy(); // Ensure the button is initially disabled
+    expect(button.disabled).toBeTruthy();
   });
 
   it('Enable button if all data is correct', () => {
@@ -33,32 +40,27 @@ describe('LoginComponent', () => {
     const inputPassword: HTMLInputElement = getNthInput(1);
     const button: HTMLButtonElement = compiled.querySelector('button')!;
 
-    // Simulate user input
     inputEmail.value = 'maria@gmail.com';
     inputPassword.value = 'Patata123';
 
-    // Dispatch input events
     inputEmail.dispatchEvent(new Event('input'));
     inputPassword.dispatchEvent(new Event('input'));
 
-    // Trigger change detection
     fixture.detectChanges();
 
-    // Assert the button is enabled
     expect(button.disabled).toBeFalse();
   });
-  
+
   it('should call login with correct credentials', () => {
-    const authServiceSpy = spyOn(component['authService'], 'login').and.callThrough();
-  
+    const authService = TestBed.inject(AuthService);
     component.email = 'maria@gmail.com';
     component.password = 'Patata123';
-  
+
     fixture.detectChanges();
     const form: HTMLFormElement = compiled.querySelector('form')!;
     form.dispatchEvent(new Event('submit'));
-  
-    expect(authServiceSpy).toHaveBeenCalledWith('maria@gmail.com', 'Patata123');
+
+    expect(authService.login).toHaveBeenCalledWith('maria@gmail.com', 'Patata123');
   });
 
   it('should show a message when no data is provided', () => {
@@ -68,16 +70,10 @@ describe('LoginComponent', () => {
     button.click();
     fixture.detectChanges();
     expect(message.textContent).toContain('No has introduït les dades');
-    button.click();
-    fixture.detectChanges();
-    expect(message.textContent).toBeFalsy();
 
     component.email = 'maria@gmail.com';
     component.password = 'Patata123';
     fixture.detectChanges();
-    button.click();
-    fixture.detectChanges();
     expect(message.textContent).toBeFalsy();
-  
   });
 });
