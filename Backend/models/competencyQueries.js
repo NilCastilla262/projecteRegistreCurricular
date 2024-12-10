@@ -355,6 +355,37 @@ async function getSaberCriteriaById(UUID_SaberCriteri, res) {
   }
 }
 
+async function toggleTreballatByIdAndTable(tableName, id) {
+  console.log(`
+    UPDATE ${tableName}
+SET treballat = CASE
+               WHEN treballat = 1 THEN 0
+               ELSE 1
+              END
+WHERE UUID = '${id}'
+
+`);
+  try {
+    const pool = await poolPromise;
+
+    const result = await pool.request().query(
+      `
+         UPDATE ${tableName}
+    SET treballat = CASE
+                    WHEN treballat = 1 THEN 0
+                    ELSE 1
+                   END
+    WHERE UUID = '${id}'
+
+    `
+    );
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed:", error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   getAllCompetencyTypesPl,
   getAllCompetencyNamesPl,
@@ -371,4 +402,5 @@ module.exports = {
   getCriteriValById,
   getSabersDescriptionById,
   getSaberCriteriaById,
+  toggleTreballatByIdAndTable,
 };

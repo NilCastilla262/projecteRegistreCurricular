@@ -307,6 +307,34 @@ async function getSaberCriteriaById(req, res) {
 
 /////////////////////////
 
+async function toggleTreballat(req, res) {
+  const { tableName, id } = req.body;
+
+  // Validate input
+  if (!tableName || !id) {
+    return res.status(400).json({
+      error: "Missing required query parameters: tableName or id",
+    });
+  }
+
+  try {
+    // Call the toggle function
+    const updatedRow = await competencyQueries.toggleTreballatByIdAndTable(
+      tableName,
+      id
+    );
+
+    // Return the updated row
+    return res.status(200).json({
+      message: "Successfully toggled treballat field",
+      data: updatedRow,
+    });
+  } catch (error) {
+    console.error("Error toggling treballat:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 module.exports = {
   NewSaberCriteri,
   getAllCompetencyTypesPl,
@@ -325,4 +353,5 @@ module.exports = {
   getCriteriValById,
   getSabersDescriptionById,
   getSaberCriteriaById,
+  toggleTreballat,
 };

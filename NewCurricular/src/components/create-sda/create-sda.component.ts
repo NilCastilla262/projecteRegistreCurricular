@@ -90,7 +90,7 @@ export class CreateSdaComponent {
 
   createSdaFunction(): void {
     const uuid_sda = this.createSdaDb(this.sda.title);
-    createSdaWithPlantilla(uuid_sda);
+    this.createSdaWithPlantilla(uuid_sda);
   }
 
   createSdaDb(sdaTitle: string): string {
