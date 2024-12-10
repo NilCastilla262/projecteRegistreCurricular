@@ -24,7 +24,7 @@ async function getSdaByGroupName(groupName) {
     throw error;
   }
 }
-async function newSda(groupValue, yearValue, curs, res) {
+async function newSda(groupValue, yearValue, curs, startDate, endDate, res) {
   try {
     const pool = await poolPromise;
 
@@ -45,9 +45,11 @@ async function newSda(groupValue, yearValue, curs, res) {
       .request()
       .input("uuidPlantilla", sql.UniqueIdentifier, uuidPlantilla)
       .input("groupValue", sql.VarChar, groupValue)
+      .input("startDate", sql.Date, startDate)
+      .input("endDate", sql.Date, endDate)
       .input("yearValue", sql.Int, yearValue).query(`
-        INSERT INTO Sda_Val (UUID, UUID_Plantilla, groupValue, yearValue)
-        VALUES (NEWID(), @uuidPlantilla, @groupValue, @yearValue)
+        INSERT INTO Sda_Val (UUID, UUID_Plantilla, groupValue, yearValue , startDate, endDate)
+        VALUES (NEWID(), @uuidPlantilla, @groupValue, @yearValue , @startDate, @endDate)
     `);
 
     res.status(201).json({

@@ -6,8 +6,13 @@ export const Constant = {
     get_All_Criteria: 'CriteriesPl',
     NewCompetencyDescriptionVal: 'NewCompetencyDescriptionVal',
     newCriteriVal: 'NewCriteriVal',
-    NewSabersDescription: 'NewSabersDescription',
+    NewSabersDescriptionVal: 'NewSabersDescriptionVal',
     NewSaberCriteri: 'NewSaberCriteri',
+    getValBySdaPl: 'getValBySdaPl',
+    toggleTreballat: 'toggle-treballat',
+    newSda: 'newSda',
+    getAllSdas: 'getAllSdas',
+    getSdaByGroupName: 'getSdaByGroupName',
   },
 };
 
