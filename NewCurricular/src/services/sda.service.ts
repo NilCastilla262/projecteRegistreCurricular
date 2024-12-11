@@ -11,19 +11,23 @@ export class SdaService {
   constructor(private http: HttpClient) {}
 
   newSda(
-    uuidPlantilla: string,
-    groupValue: string,
-    startDate: Date,
+    curs: string,
+    uuid_group: string,
     endDate: Date,
-    yearValue: number
+    description: string,
+    title: string,
+    uuid_center: string,
+    startDate: Date
   ): Observable<any> {
     // Ensure date serialization
     const params = {
-      uuidPlantilla,
-      groupValue,
-      startDate: startDate.toISOString(), // Serialize to ISO string
-      endDate: endDate.toISOString(), // Serialize to ISO string
-      yearValue: yearValue.toString(), // Convert number to string
+      curs,
+      uuid_group,
+      endDate: endDate.toISOString(),
+      description,
+      title,
+      uuid_center,
+      startDate: startDate.toISOString(),
     };
 
     return this.http.post<any>(

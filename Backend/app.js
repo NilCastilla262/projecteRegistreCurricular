@@ -15,13 +15,14 @@ app.listen(PORT, () => {
 const competencyRoutes = require("./routes/competencyRoutes");
 const CriteriaRoutes = require("./routes/criteriaRoutes");
 const SdaRoutes = require("./routes/sdaRoutes");
-
+const elementsRoutes = require("./routes/elementsRoutes");
 app.use("/api/Competency", competencyRoutes);
 const authRoutes = require("./routes/authRoutes");
 app.use(bodyParser.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/Criteria", CriteriaRoutes);
 app.use("/api/Sda", SdaRoutes);
+app.use("/api/Elements", elementsRoutes);
 
 /* //Routes
 const cursRoutes = require("./routes/cursRoutes");
