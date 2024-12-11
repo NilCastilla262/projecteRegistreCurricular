@@ -30,15 +30,6 @@ async function newSda(req, res) {
     startDate,
   } = req.body;
 
-  console.log("log ", curs);
-  console.log("log ", uuid_group);
-  console.log("log ", endDate);
-  console.log("log ", description);
-  console.log("log ", title);
-  console.log("log ", uuid_center);
-  console.log("log ", startDate);
-
-  console.log("test ");
   if (
     !curs ||
     !endDate ||
