@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { SdaService } from '../../services/sda.service';
+interface sda {
+  uuidplantilla: string;
+  title: string;
+  startDate: Date;
+  endDate: Date;
+}
 @Component({
   selector: 'app-create-sda',
   standalone: true,
@@ -9,6 +15,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./create-sda.component.css'],
 })
 export class CreateSdaComponent {
+  constructor(private sdaService: SdaService) {}
   sdaCreated?: boolean;
 
   sda = {
@@ -87,21 +94,13 @@ export class CreateSdaComponent {
   }
 
   createSda(): void {
-    const success = this.performCreateSda();
-    this.sdaCreated = success;
-  }
-
-  performCreateSda(): boolean {
-    let created = true;
-    return created;
-  }
-
-  createSdaFunction(): void {
-    const uuid_sda = this.createSdaDb(this.sda.title);
+    const uuid_sda = this.createSdaDb(this.sda);
     this.createSdaWithPlantilla(uuid_sda);
   }
 
-  createSdaDb(sdaTitle: string): string {
+  createSdaDb(sda: object): string {
+    // sdaService.newSda(this.sda.title);
+
     return '';
   }
 

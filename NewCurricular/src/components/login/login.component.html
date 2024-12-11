@@ -17,4 +17,4 @@
     <button type="submit" [disabled]="!isFormValid()">Login</button>
   </div>
 </form>
-<p *ngIf="!email || !password">No has introduït les dades</p>
+<p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>

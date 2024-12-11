@@ -8,10 +8,8 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        AuthService,
-        provideHttpClientTesting(), // Replacing HttpClientTestingModule
-      ],
+      imports: [provideHttpClientTesting],
+      providers: [AuthService],
     });
 
     service = TestBed.inject(AuthService);
@@ -19,43 +17,44 @@ describe('AuthService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify();
+    httpMock.verify(); // Ensures no outstanding HTTP requests
   });
 
-  it('should send login request and return a token', () => {
-    const mockResponse = { token: 'mock-token' };
-    const email = 'test@example.com';
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+
+  it('should send a POST request with correct credentials to the backend API', () => {
+    const mockResponse = { token: 'fake-token' }; // Simulated response from our backend
+    const email = 'admin@example.com';
     const password = 'password123';
 
-    service.login(email, password).subscribe({
-      next: (response) => {
-        expect(response.token).toEqual(mockResponse.token);
-      },
-      error: () => fail('Expected a successful login response'),
+    service.login(email, password).subscribe((response) => {
+      expect(response).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne('https://your-api-url.com/api/login');
-    expect(req.request.method).toBe('POST');
-    expect(req.request.body).toEqual({ email, password });
+    const req = httpMock.expectOne('http://localhost:3000/api/auth/login'); // Matching the backend API route
+    expect(req.request.method).toBe('POST'); // Ensures it's a POST request
+    expect(req.request.body).toEqual({ email, password }); // Verifies the request payload
 
-    req.flush(mockResponse);
+    req.flush(mockResponse); // Simulates a successful backend response
   });
 
-  it('should handle error response', () => {
-    const mockErrorMessage = 'Invalid credentials';
+  it('should handle login failure from the backend', () => {
+    const mockError = { status: 401, statusText: 'Unauthorized' };
     const email = 'wrong@example.com';
     const password = 'wrongpassword';
 
-    service.login(email, password).subscribe({
-      next: () => fail('Expected login to fail'),
-      error: (error) => {
-        expect(error.status).toBe(401);
-        expect(error.error).toBe(mockErrorMessage);
-      },
-    });
+    service.login(email, password).subscribe(
+      () => fail('should have failed with a 401 error'),
+      (error) => {
+        expect(error.status).toBe(401); // Ensures correct error status
+        expect(error.statusText).toBe('Unauthorized'); // Verifies error status text
+      }
+    );
 
-    const req = httpMock.expectOne('https://your-api-url.com/api/login');
+    const req = httpMock.expectOne('http://localhost:3000/api/auth/login');
     expect(req.request.method).toBe('POST');
-    req.flush(mockErrorMessage, { status: 401, statusText: 'Unauthorized' });
+    req.flush(null, mockError); // Simulates a backend error response
   });
 });
