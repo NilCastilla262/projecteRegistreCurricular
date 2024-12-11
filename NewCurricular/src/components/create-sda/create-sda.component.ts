@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SdaService } from '../../services/sda.service';
-interface sda {
-  uuidplantilla: string;
-  title: string;
-  startDate: Date;
-  endDate: Date;
-}
+
 @Component({
   selector: 'app-create-sda',
   standalone: true,
