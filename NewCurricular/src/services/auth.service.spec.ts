@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -8,7 +9,7 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [provideHttpClientTesting],
       providers: [AuthService],
     });
 
