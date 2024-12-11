@@ -12,7 +12,7 @@ export class SdaService {
 
   newSda(
     curs: string,
-    uuid_group: string,
+    groupLetter: string,
     endDate: Date,
     description: string,
     title: string,
@@ -22,7 +22,7 @@ export class SdaService {
     // Ensure date serialization
     const params = {
       curs,
-      uuid_group,
+      groupLetter,
       endDate: endDate.toISOString(),
       description,
       title,

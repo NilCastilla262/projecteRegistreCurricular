@@ -26,7 +26,7 @@ async function getSdaByGroupName(title) {
 }
 async function newSda(
   curs,
-  uuid_group,
+  groupLetter,
   endDate,
   description,
   title,
@@ -53,21 +53,21 @@ async function newSda(
     const insertResult = await pool
       .request()
       .input("uuidPlantilla", sql.UniqueIdentifier, uuidPlantilla)
-      .input("uuid_group", sql.UniqueIdentifier, uuid_group)
+      .input("groupLetter", sql.VarChar, groupLetter)
       .input("uuid_center", sql.UniqueIdentifier, uuid_center)
       .input("description", sql.VarChar, description)
       .input("title", sql.VarChar, title)
       .input("startDate", sql.Date, startDate)
       .input("endDate", sql.Date, endDate).query(`
-        INSERT INTO Sda_Val (UUID, UUID_Plantilla, UUID_Group , description , tittle ,UUID_Center ,active ,   startDate, endDate)
-        VALUES (NEWID(), @uuidPlantilla, @uuid_group , @description ,@title , @uuid_center , 1 ,    @startDate, @endDate)
+        INSERT INTO Sda_Val (UUID, UUID_Plantilla, GroupLetter , description , tittle ,UUID_Center ,active ,   startDate, endDate)
+        VALUES (NEWID(), @uuidPlantilla, @groupLetter , @description ,@title , @uuid_center , 1 ,    @startDate, @endDate)
     `);
 
     res.status(201).json({
       message: "SDA inserted successfully",
       data: {
         curs,
-        uuid_group,
+        groupLetter,
         endDate,
         description,
         title,

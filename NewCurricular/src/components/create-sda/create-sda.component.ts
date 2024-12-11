@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SdaService } from '../../services/sda.service';
+import { Sda } from '../../Constants/Sda';
 
 @Component({
   selector: 'app-create-sda',
@@ -93,7 +94,7 @@ export class CreateSdaComponent {
     this.createSdaWithPlantilla(uuid_sda);
   }
 
-  createSdaDb(sda: object): string {
+  createSdaDb(sda: Sda): string {
     // sdaService.newSda(this.sda.title);
 
     return '';

@@ -1,6 +1,6 @@
 export class Sda {
   curs: string;
-  uuid_group: string;
+  groupLetter: string;
   endDate: Date;
   description: string;
   title: string;
@@ -8,7 +8,7 @@ export class Sda {
   startDate: Date;
   constructor() {
     this.curs = '';
-    this.uuid_group = '';
+    this.groupLetter = '';
     this.endDate = new Date();
     this.description = '';
     this.title = '';
