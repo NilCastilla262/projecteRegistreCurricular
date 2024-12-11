@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs'; // Importar correctamente throwError
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthService } from '../../services/auth.service';
 import { LoginComponent } from './login.component';
@@ -14,14 +14,15 @@ function getNthInput(index: number): HTMLInputElement {
 }
 
 describe('LoginComponent', () => {
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
+
   beforeEach(async () => {
-    const mockAuthService = {
-      login: jasmine.createSpy('login').and.returnValue(of({ token: 'fake-token' })),
-    };
+    // Crear un espía para AuthService
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['login']);
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, HttpClientTestingModule, LoginComponent],
-      providers: [{ provide: AuthService, useValue: mockAuthService }],
+      providers: [{ provide: AuthService, useValue: authServiceSpy }], // Usar el espía
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
@@ -52,7 +53,8 @@ describe('LoginComponent', () => {
   });
 
   it('should call login with correct credentials', () => {
-    const authService = TestBed.inject(AuthService);
+    authServiceSpy.login.and.returnValue(of({ token: 'fake-token' })); // Mock exitoso
+
     component.email = 'maria@gmail.com';
     component.password = 'Patata123';
 
@@ -60,20 +62,51 @@ describe('LoginComponent', () => {
     const form: HTMLFormElement = compiled.querySelector('form')!;
     form.dispatchEvent(new Event('submit'));
 
-    expect(authService.login).toHaveBeenCalledWith('maria@gmail.com', 'Patata123');
+    expect(authServiceSpy.login).toHaveBeenCalledWith('maria@gmail.com', 'Patata123');
   });
 
-  it('should show a message when no data is provided', () => {
+  it('should call login and store token on successful login', () => {
+    authServiceSpy.login.and.returnValue(of({ token: 'fake-token' })); // Mock exitoso
+    const inputEmail: HTMLInputElement = getNthInput(0);
+    const inputPassword: HTMLInputElement = getNthInput(1);
     const button: HTMLButtonElement = compiled.querySelector('button')!;
-    const message: HTMLParagraphElement = compiled.querySelector('p')!;
 
+    // Set user input
+    inputEmail.value = 'maria@gmail.com';
+    inputPassword.value = 'Patata123';
+    inputEmail.dispatchEvent(new Event('input'));
+    inputPassword.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Simulate form submission
     button.click();
     fixture.detectChanges();
-    expect(message.textContent).toContain('No has introduït les dades');
 
-    component.email = 'maria@gmail.com';
-    component.password = 'Patata123';
-    fixture.detectChanges();
-    expect(message.textContent).toBeFalsy();
+    expect(authServiceSpy.login).toHaveBeenCalledWith('maria@gmail.com', 'Patata123');
+    expect(localStorage.getItem('token')).toEqual('fake-token');
   });
+
+  it('should handle login failure and show error message', () => {
+    authServiceSpy.login.and.returnValue(throwError({ error: { message: 'Login failed' } })); // Mock fallo
+
+    const inputEmail: HTMLInputElement = getNthInput(0);
+    const inputPassword: HTMLInputElement = getNthInput(1);
+    const button: HTMLButtonElement = compiled.querySelector('button')!;
+
+    // Set user input
+    inputEmail.value = 'maria@gmail.com';
+    inputPassword.value = 'wrongpassword';
+    inputEmail.dispatchEvent(new Event('input'));
+    inputPassword.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Simulate form submission
+    button.click();
+    fixture.detectChanges();
+
+    const errorMessage = compiled.querySelector('.error-message');
+    expect(authServiceSpy.login).toHaveBeenCalledWith('maria@gmail.com', 'wrongpassword');
+    expect(errorMessage?.textContent).toContain('Login failed');
+  });
+
 });
