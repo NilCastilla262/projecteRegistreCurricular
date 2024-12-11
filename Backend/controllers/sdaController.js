@@ -20,21 +20,48 @@ async function getSdaByGroupName(req, res) {
   }
 }
 async function newSda(req, res) {
-  const { groupValue, yearValue, curs, endDate, startDate } = req.body;
+  const {
+    curs,
+    uuid_group,
+    endDate,
+    description,
+    title,
+    uuid_center,
+    startDate,
+  } = req.body;
 
-  if (!groupValue || !yearValue || !curs || !endDate || !startDate) {
+  console.log("log ", curs);
+  console.log("log ", uuid_group);
+  console.log("log ", endDate);
+  console.log("log ", description);
+  console.log("log ", title);
+  console.log("log ", uuid_center);
+  console.log("log ", startDate);
+
+  console.log("test ");
+  if (
+    !curs ||
+    !endDate ||
+    !startDate ||
+    !title ||
+    !uuid_center ||
+    !description ||
+    !uuid_group
+  ) {
     return res.status(400).json({
       error:
-        "Missing required fields: groupValue, yearValue, curs , startDate,endDate",
+        "Missing required fields:  curs, uuid_group,endDate,description,title,uuid_center,startDate,",
     });
   }
   try {
     const sdas = await sdaQueries.newSda(
-      groupValue,
-      yearValue,
       curs,
-      startDate,
+      uuid_group,
       endDate,
+      description,
+      title,
+      uuid_center,
+      startDate,
       res
     );
     res.json(sdas);

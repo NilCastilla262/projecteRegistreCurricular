@@ -11,20 +11,29 @@ async function getAllSdas() {
     throw error;
   }
 }
-async function getSdaByGroupName(groupName) {
+async function getSdaByGroupName(title) {
   try {
     const pool = await poolPromise;
     const result = await pool
       .request()
-      .input("groupName", sql.VarChar, `%${groupName}%`) // Safe parameterized query
-      .query("SELECT * FROM Sda_Val WHERE groupValue LIKE @groupName");
+      .input("title", sql.VarChar, `%${title}%`) // Safe parameterized query
+      .query("SELECT * FROM Sda_Val WHERE title  LIKE @title");
     return result.recordset;
   } catch (error) {
     console.error("Query failed:", error.message);
     throw error;
   }
 }
-async function newSda(groupValue, yearValue, curs, startDate, endDate, res) {
+async function newSda(
+  curs,
+  uuid_group,
+  endDate,
+  description,
+  title,
+  uuid_center,
+  startDate,
+  res
+) {
   try {
     const pool = await poolPromise;
 
@@ -44,17 +53,27 @@ async function newSda(groupValue, yearValue, curs, startDate, endDate, res) {
     const insertResult = await pool
       .request()
       .input("uuidPlantilla", sql.UniqueIdentifier, uuidPlantilla)
-      .input("groupValue", sql.VarChar, groupValue)
+      .input("uuid_group", sql.UniqueIdentifier, uuid_group)
+      .input("uuid_center", sql.UniqueIdentifier, uuid_center)
+      .input("description", sql.VarChar, description)
+      .input("title", sql.VarChar, title)
       .input("startDate", sql.Date, startDate)
-      .input("endDate", sql.Date, endDate)
-      .input("yearValue", sql.Int, yearValue).query(`
-        INSERT INTO Sda_Val (UUID, UUID_Plantilla, groupValue, yearValue , startDate, endDate)
-        VALUES (NEWID(), @uuidPlantilla, @groupValue, @yearValue , @startDate, @endDate)
+      .input("endDate", sql.Date, endDate).query(`
+        INSERT INTO Sda_Val (UUID, UUID_Plantilla, UUID_Group , description , tittle ,UUID_Center ,active ,   startDate, endDate)
+        VALUES (NEWID(), @uuidPlantilla, @uuid_group , @description ,@title , @uuid_center , 1 ,    @startDate, @endDate)
     `);
 
     res.status(201).json({
       message: "SDA inserted successfully",
-      data: { groupValue, yearValue, uuidPlantilla },
+      data: {
+        curs,
+        uuid_group,
+        endDate,
+        description,
+        title,
+        uuid_center,
+        startDate,
+      },
     });
   } catch (error) {
     console.error("Query failed:", error.message);
