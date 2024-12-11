@@ -84,6 +84,10 @@ export class CreateSdaComponent {
     return isValid as boolean;
   }
 
+  groupIsDisabled() {
+    return !this.sda.selectedClass;
+  }
+
   createSda(): void {
     const uuid_sda = this.createSdaDb(this.sda);
     this.createSdaWithPlantilla(uuid_sda);
