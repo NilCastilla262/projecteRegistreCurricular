@@ -1,23 +1,32 @@
-/* const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const { Sequelize, DataTypes } = require("sequelize");
+const sequelize = require("../config/db");
 
-const UserSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-}, { timestamps: true });
-
-// Hash the password before saving
-UserSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
-    this.password = await bcrypt.hash(this.password, 10);
-    next();
+const User = sequelize.define("UserTable", {
+  UUID: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    primaryKey: true,
+  },
+  Type: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+}, {
+  tableName: "UserTable",
+  timestamps: false, // Asume que no hay columnas de createdAt/updatedAt
 });
 
-// Compare passwords
-UserSchema.methods.comparePassword = async function (password) {
-    return bcrypt.compare(password, this.password);
-};
-
-module.exports = mongoose.model('User', UserSchema);
- */
+module.exports = User;
