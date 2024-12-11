@@ -74,7 +74,7 @@
       name="group"
       class="form-control"
       [(ngModel)]="sda.selectedGroup"
-      [disabled]="!sda.selectedClass"
+      [disabled]='this.groupIsDisabled()'
       required
     >
       <option value="" disabled selected>Selecciona un grup</option>

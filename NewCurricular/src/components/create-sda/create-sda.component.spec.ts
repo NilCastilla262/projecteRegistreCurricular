@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgFor } from '@angular/common';
 
-describe('CreateSdaComponent', () => {
+  describe('CreateSdaComponent', () => {
   let component: CreateSdaComponent;
   let fixture: ComponentFixture<CreateSdaComponent>;
   let nativeElement: HTMLElement;
@@ -100,6 +100,27 @@ describe('CreateSdaComponent', () => {
       fixture.detectChanges();
     
       //expect(selectGroup.disabled).toBeFalse();
+    });
+  });
+
+  describe('Group field behavior', () => {
+    it('should toggle the group field disabled state based on class selection', () => {
+      const selectClass = nativeElement.querySelector('select#classe') as HTMLSelectElement;
+      const selectGroup = nativeElement.querySelector('select#group') as HTMLSelectElement;
+      console.log(component.sda.selectedClass + "TS");
+      
+      expect(component.groupIsDisabled()).toBeTrue();
+      // selectClass.selectedIndex =0;
+      // fixture.detectChanges();
+      // console.log(component.sda.selectedClass);
+      // expect(selectGroup.disabled).toBeTrue(); // No agafa canvis de navegador (MBA)
+       
+      selectClass.value = '1r';
+      selectClass.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+      console.log(component.sda.selectedClass);
+      expect(component.groupIsDisabled()).toBeFalse();
+      expect(selectGroup.disabled).toBeFalse();
     });
   });
 

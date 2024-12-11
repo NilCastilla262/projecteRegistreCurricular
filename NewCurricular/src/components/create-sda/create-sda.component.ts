@@ -82,6 +82,10 @@ export class CreateSdaComponent {
     return isValid as boolean;
   }
 
+  groupIsDisabled() {
+    return !this.sda.selectedClass;
+  }
+
   createSda(): void {
     const success = this.performCreateSda();
     this.sdaCreated = success;
