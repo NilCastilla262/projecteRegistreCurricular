@@ -76,4 +76,25 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
     expect(message.textContent).toBeFalsy();
   });
+
+  it('should call login and store token on successful login', () => {
+    const authService = TestBed.inject(AuthService);
+    const inputEmail: HTMLInputElement = getNthInput(0);
+    const inputPassword: HTMLInputElement = getNthInput(1);
+    const button: HTMLButtonElement = compiled.querySelector('button')!;
+
+    // Set user input
+    inputEmail.value = 'maria@gmail.com';
+    inputPassword.value = 'Patata123';
+    inputEmail.dispatchEvent(new Event('input'));
+    inputPassword.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Simulate form submission
+    button.click();
+    fixture.detectChanges();
+
+    expect(authService.login).toHaveBeenCalledWith('maria@gmail.com', 'Patata123');
+    expect(localStorage.getItem('token')).toEqual('fake-token');
+  });
 });
