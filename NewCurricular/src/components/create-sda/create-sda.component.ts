@@ -18,7 +18,7 @@ export class CreateSdaComponent {
     endDate: '',
     selectedSubjects: [] as string[],
     selectedClass: '',
-    selectedGroup: ''
+    selectedGroup: '',
   };
 
   subjects = [
@@ -33,7 +33,7 @@ export class CreateSdaComponent {
     'Competència emprenedora (CE)',
     'Competència digital (CD)',
     "Competència personal, social i d'apendre a aprendre (CPSAA)",
-  ]
+  ];
 
   courses = ['1r', '2n', '3r', '4t', '5è', '6è'];
   groups = ['A', 'B', 'C'];
@@ -53,7 +53,15 @@ export class CreateSdaComponent {
   }
 
   isFormValid(): boolean {
-    const { title, description, startDate, endDate, selectedSubjects, selectedGroup, selectedClass } = this.sda;
+    const {
+      title,
+      description,
+      startDate,
+      endDate,
+      selectedSubjects,
+      selectedGroup,
+      selectedClass,
+    } = this.sda;
 
     const isTitleValid = title && title.trim().length > 0;
     const isDescriptionValid = description && description.trim().length > 0;
@@ -62,8 +70,15 @@ export class CreateSdaComponent {
     const areSubjectsSelected = selectedSubjects.length > 0;
     const isGroupSelected = selectedGroup && selectedGroup.trim().length > 0;
     const isClassSelected = selectedClass && selectedClass.trim().length > 0;
-    const isValid = isTitleValid && isDescriptionValid && isStartDateValid && isEndDateValid && areSubjectsSelected && isGroupSelected && isClassSelected;
-  
+    const isValid =
+      isTitleValid &&
+      isDescriptionValid &&
+      isStartDateValid &&
+      isEndDateValid &&
+      areSubjectsSelected &&
+      isGroupSelected &&
+      isClassSelected;
+
     return isValid as boolean;
   }
 

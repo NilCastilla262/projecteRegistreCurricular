@@ -4,6 +4,15 @@ export const Constant = {
     get_All_CompetencyName: 'competencyNamePl',
     get_All_CompetencyDescription: 'competencyDescriptionPl',
     get_All_Criteria: 'CriteriesPl',
+    NewCompetencyDescriptionVal: 'NewCompetencyDescriptionVal',
+    newCriteriVal: 'NewCriteriVal',
+    NewSabersDescriptionVal: 'NewSabersDescriptionVal',
+    NewSaberCriteri: 'NewSaberCriteri',
+    getValBySdaPl: 'getValBySdaPl',
+    toggleTreballat: 'toggle-treballat',
+    newSda: 'newSda',
+    getAllSdas: 'getAllSdas',
+    getSdaByGroupName: 'getSdaByGroupName',
   },
 };
 
