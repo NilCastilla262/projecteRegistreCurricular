@@ -43,7 +43,7 @@ export class CreateSdaComponent {
   ];
 
   courses = ['1r', '2n', '3r', '4t', '5è', '6è'];
-  groups = ['A', 'B', 'C'];
+  groups = ['A', 'B', 'C', 'D', 'E'];
 
   onCheckboxChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
