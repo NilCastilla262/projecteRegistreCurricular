@@ -14,7 +14,8 @@ export class CreateSdaComponent {
   constructor(private sdaService: SdaService) {}
   sdaCreated?: boolean;
 
-  sda = {
+  sda: Sda = new Sda();
+  /* {
     title: '',
     description: '',
     startDate: '',
@@ -23,7 +24,7 @@ export class CreateSdaComponent {
     selectedClass: '',
     selectedGroup: '',
   };
-
+ */
   subjects = [
     'Llengua catalana i castellana',
     'Llengua estrangera, 1a',
@@ -62,17 +63,17 @@ export class CreateSdaComponent {
       startDate,
       endDate,
       selectedSubjects,
-      selectedGroup,
-      selectedClass,
+      groupLetter,
+      curs,
     } = this.sda;
 
     const isTitleValid = title && title.trim().length > 0;
     const isDescriptionValid = description && description.trim().length > 0;
-    const isStartDateValid = startDate && startDate.trim().length > 0;
-    const isEndDateValid = endDate && endDate.trim().length > 0;
+    const isStartDateValid = startDate;
+    const isEndDateValid = endDate;
     const areSubjectsSelected = selectedSubjects.length > 0;
-    const isGroupSelected = selectedGroup && selectedGroup.trim().length > 0;
-    const isClassSelected = selectedClass && selectedClass.trim().length > 0;
+    const isGroupSelected = groupLetter && groupLetter.trim().length > 0;
+    const isClassSelected = curs && curs.trim().length > 0;
     const isValid =
       isTitleValid &&
       isDescriptionValid &&
@@ -86,7 +87,7 @@ export class CreateSdaComponent {
   }
 
   groupIsDisabled() {
-    return !this.sda.selectedClass;
+    return !this.sda.curs;
   }
 
   createSda(): void {

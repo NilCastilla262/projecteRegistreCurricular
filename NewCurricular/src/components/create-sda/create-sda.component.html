@@ -1,6 +1,6 @@
 <div class="create-sda-container">
   <h1>Crear SDA</h1>
-  
+
   <div class="form-group">
     <label for="title">Títol de la SDA:</label>
     <input
@@ -48,7 +48,7 @@
       class="form-control"
       [(ngModel)]="sda.endDate"
       required
-    />c 
+    />c
   </div>
 
   <div class="form-group">
@@ -57,62 +57,61 @@
       id="classe"
       name="classe"
       class="form-control"
-      [(ngModel)]="sda.selectedClass"
+      [(ngModel)]="sda.curs"
       required
     >
       <option value="" disabled selected>Selecciona un curs</option>
       @for (course of courses; track course) {
-        <option>{{ course }}</option>
+      <option>{{ course }}</option>
       }
     </select>
   </div>
-  
+
   <div class="form-group">
     <label for="group">Grup:</label>
     <select
       id="group"
       name="group"
       class="form-control"
-      [(ngModel)]="sda.selectedGroup"
-      [disabled]='this.groupIsDisabled()'
+      [(ngModel)]="sda.groupLetter"
+      [disabled]="this.groupIsDisabled()"
       required
     >
       <option value="" disabled selected>Selecciona un grup</option>
       @for (group of groups; track group) {
-        <option>{{ group }}</option>
+      <option>{{ group }}</option>
       }
     </select>
   </div>
-  
 
   <h2>Que es treballarà en la SDA</h2>
-  
-  <div class="checkbox-group">
-      @for(subject of subjects; track subject){
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              [value]="subject"
-              (change)="onCheckboxChange($event)"
-            />
-            {{ subject }}
-          </label>
-        </div>
-      } 
-  </div>
-  
 
-  <button 
-  type="button" 
-  class="btn btn-primary" 
-  [disabled]="!isFormValid() || sdaCreated"
-  (click)="createSda()">
-  Crear SDA
+  <div class="checkbox-group">
+    @for(subject of subjects; track subject){
+    <div>
+      <label>
+        <input
+          type="checkbox"
+          [value]="subject"
+          (change)="onCheckboxChange($event)"
+        />
+        {{ subject }}
+      </label>
+    </div>
+    }
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    [disabled]="!isFormValid() || sdaCreated"
+    (click)="createSda()"
+  >
+    Crear SDA
   </button>
   @if(this.sdaCreated){
-      <p>SDA Creat correctament</p>
+  <p>SDA Creat correctament</p>
   }@else if(!sdaCreated && sdaCreated !== undefined) {
-    <p>Error al crear l'SDA</p>
+  <p>Error al crear l'SDA</p>
   }
 </div>
