@@ -15,7 +15,7 @@ async function getAllCriteriaPl() {
 async function getAllCriteriaVal() {
   try {
     const pool = await poolPromise;
-    const result = await pool.request().query("SELECT * FROM Criteria_Val");
+    const result = await pool.request().query("SELECT * FROM Criteria_Pl");
     return result.recordset;
   } catch (error) {
     console.error("Query failed:", error.message);

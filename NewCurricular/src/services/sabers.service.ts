@@ -15,7 +15,7 @@ export class SabersService {
   getAllSabersDescription(): Observable<any> {
     return this.http.get<any>(
       environment.api_url_Sabers +
-        Constant.API_Competency_END_POINT.get_All_CompetencyDescription
+        Constant.API_Competency_END_POINT.get_All_SabersDescription
     );
   }
   getAllSaberCritaris(): Observable<any> {
