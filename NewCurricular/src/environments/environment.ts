@@ -6,5 +6,5 @@ export const environment = {
   api_url_GroupTable: 'http://localhost:3000/api/GroupTable/',
   api_url_Plantilla: 'http://localhost:3000/api/Plantilla/',
   api_url_Vectors: 'http://localhost:3000/api/Vectors/',
-  api_url_Sda: 'http://localhost:3000/api/Sda/',
+  api_url_Sda: 'http://localhost:3000/api/sda/',
 };

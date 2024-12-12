@@ -20,6 +20,8 @@ async function getSdaByGroupName(req, res) {
   }
 }
 async function newSda(req, res) {
+  console.log("chill bro ");
+
   const {
     curs,
     groupLetter,
@@ -29,6 +31,14 @@ async function newSda(req, res) {
     uuid_center,
     startDate,
   } = req.body;
+  console.log("within controller : ");
+  console.log(curs);
+  console.log(groupLetter);
+  console.log(endDate);
+  console.log(description);
+  console.log(title);
+  console.log(uuid_center);
+  console.log(startDate);
 
   if (
     !curs ||

@@ -15,16 +15,7 @@ export class CreateSdaComponent {
   sdaCreated?: boolean;
 
   sda: Sda = new Sda();
-  /* {
-    title: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    selectedSubjects: [] as string[],
-    selectedClass: '',
-    selectedGroup: '',
-  };
- */
+
   subjects = [
     'Llengua catalana i castellana',
     'Llengua estrangera, 1a',
@@ -39,7 +30,7 @@ export class CreateSdaComponent {
     "Competència personal, social i d'apendre a aprendre (CPSAA)",
   ];
 
-  courses = ['1r', '2n', '3r', '4t', '5è', '6è'];
+  courses = ['1r-2n', '3r-4t', '5è-6è'];
   groups = ['A', 'B', 'C', 'D', 'E'];
 
   onCheckboxChange(event: Event): void {
@@ -91,12 +82,17 @@ export class CreateSdaComponent {
   }
 
   createSda(): void {
+    this.sda.uuid_center = 'B674B1EA-948E-4C5E-8E1A-9A5DE3F6C631';
     const uuid_sda = this.createSdaDb(this.sda);
     this.createSdaWithPlantilla(uuid_sda);
   }
 
   createSdaDb(sda: Sda): string {
-    // sdaService.newSda(this.sda.title);
+    console.log('jere ', this.sda);
+    this.sdaService.newSda(sda).subscribe({
+      next: (response) => console.log('Success:', response),
+      error: (error) => console.error('Error:', error),
+    });
 
     return '';
   }
