@@ -1,10 +1,10 @@
 // routes/competencyRoutes.js
 const express = require("express");
 const router = express.Router();
-const criteriaController = require("../controllers/criteriaController");
+const elementsController = require("../controllers/criteriaController");
 
-router.get("/newUser", criteriaController.getAllCriteriaPl);
-router.get("/Users", criteriaController.getAllCriteriaVal);
-router.get("/Groups", criteriaController.getAllCriteriaVal);
+router.get("/newUser", elementsController.getAllCriteriaPl);
+router.get("/Users", elementsController.getAllCriteriaVal);
+router.get("/Groups", elementsController.getAllCriteriaVal);
 
 module.exports = router;

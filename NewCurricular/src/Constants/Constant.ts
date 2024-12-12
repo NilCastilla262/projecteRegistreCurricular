@@ -4,6 +4,10 @@ export const Constant = {
     get_All_CompetencyName: 'competencyNamePl',
     get_All_CompetencyDescription: 'competencyDescriptionPl',
     get_All_Criteria: 'CriteriesPl',
+
+    get_All_SabersDescription: 'GetAllSabersDescription',
+    get_All_SaberCritaris: 'GetAllSaberCritaris',
+
     NewCompetencyDescriptionVal: 'NewCompetencyDescriptionVal',
     newCriteriVal: 'NewCriteriVal',
     NewSabersDescriptionVal: 'NewSabersDescriptionVal',
