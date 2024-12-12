@@ -40,7 +40,7 @@ export class ShowSdaComponent {
     });
   }
 
-  getAllCompetencyNameById(id: string) {
+/*   getAllCompetencyNameById(id: string) {
     this.competencyService.getAllCompetencyNameById(id).subscribe({
       next: (data: any[]) => {
         this.competencyNamesList = data; // Assign data to the local variable
@@ -49,7 +49,7 @@ export class ShowSdaComponent {
         console.error('Error fetching competencies:', error); // Handle errors
       },
     });
-  }
+  } */
 
   filterCompetencyNameById(typeId: string) {
     return this.competencyNamesList.filter(
@@ -68,6 +68,7 @@ export class ShowSdaComponent {
     );
   }
   filterCriteriaById(DescriptionId: string) {
+
     return this.CriteriesList.filter(
       (item) => item.UUID_CompetencyDescription === DescriptionId
     );
@@ -123,10 +124,12 @@ export class ShowSdaComponent {
     this.SabersService.getAllSaberCritaris().subscribe({
       next: (data: any[]) => {
         this.saberCritarisList = data; // Assign data to the local variable
+        console.log('sabercritari list ', this.saberCritarisList);
       },
       error: (error) => {
         console.error('Error fetching sabers critaris', error); // Handle errors
       },
     });
+    console.log('sab cr done ');
   }
 }

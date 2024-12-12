@@ -7,9 +7,6 @@ import { Constant } from '../Constants/Constant';
 @Injectable({
   providedIn: 'root',
 })
-@Injectable({
-  providedIn: 'root',
-})
 export class SabersService {
   constructor(private http: HttpClient) {}
   getAllSabersDescription(): Observable<any> {
@@ -19,6 +16,10 @@ export class SabersService {
     );
   }
   getAllSaberCritaris(): Observable<any> {
+    console.log(
+      environment.api_url_Sabers +
+        Constant.API_Competency_END_POINT.get_All_SaberCritaris
+    );
     return this.http.get<any>(
       environment.api_url_Sabers +
         Constant.API_Competency_END_POINT.get_All_SaberCritaris

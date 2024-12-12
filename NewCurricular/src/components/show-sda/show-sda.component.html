@@ -1,27 +1,64 @@
-@for ( competencyType of this.competencyTypesList; track competencyType) {
+<!-- @for (competencyType of this.competencyTypesList; track competencyType) {
+<h1>Comp Type: {{ competencyType.Description }}</h1>
 
-<h1>Comp Type : {{ competencyType.Description }}</h1>
-
-@for ( competencyName of filterCompetencyNameById(competencyType.UUID); track
+@for (competencyName of filterCompetencyNameById(competencyType.UUID); track
 competencyName) {
-<strong>PART 1 </strong>
-<h2>CompName : {{ competencyName.Description }}</h2>
 
-@for ( competencyDescription of
+<strong>PART 1</strong>
+<h2>CompName: {{ competencyName.Description }}</h2>
+
+@for (competencyDescription of
 filterCompetencyDescriptionById(competencyName.UUID); track
 competencyDescription) {
-<h3>ComptDescription : {{ competencyDescription.Descripcion }}</h3>
 
-@for ( criteri of filterCriteriaById(competencyDescription.UUID); track criteri)
+<h3>CompDescription: {{ competencyDescription.Descripcion }}</h3>
+
+@for (criteri of filterCriteriaById(competencyDescription.UUID); track criteri)
 {
-<p style="color: blue">CompCriteri : {{ criteri.Description }}</p>
+<p style="color: blue">CompCriteri: {{ criteri.Description }}</p>
+}
 
-} @for ( SaberDescription of
-filterSabersDescriptionById(competencyName.UUID);track SaberDescription ) {
-<h3>Sabers : {{ SaberDescription.Description }}</h3>
+<p>-- > here</p>
 
-@for ( Sabercriteri of filterSaberCriteriaById(SaberDescription.UUID); track
+@for (SaberDescription of filterSabersDescriptionById(competencyName.UUID);
+track SaberDescription) {
+<h3>Sabers: {{ SaberDescription.Description }}</h3>
+
+@for (Sabercriteri of filterSaberCriteriaById(SaberDescription.UUID); track
 Sabercriteri) {
-<p style="color: blue">{{ Sabercriteri.Description }}</p>
-
+<p style="color: blue">SabCriteri: {{ Sabercriteri.Description }}</p>
 } } } } }
+ -->
+@for ( competencyType of this.competencyTypesList; track competencyType) {
+
+    <h1>Comp Type : {{ competencyType.Description }}</h1>
+
+    @for ( competencyName of filterCompetencyNameById(competencyType.UUID); track
+    competencyName) {
+        <strong>PART 1 </strong>
+        <h2>CompName : {{ competencyName.Description }}</h2>
+
+        @for ( competencyDescription of
+        filterCompetencyDescriptionById(competencyName.UUID); track
+        competencyDescription) {
+            <h3>ComptDescription : {{ competencyDescription.Descripcion }}</h3>
+
+                    @for ( criteri of filterCriteriaById(competencyDescription.UUID); track criteri)
+                    {
+                    <p style="color: blue">CompCriteri : {{ criteri.Description }}</p>
+
+                    }
+        }
+        @for ( SaberDescription of
+        filterSabersDescriptionById(competencyName.UUID);track SaberDescription ) {
+        <h3>Sabers : {{ SaberDescription.Description }}</h3>
+
+                @for ( Sabercriteri of filterSaberCriteriaById(SaberDescription.UUID); track
+                Sabercriteri) {
+                <p style="color: blue">sabCriteri : {{ Sabercriteri.Description }}</p>
+
+                } 
+        
+        } 
+    } 
+}
