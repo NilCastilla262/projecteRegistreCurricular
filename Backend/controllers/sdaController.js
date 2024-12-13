@@ -20,15 +20,25 @@ async function getSdaByGroupName(req, res) {
   }
 }
 async function newSda(req, res) {
+  console.log("chill bro ");
+
   const {
     curs,
-    uuid_group,
+    groupLetter,
     endDate,
     description,
     title,
     uuid_center,
     startDate,
   } = req.body;
+  console.log("within controller : ");
+  console.log(curs);
+  console.log(groupLetter);
+  console.log(endDate);
+  console.log(description);
+  console.log(title);
+  console.log(uuid_center);
+  console.log(startDate);
 
   if (
     !curs ||
@@ -37,17 +47,17 @@ async function newSda(req, res) {
     !title ||
     !uuid_center ||
     !description ||
-    !uuid_group
+    !groupLetter
   ) {
     return res.status(400).json({
       error:
-        "Missing required fields:  curs, uuid_group,endDate,description,title,uuid_center,startDate,",
+        "Missing required fields:  curs, groupLetter,endDate,description,title,uuid_center,startDate,",
     });
   }
   try {
     const sdas = await sdaQueries.newSda(
       curs,
-      uuid_group,
+      groupLetter,
       endDate,
       description,
       title,

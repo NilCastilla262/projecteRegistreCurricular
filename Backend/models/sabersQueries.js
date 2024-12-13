@@ -1,10 +1,12 @@
 // models/competencyQueries.js
 const { poolPromise } = require("../config/db");
 
-async function getAllCriteriaPl() {
+async function GetAllSabersDescription() {
   try {
     const pool = await poolPromise;
-    const result = await pool.request().query("SELECT * FROM Criteria_Pl");
+    const result = await pool
+      .request()
+      .query("SELECT * FROM SabersDescription_Pl");
     return result.recordset;
   } catch (error) {
     console.error("Query failed:", error.message);
@@ -12,10 +14,10 @@ async function getAllCriteriaPl() {
   }
 }
 
-async function getAllCriteriaVal() {
+async function GetAllSaberCritaris() {
   try {
     const pool = await poolPromise;
-    const result = await pool.request().query("SELECT * FROM Criteria_Pl");
+    const result = await pool.request().query("SELECT * FROM SaberCriteria_Pl");
     return result.recordset;
   } catch (error) {
     console.error("Query failed:", error.message);
@@ -24,6 +26,6 @@ async function getAllCriteriaVal() {
 }
 
 module.exports = {
-  getAllCriteriaPl,
-  getAllCriteriaVal,
+  GetAllSabersDescription,
+  GetAllSaberCritaris,
 };

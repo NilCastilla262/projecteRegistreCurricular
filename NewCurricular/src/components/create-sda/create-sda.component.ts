@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SdaService } from '../../services/sda.service';
-interface sda {
-  uuidplantilla: string;
-  title: string;
-  startDate: Date;
-  endDate: Date;
-}
+import { Sda } from '../../Constants/Sda';
+
 @Component({
   selector: 'app-create-sda',
   standalone: true,
@@ -18,15 +14,7 @@ export class CreateSdaComponent {
   constructor(private sdaService: SdaService) {}
   sdaCreated?: boolean;
 
-  sda = {
-    title: '',
-    description: '',
-    startDate: '',
-    endDate: '',
-    selectedSubjects: [] as string[],
-    selectedClass: '',
-    selectedGroup: '',
-  };
+  sda: Sda = new Sda();
 
   subjects = [
     'Llengua catalana i castellana',
@@ -42,8 +30,8 @@ export class CreateSdaComponent {
     "Competència personal, social i d'apendre a aprendre (CPSAA)",
   ];
 
-  courses = ['1r', '2n', '3r', '4t', '5è', '6è'];
-  groups = ['A', 'B', 'C'];
+  courses = ['1r-2n', '3r-4t', '5è-6è'];
+  groups = ['A', 'B', 'C', 'D', 'E'];
 
   onCheckboxChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
@@ -66,17 +54,17 @@ export class CreateSdaComponent {
       startDate,
       endDate,
       selectedSubjects,
-      selectedGroup,
-      selectedClass,
+      groupLetter,
+      curs,
     } = this.sda;
 
     const isTitleValid = title && title.trim().length > 0;
     const isDescriptionValid = description && description.trim().length > 0;
-    const isStartDateValid = startDate && startDate.trim().length > 0;
-    const isEndDateValid = endDate && endDate.trim().length > 0;
+    const isStartDateValid = startDate;
+    const isEndDateValid = endDate;
     const areSubjectsSelected = selectedSubjects.length > 0;
-    const isGroupSelected = selectedGroup && selectedGroup.trim().length > 0;
-    const isClassSelected = selectedClass && selectedClass.trim().length > 0;
+    const isGroupSelected = groupLetter && groupLetter.trim().length > 0;
+    const isClassSelected = curs && curs.trim().length > 0;
     const isValid =
       isTitleValid &&
       isDescriptionValid &&
@@ -90,16 +78,21 @@ export class CreateSdaComponent {
   }
 
   groupIsDisabled() {
-    return !this.sda.selectedClass;
+    return !this.sda.curs;
   }
 
   createSda(): void {
+    this.sda.uuid_center = 'B674B1EA-948E-4C5E-8E1A-9A5DE3F6C631';
     const uuid_sda = this.createSdaDb(this.sda);
     this.createSdaWithPlantilla(uuid_sda);
   }
 
-  createSdaDb(sda: object): string {
-    // sdaService.newSda(this.sda.title);
+  createSdaDb(sda: Sda): string {
+    console.log('jere ', this.sda);
+    this.sdaService.newSda(sda).subscribe({
+      next: (response) => console.log('Success:', response),
+      error: (error) => console.error('Error:', error),
+    });
 
     return '';
   }

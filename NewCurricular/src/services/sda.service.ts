@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Constant } from '../Constants/Constant';
+import { Sda } from '../Constants/Sda';
 
 @Injectable({
   providedIn: 'root',
@@ -10,25 +11,35 @@ import { Constant } from '../Constants/Constant';
 export class SdaService {
   constructor(private http: HttpClient) {}
 
-  newSda(
-    uuidPlantilla: string,
-    groupValue: string,
-    startDate: Date,
-    endDate: Date,
-    yearValue: number
-  ): Observable<any> {
+  newSda(sda: Sda): Observable<any> {
     // Ensure date serialization
     const params = {
-      uuidPlantilla,
-      groupValue,
-      startDate: startDate.toISOString(), // Serialize to ISO string
-      endDate: endDate.toISOString(), // Serialize to ISO string
-      yearValue: yearValue.toString(), // Convert number to string
+      curs: sda.curs,
+      groupLetter: sda.groupLetter,
+      endDate: sda.endDate,
+      description: sda.description,
+      title: sda.title,
+      uuid_center: sda.uuid_center,
+      startDate: sda.startDate,
     };
 
-    return this.http.post<any>(
-      `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.newSda}`, // Template literals for readability
+    console.log(
+      'link',
+      `${environment.api_url_Sda}${Constant.API_Competency_END_POINT.newSda}`, // Template literals for readability
       { params }
+    );
+
+    return this.http.post<any>(
+      `${environment.api_url_Sda}${Constant.API_Competency_END_POINT.newSda}`, // Template literals for readability
+      {
+        curs: sda.curs,
+        groupLetter: sda.groupLetter,
+        endDate: sda.endDate,
+        description: sda.description,
+        title: sda.title,
+        uuid_center: sda.uuid_center,
+        startDate: sda.startDate,
+      }
     );
   }
 

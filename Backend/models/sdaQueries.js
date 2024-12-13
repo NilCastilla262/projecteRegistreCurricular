@@ -26,7 +26,7 @@ async function getSdaByGroupName(title) {
 }
 async function newSda(
   curs,
-  uuid_group,
+  groupLetter,
   endDate,
   description,
   title,
@@ -35,39 +35,56 @@ async function newSda(
   res
 ) {
   try {
+    console.log(`SELECT UUID FROM Curs_Pl WHERE Curs LIKE  '%${curs}%' `);
+
     const pool = await poolPromise;
 
     const plantillaResult = await pool
       .request()
       .input("curs", sql.VarChar, curs)
-      .query("SELECT UUID FROM plantilla_Pl WHERE Curs = @curs");
+      .query(`SELECT UUID FROM Curs_Pl WHERE Curs LIKE  '%${curs}%' `);
+    console.log(" uuid curs  ", plantillaResult);
 
-    if (plantillaResult.recordset.length === 0) {
-      return res
-        .status(404)
-        .json({ error: "No UUID_Plantilla found for the provided Curs" });
+    let uuidCurs; // Declare in outer scope
+
+    if (plantillaResult.recordset && plantillaResult.recordset.length > 0) {
+      uuidCurs = plantillaResult.recordset[0].UUID; // Assign value
+      console.log("Extracted UUID:", uuidCurs); // Correct variable name here
+    } else {
+      console.log("No records found.");
     }
 
-    const uuidPlantilla = plantillaResult.recordset[0].UUID;
+    const uuidplantillaResult = await pool
+      .request()
+      .input("curs", sql.VarChar, uuidCurs)
+      .query(
+        `SELECT UUID FROM Plantilla_Pl WHERE UUID_Curs =  '${uuidCurs}' AND active=1 `
+      );
+    let uuidPlantilla = uuidplantillaResult.recordset[0].UUID;
+    console.log(`
+        INSERT INTO Sda_Val (UUID, UUID_Plantilla, GroupLetter , description , tittle ,UUID_Center ,active ,   startDate, endDate)
+        VALUES (NEWID(), @uuidPlantilla, @groupLetter , @description ,@title , @uuid_center , 1 ,    @startDate, @endDate)
+    `);
 
     const insertResult = await pool
       .request()
       .input("uuidPlantilla", sql.UniqueIdentifier, uuidPlantilla)
-      .input("uuid_group", sql.UniqueIdentifier, uuid_group)
+      .input("groupLetter", sql.VarChar, groupLetter)
       .input("uuid_center", sql.UniqueIdentifier, uuid_center)
       .input("description", sql.VarChar, description)
       .input("title", sql.VarChar, title)
       .input("startDate", sql.Date, startDate)
       .input("endDate", sql.Date, endDate).query(`
-        INSERT INTO Sda_Val (UUID, UUID_Plantilla, UUID_Group , description , tittle ,UUID_Center ,active ,   startDate, endDate)
-        VALUES (NEWID(), @uuidPlantilla, @uuid_group , @description ,@title , @uuid_center , 1 ,    @startDate, @endDate)
+        INSERT INTO Sda_Val (UUID, UUID_Plantilla, GroupLetter , description , tittle ,UUID_Center ,active ,   startDate, endDate)
+        VALUES (NEWID(), @uuidPlantilla, @groupLetter , @description ,@title , @uuid_center , 1 ,    @startDate, @endDate)
     `);
 
+    console.log("created ");
     res.status(201).json({
       message: "SDA inserted successfully",
       data: {
         curs,
-        uuid_group,
+        groupLetter,
         endDate,
         description,
         title,
@@ -77,6 +94,7 @@ async function newSda(
     });
   } catch (error) {
     console.error("Query failed:", error.message);
+    console.log("Query failed:", error.message);
     throw error;
   }
 }
