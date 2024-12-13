@@ -29,4 +29,5 @@ const User = sequelize.define("UserTable", {
   timestamps: false, // Asume que no hay columnas de createdAt/updatedAt
 });
 
+
 module.exports = User;
