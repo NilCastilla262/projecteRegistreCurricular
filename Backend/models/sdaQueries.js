@@ -13,14 +13,14 @@ async function getAllSdas() {
 }
 async function getSdaByGroupName(title) {
   try {
-    const pool = await poolPromise;
+   const pool = await poolPromise;
     const result = await pool
       .request()
       .input("title", sql.VarChar, `%${title}%`) // Safe parameterized query
-      .query("SELECT * FROM Sda_Val WHERE title  LIKE @title");
-    return result.recordset;
+      .query(`SELECT * FROM Sda_Val WHERE tittle  LIKE '%${title}%'`);
+    return result.recordset[0].UUID;
   } catch (error) {
-    console.error("Query failed:", error.message);
+    console.error("Query failed: getsdaBy GroupName", error.message);
     throw error;
   }
 }
@@ -35,16 +35,14 @@ async function newSda(
   res
 ) {
   try {
-    console.log(`SELECT UUID FROM Curs_Pl WHERE Curs LIKE  '%${curs}%' `);
-
+  
     const pool = await poolPromise;
 
     const plantillaResult = await pool
       .request()
       .input("curs", sql.VarChar, curs)
       .query(`SELECT UUID FROM Curs_Pl WHERE Curs LIKE  '%${curs}%' `);
-    console.log(" uuid curs  ", plantillaResult);
-
+  
     let uuidCurs; // Declare in outer scope
 
     if (plantillaResult.recordset && plantillaResult.recordset.length > 0) {

@@ -14,37 +14,34 @@ async function getAllCompetencyDescriptionPlById(id) {
   }
 }
 async function newCompetencyDescriptionVal(
-  sdaNom,
   UUID_CompetencyDescriptionPl,
+  sdaNom,
   res
 ) {
   try {
     const pool = await poolPromise;
 
-    const plantillaResult = await pool
-      .request()
-      .input("sdaNom", sql.VarChar, `%${sdaNom}%`)
-      .query("SELECT UUID FROM Sda_Val WHERE groupValue LIKE @sdaNom");
+    // const plantillaResult = await pool
+    //   .request()
+    //   .input("sdaNom", sql.VarChar, `%${sdaNom}%`)
+    //   .query("SELECT UUID FROM Sda_Val WHERE groupValue LIKE @sdaNom");
 
-    if (plantillaResult.recordset.length === 0) {
-      return res
-        .status(404)
-        .json({ error: "No UUID_SDA found for the provided sda Name" });
-    }
+    // if (plantillaResult.recordset.length === 0) {
+    //   return res
+    //     .status(404)
+    //     .json({ error: "No UUID_SDA found for the provided sda Name" });
+    // }
 
-    const uuidSda = plantillaResult.recordset[0].UUID;
+    // const uuidSda = plantillaResult.recordset[0].UUID;
 
-    // Ensure UUID_CompetencyDescription_Pl is a valid GUID (or convert it if necessary)
-    const validUuidCompetencyDescriptionPl = sql.UniqueIdentifier(
-      UUID_CompetencyDescriptionPl
-    ); // Converting to UniqueIdentifier
-    console.log(`
-      INSERT INTO CompetencyDescription_Val (UUID, UUID_Sda, UUID_CompetencyDescription_Pl, Treballat)
-      VALUES (NEWID(), '${uuidSda}', '${UUID_CompetencyDescriptionPl}', 0)
-    `);
+    // // Ensure UUID_CompetencyDescription_Pl is a valid GUID (or convert it if necessary)
+    // const validUuidCompetencyDescriptionPl = sql.UniqueIdentifier(
+    //   UUID_CompetencyDescriptionPl
+    // ); // Converting to UniqueIdentifier
+
     const insertResult = await pool.request().query(`
       INSERT INTO CompetencyDescription_Val (UUID, UUID_Sda, UUID_CompetencyDescription_Pl, Treballat)
-      VALUES (NEWID(), '${uuidSda}', '${UUID_CompetencyDescriptionPl}', 0)
+      VALUES (NEWID(), '${sdaNom}', '${UUID_CompetencyDescriptionPl}', 0)
     `);
 
     res.status(201).json({
@@ -52,7 +49,7 @@ async function newCompetencyDescriptionVal(
       data: {
         sdaNom,
         UUID_CompetencyDescriptionPl,
-        UUID_Sda: uuidSda,
+        UUID_Sda: sdaNom,
         Treballat: false,
       },
     });
@@ -68,18 +65,18 @@ async function NewSabersDescription(sdaNom, UUID_SabersDescriptionPl, res) {
   try {
     const pool = await poolPromise;
 
-    const plantillaResult = await pool
-      .request()
-      .input("sdaNom", sql.VarChar, `%${sdaNom}%`)
-      .query("SELECT UUID FROM Sda_Val WHERE groupValue LIKE @sdaNom");
+    // const plantillaResult = await pool
+    //   .request()
+    //   .input("sdaNom", sql.VarChar, `%${sdaNom}%`)
+    //   .query("SELECT UUID FROM Sda_Val WHERE groupValue LIKE @sdaNom");
 
-    if (plantillaResult.recordset.length === 0) {
-      return res
-        .status(404)
-        .json({ error: "No UUID_SDA found for the provided sda Name" });
-    }
+    // if (plantillaResult.recordset.length === 0) {
+    //   return res
+    //     .status(404)
+    //     .json({ error: "No UUID_SDA found for the provided sda Name" });
+    // }
 
-    const uuidSda = plantillaResult.recordset[0].UUID;
+    // const uuidSda = plantillaResult.recordset[0].UUID;
 
     // Ensure UUID_CompetencyDescription_Pl is a valid GUID (or convert it if necessary)
     const validUuidCompetencyDescriptionPl = sql.UniqueIdentifier(
@@ -88,7 +85,7 @@ async function NewSabersDescription(sdaNom, UUID_SabersDescriptionPl, res) {
 
     const insertResult = await pool
       .request()
-      .input("UUID_Sda", sql.UniqueIdentifier, uuidSda)
+      .input("UUID_Sda", sql.UniqueIdentifier, sdaNom)
       .input(
         "UUID_SabersDescription_Pl",
         sql.UniqueIdentifier,
@@ -103,7 +100,7 @@ async function NewSabersDescription(sdaNom, UUID_SabersDescriptionPl, res) {
       data: {
         sdaNom,
         UUID_SabersDescriptionPl,
-        UUID_Sda: uuidSda,
+        UUID_Sda: sdaNom,
         Treballat: false,
       },
     });
@@ -126,24 +123,30 @@ async function NewSaberCriteri(sdaNom, UUID_SaberCriteriPl, res) {
     const pool = await poolPromise;
 
     // Retrieve the UUID from Sda_Val based on the provided sdaNom
-    const plantillaResult = await pool
-      .request()
-      .input("sdaNom", sql.VarChar, `%${sdaNom}%`)
-      .query("SELECT UUID FROM Sda_Val WHERE groupValue LIKE @sdaNom");
+    // const plantillaResult = await pool
+    //   .request()
+    //   .input("sdaNom", sql.VarChar, `%${sdaNom}%`)
+    //   .query("SELECT UUID FROM Sda_Val WHERE groupValue LIKE @sdaNom");
 
-    // If no UUID is found, return a 404 response
-    if (plantillaResult.recordset.length === 0) {
-      return res
-        .status(404)
-        .json({ error: "No UUID_Sda found for the provided sda Name" });
-    }
+    // // If no UUID is found, return a 404 response
+    // if (plantillaResult.recordset.length === 0) {
+    //   return res
+    //     .status(404)
+    //     .json({ error: "No UUID_Sda found for the provided sda Name" });
+    // }
 
-    const uuidSda = plantillaResult.recordset[0].UUID;
+    // const uuidSda = plantillaResult.recordset[0].UUID;
 
     // Insert the new Competency Description Value
+
+    console.log(` HERE HEHE ZINA : 
+        INSERT INTO SaberCriteria_Val (UUID, UUID_Sda, UUID_SaberCriteria_Pl, Treballat)
+        VALUES (NEWID(), ${sdaNom} , ${UUID_SaberCriteriPl}, 0)
+      `);
+
     await pool
       .request()
-      .input("UUID_Sda", sql.UniqueIdentifier, uuidSda)
+      .input("UUID_Sda", sql.UniqueIdentifier, sdaNom)
       .input("UUID_SaberCriteriPl", sql.UniqueIdentifier, UUID_SaberCriteriPl)
       .query(`
         INSERT INTO SaberCriteria_Val (UUID, UUID_Sda, UUID_SaberCriteria_Pl, Treballat)
@@ -156,7 +159,7 @@ async function NewSaberCriteri(sdaNom, UUID_SaberCriteriPl, res) {
       data: {
         sdaNom,
         UUID_SaberCriteriPl,
-        UUID_Sda: uuidSda,
+        UUID_Sda: sdaNom,
         Treballat: false,
       },
     });
@@ -182,25 +185,22 @@ async function NewCriteriVal(sdaNom, UUID_CriteriPl, res) {
   try {
     const pool = await poolPromise;
 
-    const plantillaResult = await pool
-      .request()
-      .input("sdaNom", sql.VarChar, `%${sdaNom}%`)
-      .query("SELECT UUID FROM Sda_Val WHERE groupValue LIKE @sdaNom");
+    // const plantillaResult = await pool
+    //   .request()
+    //   .input("sdaNom", sql.VarChar, `%${sdaNom}%`)
+    //   .query("SELECT UUID FROM Sda_Val WHERE groupValue LIKE @sdaNom");
 
-    if (plantillaResult.recordset.length === 0) {
-      return res
-        .status(404)
-        .json({ error: "No UUID_SDA found for the provided sda Name" });
-    }
+    // if (plantillaResult.recordset.length === 0) {
+    //   return res
+    //     .status(404)
+    //     .json({ error: "No UUID_SDA found for the provided sda Name" });
+    // }
 
-    const uuidSda = plantillaResult.recordset[0].UUID;
-    console.log(`
-      INSERT INTO Criteria_Val (UUID, UUID_Sda, UUID_Criteria_Pl, Treballat)
-      VALUES (NEWID(), '${uuidSda}', '${UUID_CriteriPl}', 0)
-    `);
+    //  const uuidSda = plantillaResult.recordset[0].UUID;
+
     const insertResult = await pool.request().query(`
       INSERT INTO Criteria_Val (UUID, UUID_Sda, UUID_Criteria_Pl, Treballat)
-      VALUES (NEWID(), '${uuidSda}', '${UUID_CriteriPl}', 0)
+      VALUES (NEWID(), '${sdaNom}', '${UUID_CriteriPl}', 0)
     `);
 
     res.status(201).json({
@@ -208,7 +208,7 @@ async function NewCriteriVal(sdaNom, UUID_CriteriPl, res) {
       data: {
         sdaNom,
         UUID_CriteriPl,
-        UUID_Sda: uuidSda,
+        UUID_Sda: sdaNom,
         Treballat: false,
       },
     });
@@ -356,15 +356,15 @@ async function getSaberCriteriaById(UUID_SaberCriteri, res) {
 }
 
 async function toggleTreballatByIdAndTable(tableName, id) {
-  console.log(`
-    UPDATE ${tableName}
-SET treballat = CASE
-               WHEN treballat = 1 THEN 0
-               ELSE 1
-              END
-WHERE UUID = '${id}'
+  //   console.log(`
+  //     UPDATE ${tableName}
+  // SET treballat = CASE
+  //                WHEN treballat = 1 THEN 0
+  //                ELSE 1
+  //               END
+  // WHERE UUID = '${id}'
 
-`);
+  // `);
   try {
     const pool = await poolPromise;
 

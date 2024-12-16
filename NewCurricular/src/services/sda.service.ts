@@ -13,21 +13,6 @@ export class SdaService {
 
   newSda(sda: Sda): Observable<any> {
     // Ensure date serialization
-    const params = {
-      curs: sda.curs,
-      groupLetter: sda.groupLetter,
-      endDate: sda.endDate,
-      description: sda.description,
-      title: sda.title,
-      uuid_center: sda.uuid_center,
-      startDate: sda.startDate,
-    };
-
-    console.log(
-      'link',
-      `${environment.api_url_Sda}${Constant.API_Competency_END_POINT.newSda}`, // Template literals for readability
-      { params }
-    );
 
     return this.http.post<any>(
       `${environment.api_url_Sda}${Constant.API_Competency_END_POINT.newSda}`, // Template literals for readability
@@ -52,13 +37,10 @@ export class SdaService {
 
   getSdaByGroupName(groupValue: string): Observable<any> {
     // Ensure date serialization
-    const params = {
-      groupValue,
-    };
+    const url = `${environment.api_url_Sda}${
+      Constant.API_Competency_END_POINT.getSdaByGroupName
+    }?groupValue=${encodeURIComponent(groupValue)}`;
 
-    return this.http.get<any>(
-      `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.newSda}`, // Template literals for readability
-      { params }
-    );
+    return this.http.get<any>(url); // Query parameters are included in the URL
   }
 }

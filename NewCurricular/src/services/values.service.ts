@@ -13,11 +13,11 @@ export class ValuesService {
   //////////////////
   /**functions to create sda values  */
   //////////////////
-  NewCriteriVal(sdaNom: string, UUUID_CriteriPl: string): Observable<any> {
+  NewCriteriVal(UUID_CriteriPl: string, sdaNom: string): Observable<any> {
     return this.http.post<any>(
       environment.api_url_Competency +
         Constant.API_Competency_END_POINT.newCriteriVal,
-      { sdaNom, UUUID_CriteriPl }
+      { sdaNom, UUID_CriteriPl }
     );
   }
   NewCompetencyDescriptionVal(
@@ -46,7 +46,7 @@ export class ValuesService {
   ): Observable<any> {
     return this.http.post<any>(
       environment.api_url_Competency +
-        Constant.API_Competency_END_POINT.NewSaberCriteri,
+        Constant.API_Competency_END_POINT.NewSabersDescriptionVal,
       { sdaNom, UUID_SabersDescriptionPl }
     );
   }

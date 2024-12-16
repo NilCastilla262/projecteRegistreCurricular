@@ -1,0 +1,75 @@
+.competency-types {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.toggle {
+  display: none;
+}
+
+.toggle-label {
+  cursor: pointer;
+  display: block;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+}
+
+.toggle-label:hover {
+  background-color: #e0e0e0;
+}
+
+.toggle-label::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 5px;
+  transition: transform 0.3s;
+}
+
+.toggle:checked + .toggle-label::before {
+  transform: rotate(90deg);
+}
+
+.content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  padding-left: 20px;
+}
+
+.toggle:checked ~ .content {
+  max-height: 1000px; /* Adjust this value based on your content */
+  transition: max-height 0.3s ease-in;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 10px 0;
+}
+
+.descriptions-criteria,
+.sabers {
+  border: 2px solid #ddd;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.comp-criteri,
+.saber-criteri {
+  color: blue;
+  margin: 5px 0;
+}
+
+.description,
+.saber-description {
+  margin-bottom: 15px;
+}
+
+.criteria,
+.saber-criteria {
+  padding-left: 15px;
+}

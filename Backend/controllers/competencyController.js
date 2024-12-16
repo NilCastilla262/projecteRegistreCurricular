@@ -374,7 +374,6 @@ async function getValBySdaPl(req, res) {
 }
 
 module.exports = {
-  NewSaberCriteri,
   getAllCompetencyTypesPl,
   getAllCompetencyNamesPl,
   getAllCompetencyDescriptionsPl,
@@ -384,9 +383,12 @@ module.exports = {
   getAllCompetencyDescriptionsPlById,
   getAllCompetencyNamePlById,
   getAllCompetencyTypesPlById,
+  /**/
   newCompetencyDescriptionVal,
   NewCriteriVal,
   NewSabersDescription,
+  NewSaberCriteri,
+  /**/
   getCompetencyDescriptionValById,
   getCriteriValById,
   getSabersDescriptionById,
