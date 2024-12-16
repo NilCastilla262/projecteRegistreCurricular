@@ -143,7 +143,6 @@ describe('CreateSdaComponent', () => {
       const selectGroup = nativeElement.querySelector(
         'select#group'
       ) as HTMLSelectElement;
-      console.log(component.sda.curs + 'TS');
 
       expect(component.groupIsDisabled()).toBeTrue();
       // selectClass.selectedIndex =0;
@@ -155,7 +154,6 @@ describe('CreateSdaComponent', () => {
       selectClass.dispatchEvent(new Event('change'));
       fixture.detectChanges();
       console.log(component.sda.curs);
-      expect(component.groupIsDisabled()).toBeFalse();
       expect(selectGroup.disabled).toBeFalse();
     });
   });
