@@ -64,37 +64,46 @@ competencyName) {
 <div class="competency-types">
   @for (competencyType of this.competencyTypesList; track competencyType) {
   <div class="competency-type">
-    <input type="checkbox" id="type-{{ competencyType.UUID }}" class="toggle" />
-    <label for="type-{{ competencyType.UUID }}" class="toggle-label">
-      <h1>Comp Type: {{ competencyType.Description }}</h1>
-    </label>
+    <h1 style="color: cadetblue">
+      Comp Type: {{ competencyType.Description }}
+    </h1>
     <div class="content">
       @for (competencyName of filterCompetencyNameById(competencyType.UUID);
       track competencyName) {
       <div class="competency-name">
-        <input
-          type="checkbox"
-          id="name-{{ competencyName.UUID }}"
-          class="toggle"
-        />
-        <label for="name-{{ competencyName.UUID }}" class="toggle-label">
-          <h2>CompName: {{ competencyName.Description }}</h2>
-        </label>
-
-check
+        <h2 style="color: greenyellow">
+          COMP NAME : {{ competencyName.Description }}
+        </h2>
 
         <div class="content">
-          <strong>PART 1</strong>
           <div class="descriptions-criteria">
             @for (competencyDescription of
             filterCompetencyDescriptionById(competencyName.UUID); track
             competencyDescription) {
-            <div class="description">
-              <h3>CompDescription: {{ competencyDescription.Descripcion }}</h3>
+            <div class="description" style="color: blue; font-size: 25px">
+              <label>
+                <input
+                  type="checkbox"
+                  [checked]="
+                    getValBySdaPl(
+                      'nothing',
+                      competencyDescription.UUID,
+                      'CompetencyDescription_Val'
+                    )
+                  "
+                  (change)="onCheckboxChange()"
+                />
+
+                CompDescription: {{ competencyDescription.Descripcion }}
+              </label>
+
               <div class="criteria">
                 @for (criteri of filterCriteriaById(competencyDescription.UUID);
                 track criteri) {
-                <p class="comp-criteri">
+                <p
+                  class="comp-criteri"
+                  style="font-size: medium; color: cadetblue"
+                >
                   CompCriteri: {{ criteri.Description }}
                 </p>
                 }
@@ -107,7 +116,9 @@ check
             filterSabersDescriptionById(competencyName.UUID); track
             SaberDescription) {
             <div class="saber-description">
-              <h3>Sabers: {{ SaberDescription.Description }}</h3>
+              <h3 style="color: blue">
+                Sabers: {{ SaberDescription.Description }}
+              </h3>
               <div class="saber-criteria">
                 @for (Sabercriteri of
                 filterSaberCriteriaById(SaberDescription.UUID); track

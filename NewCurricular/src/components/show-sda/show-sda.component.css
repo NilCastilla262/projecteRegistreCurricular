@@ -1,4 +1,4 @@
-.competency-types {
+/* .competency-types {
   font-family: Arial, sans-serif;
   max-width: 800px;
   margin: 0 auto;
@@ -40,7 +40,7 @@
 }
 
 .toggle:checked ~ .content {
-  max-height: 1000px; /* Adjust this value based on your content */
+  max-height: 1000px; 
   transition: max-height 0.3s ease-in;
 }
 
@@ -73,3 +73,4 @@ h3 {
 .saber-criteria {
   padding-left: 15px;
 }
+ */

@@ -131,7 +131,8 @@ export class ShowSdaComponent {
   }
 
   getValBySdaPl(uuid_sda: string, uuid_Pl: string, tableName: string) {
-    return this.ValuesService.getValBySdaPl(uuid_sda, uuid_Pl, tableName);
+    const sda = '55FA98B1-DE38-4CEB-9AFC-599ADEED8048';
+    return this.ValuesService.getValBySdaPl(sda, uuid_Pl, tableName);
   }
 
   getAllCompetencyName() {
@@ -144,6 +145,8 @@ export class ShowSdaComponent {
       },
     });
   }
+
+  onCheckboxChange() {}
 
   /*   getAllCompetencyNameById(id: string) {
     this.competencyService.getAllCompetencyNameById(id).subscribe({
