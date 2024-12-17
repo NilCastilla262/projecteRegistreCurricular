@@ -60,4 +60,4 @@ router.put("/toggle-treballat", competencyController.toggleTreballat);
 
 ////////////////////////////////////
 
-router.get("/getValBySdaPl", competencyController.getValBySdaPl);
+router.post("/getValBySdaPl", competencyController.getValBySdaPl);

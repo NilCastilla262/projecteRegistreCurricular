@@ -102,11 +102,12 @@ import { CompetencyService } from '../../services/competency.service';
 import { CriteriaService } from '../../services/criteria.service';
 import { SabersService } from '../../services/sabers.service';
 import { ValuesService } from '../../services/values.service';
-
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-show-sda',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './show-sda.component.html',
   styleUrl: './show-sda.component.css',
 })
@@ -132,7 +133,13 @@ export class ShowSdaComponent {
 
   getValBySdaPl(uuid_sda: string, uuid_Pl: string, tableName: string) {
     const sda = '55FA98B1-DE38-4CEB-9AFC-599ADEED8048';
-    return this.ValuesService.getValBySdaPl(sda, uuid_Pl, tableName);
+    const pl = '5195BAB9-1DC3-4083-B5BC-0BDAA9C0579B';
+    const table = 'SaberCriteria_Val';
+    let bool;
+    this.ValuesService.getValBySdaPl(sda, pl, table).subscribe((response) => {
+      bool = response.Treballat;
+    });
+    return bool;
   }
 
   getAllCompetencyName() {

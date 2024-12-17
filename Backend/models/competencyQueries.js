@@ -407,7 +407,7 @@ async function getValBySdaPl(UUID_Sda, UUID_Pl, tableName) {
         `SELECT * FROM ${tableName} where  uuid_sda= '${UUID_Sda}' AND ${columnName} = '${UUID_Pl}'`
       );
 
-    return result.recordset;
+    return result.recordset[0];
   } catch (error) {
     console.error("Query failed:", error.message);
     throw error;

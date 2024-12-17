@@ -104,6 +104,18 @@ competencyName) {
                   class="comp-criteri"
                   style="font-size: medium; color: cadetblue"
                 >
+                  <label>
+                    <input
+                      type="checkbox"
+                      [checked]="
+                        getValBySdaPl('nothing', criteri.UUID, 'Criteria_Val')
+
+                      "
+                      (change)="onCheckboxChange()"
+                    />
+                    CompCriteri: {{ criteri.Description }}
+                  </label>
+
                   CompCriteri: {{ criteri.Description }}
                 </p>
                 }
