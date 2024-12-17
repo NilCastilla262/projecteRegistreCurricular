@@ -386,19 +386,27 @@ async function toggleTreballatByIdAndTable(tableName, id) {
   }
 }
 ///////////////////////
-async function getValBySdaPl(
-  UUID_Sda,
-  UUID_CompetencyDescriptionPl,
-  tableName
-) {
+async function getValBySdaPl(UUID_Sda, UUID_Pl, tableName) {
   try {
     const pool = await poolPromise;
+    console.log(tableName);
+    var columnName;
+    if (tableName == "CompetencyDescription_Val") {
+      columnName = "UUID_CompetencyDescription_Pl";
+    } else if (tableName == "SabersDescription_Val") {
+      columnName = "UUID_SabersDescription_Pl";
+    } else if (tableName == "Criteria_Val") {
+      columnName = "UUID_Criteria_Pl";
+    } else if (tableName == "SaberCriteria_Val") {
+      columnName = "UUID_SaberCriteria_Pl";
+    }
 
     const result = await pool
       .request()
       .query(
-        `SELECT * FROM ${tableName} where  uuid_sda= '${UUID_Sda}' AND UUID_CompetencyDescription_Pl = '${UUID_CompetencyDescriptionPl}'`
+        `SELECT * FROM ${tableName} where  uuid_sda= '${UUID_Sda}' AND ${columnName} = '${UUID_Pl}'`
       );
+
     return result.recordset;
   } catch (error) {
     console.error("Query failed:", error.message);

@@ -101,6 +101,7 @@ import { Component, inject } from '@angular/core';
 import { CompetencyService } from '../../services/competency.service';
 import { CriteriaService } from '../../services/criteria.service';
 import { SabersService } from '../../services/sabers.service';
+import { ValuesService } from '../../services/values.service';
 
 @Component({
   selector: 'app-show-sda',
@@ -119,6 +120,7 @@ export class ShowSdaComponent {
   competencyService = inject(CompetencyService);
   CriteriaService = inject(CriteriaService);
   SabersService = inject(SabersService);
+  ValuesService = inject(ValuesService);
   ngOnInit(): void {
     this.getAllCompetencyDescription();
     this.getAllCompetencyName();
@@ -126,6 +128,10 @@ export class ShowSdaComponent {
     this.getAllCriterias();
     this.getAllSabersDescription();
     this.getAllSaberCritaris();
+  }
+
+  getValBySdaPl(uuid_sda: string, uuid_Pl: string, tableName: string) {
+    return this.ValuesService.getValBySdaPl(uuid_sda, uuid_Pl, tableName);
   }
 
   getAllCompetencyName() {

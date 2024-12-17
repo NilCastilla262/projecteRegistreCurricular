@@ -336,13 +336,13 @@ async function toggleTreballat(req, res) {
 }
 
 async function getValBySdaPl(req, res) {
-  const { UUID_Sda, UUID_CompetencyDescriptionPl, tableName } = req.body;
+  const { UUID_Sda, UUID_Pl, tableName } = req.body;
 
   // Validate input
-  if (!UUID_CompetencyDescriptionPl || !UUID_Sda || !tableName) {
+  if (!UUID_Pl || !UUID_Sda || !tableName) {
     return res.status(400).json({
       error:
-        "Missing required field:  UUID_CompetencyDescriptionPl , UUID_Sda ,tableName",
+        "Missing required field:  UUID_Pl , UUID_Sda ,tableName",
     });
   }
 
@@ -350,7 +350,7 @@ async function getValBySdaPl(req, res) {
     // Fetch competency description
     const competencyDescription = await competencyQueries.getValBySdaPl(
       UUID_Sda,
-      UUID_CompetencyDescriptionPl,
+      UUID_Pl,
       tableName
     );
 
