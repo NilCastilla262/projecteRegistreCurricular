@@ -102,7 +102,7 @@ import { CompetencyService } from '../../services/competency.service';
 import { CriteriaService } from '../../services/criteria.service';
 import { SabersService } from '../../services/sabers.service';
 import { ValuesService } from '../../services/values.service';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-show-sda',
@@ -131,15 +131,20 @@ export class ShowSdaComponent {
     this.getAllSaberCritaris();
   }
 
-  getValBySdaPl(uuid_sda: string, uuid_Pl: string, tableName: string) {
+  async getValBySdaPl(uuid_sda: string, uuid_Pl: string, tableName: string) {
     const sda = '55FA98B1-DE38-4CEB-9AFC-599ADEED8048';
     const pl = '5195BAB9-1DC3-4083-B5BC-0BDAA9C0579B';
     const table = 'SaberCriteria_Val';
-    let bool;
-    this.ValuesService.getValBySdaPl(sda, pl, table).subscribe((response) => {
-      bool = response.Treballat;
-    });
-    return bool;
+
+    try {
+      const response = await lastValueFrom(
+        this.ValuesService.getValBySdaPl(sda, uuid_Pl, tableName)
+      );
+      return response.Treballat;
+    } catch (error) {
+      console.error('Error fetching value:', error);
+      return null; // or handle the error as needed
+    }
   }
 
   getAllCompetencyName() {

@@ -82,19 +82,7 @@ competencyName) {
             competencyDescription) {
             <div class="description" style="color: blue; font-size: 25px">
               <label>
-                <input
-                  type="checkbox"
-                  [checked]="
-                    getValBySdaPl(
-                      'nothing',
-                      competencyDescription.UUID,
-                      'CompetencyDescription_Val'
-                    )
-                  "
-                  (change)="onCheckboxChange()"
-                />
-
-                CompDescription: {{ competencyDescription.Descripcion }}
+                z CompDescription: {{ competencyDescription.Descripcion }}
               </label>
 
               <div class="criteria">
@@ -105,14 +93,7 @@ competencyName) {
                   style="font-size: medium; color: cadetblue"
                 >
                   <label>
-                    <input
-                      type="checkbox"
-                      [checked]="
-                        getValBySdaPl('nothing', criteri.UUID, 'Criteria_Val')
-
-                      "
-                      (change)="onCheckboxChange()"
-                    />
+                    <input type="checkbox" (change)="onCheckboxChange()" />
                     CompCriteri: {{ criteri.Description }}
                   </label>
 

@@ -386,32 +386,67 @@ async function toggleTreballatByIdAndTable(tableName, id) {
   }
 }
 ///////////////////////
-async function getValBySdaPl(UUID_Sda, UUID_Pl, tableName) {
+// async function getValBySdaPl(UUID_Sda, UUID_Pl, tableName) {
+//   try {
+//     const pool = await poolPromise;
+//     console.log(tableName);
+//     var columnName;
+//     if (tableName == "CompetencyDescription_Val") {
+//       columnName = "UUID_CompetencyDescription_Pl";
+//     } else if (tableName == "SabersDescription_Val") {
+//       columnName = "UUID_SabersDescription_Pl";
+//     } else if (tableName == "Criteria_Val") {
+//       columnName = "UUID_Criteria_Pl";
+//     } else if (tableName == "SaberCriteria_Val") {
+//       columnName = "UUID_SaberCriteria_Pl";
+//     }
+
+//     const result = await pool
+//       .request()
+//       .query(
+//         `SELECT * FROM ${tableName} where  uuid_sda= '${UUID_Sda}' AND ${columnName} = '${UUID_Pl}'`
+//       );
+
+//     return result.recordset[0];
+//   } catch (error) {
+//     console.error("Query failed:", error.message);
+//     throw error;
+//   }
+// }
+
+async function getValBySdaPl(req, res) {
+  const { UUID_Sda, UUID_Pl_List, tableName } = req.body;
+
+  if (!UUID_Sda || !UUID_Pl_List || !tableName) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
   try {
     const pool = await poolPromise;
-    console.log(tableName);
-    var columnName;
-    if (tableName == "CompetencyDescription_Val") {
-      columnName = "UUID_CompetencyDescription_Pl";
-    } else if (tableName == "SabersDescription_Val") {
-      columnName = "UUID_SabersDescription_Pl";
-    } else if (tableName == "Criteria_Val") {
-      columnName = "UUID_Criteria_Pl";
-    } else if (tableName == "SaberCriteria_Val") {
-      columnName = "UUID_SaberCriteria_Pl";
-    }
+    const columnName = getColumnNameForTable(tableName); // Use your logic to get column name
+    const uuidPlConditions = UUID_Pl_List.map((uuid) => `'${uuid}'`).join(",");
 
-    const result = await pool
-      .request()
-      .query(
-        `SELECT * FROM ${tableName} where  uuid_sda= '${UUID_Sda}' AND ${columnName} = '${UUID_Pl}'`
-      );
+    const query = `
+      SELECT * FROM ${tableName}
+      WHERE uuid_sda = '${UUID_Sda}' AND ${columnName} IN (${uuidPlConditions})
+    `;
 
-    return result.recordset[0];
+    const result = await pool.request().query(query);
+    return res.json(result.recordset);
   } catch (error) {
-    console.error("Query failed:", error.message);
-    throw error;
+    console.error("Batch query failed:", error.message);
+    return res.status(500).json({ error: "Failed to retrieve data" });
   }
+}
+
+function getColumnNameForTable(tableName) {
+  const mapping = {
+    CompetencyDescription_Val: "UUID_CompetencyDescription_Pl",
+    SabersDescription_Val: "UUID_SabersDescription_Pl",
+    Criteria_Val: "UUID_Criteria_Pl",
+    SaberCriteria_Val: "UUID_SaberCriteria_Pl",
+  };
+  return mapping[tableName];
 }
 
 module.exports = {
