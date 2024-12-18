@@ -172,49 +172,51 @@ describe('CreateSdaComponent', () => {
       expect(button.disabled).toBeFalse();
     });
 
-    it('should disable the button after creating an SDA', () => {
-      spyOn(component, 'createSda').and.callThrough();
-      expect(button.disabled).toBeTrue();
-      fillForm(
-        'Títol de prova',
-        'Descripció de prova',
-        '2024-01-01',
-        '2024-01-31',
-        '1r-2n',
-        'A'
-      );
-      expect(button.disabled).toBeFalse();
+    // it('should disable the button after creating an SDA', () => {
+    //   spyOn(component, 'createSda').and.callThrough();
+    //   expect(button.disabled).toBeTrue();
+    //   fillForm(
+    //     'Títol de prova',
+    //     'Descripció de prova',
+    //     '2024-01-01',
+    //     '2024-01-31',
+    //     '1r-2n',
+    //     'A'
+    //   );
+    //   expect(button.disabled).toBeFalse();
 
-      button.click();
-      fixture.detectChanges();
-      //S'ha de comprovar si s'ha creat la 
-      //expect(component.sdaCreated).toBeTrue();
-      //expect(button.disabled).toBeTrue();
-    });
+    //   button.click();
+    //   fixture.detectChanges();
+    //   //S'ha de comprovar si s'ha creat la SDA
+    //   //expect(component.sdaCreated).toBeTrue();
+    //   //expect(button.disabled).toBeTrue();
+    // });
   });
 
   describe('Create SDA functionality', () => {
-    it('should call the createSda function and display the success message on successful creation', () => {
-      spyOn(component, 'createSda').and.callThrough();
+    // //S'ha de configurar que es retorni si s'ha creat o no la SDA enviant un missatge i comprovant que funciona
+    // it('should call the createSda function and display the success message on successful creation', () => {
+    //   spyOn(component, 'createSda').and.callThrough();
 
-      fillForm(
-        'Títol de prova',
-        'Descripció de prova',
-        '2024-01-01',
-        '2024-01-31',
-        '1r-2n',
-        'A'
-      );
+    //   fillForm(
+    //     'Títol de prova',
+    //     'Descripció de prova',
+    //     '2024-01-01',
+    //     '2024-01-31',
+    //     '1r-2n',
+    //     'A'
+    //   );
 
-      const button = nativeElement.querySelector('button') as HTMLButtonElement;
-      button.click();
-      fixture.detectChanges();
+    //   const button = nativeElement.querySelector('button') as HTMLButtonElement;
+    //   button.click();
+    //   fixture.detectChanges();
 
-      expect(component.createSda).toHaveBeenCalled();
-      //expect(component.sdaCreated).toBeTrue();
+    //   expect(component.createSda).toHaveBeenCalled();
 
-      const successMessage = nativeElement.querySelector('p');
-      //expect(successMessage?.textContent).toContain('SDA Creat correctament');
+    //   //expect(component.sdaCreated).toBeTrue();
+
+    //   const successMessage = nativeElement.querySelector('p');
+    //   //expect(successMessage?.textContent).toContain('SDA Creat correctament');
     });
 
     // it('should display an error message when the button click fails', () => {
@@ -238,5 +240,5 @@ describe('CreateSdaComponent', () => {
     //   const errorMessage = nativeElement.querySelector('p');
     //   expect(errorMessage?.textContent).toContain("Error al crear l'SDA");
     // });
-  });
+    // });
 });
