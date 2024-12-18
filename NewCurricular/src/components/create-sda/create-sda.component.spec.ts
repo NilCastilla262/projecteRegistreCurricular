@@ -194,6 +194,23 @@ describe('CreateSdaComponent', () => {
   });
 
   describe('Create SDA functionality', () => {
+    it('should disable the button if startDate is not earlier than endDate', () => {
+      fillForm(
+        'Títol de prova',
+        'Descripció de prova',
+        '2024-01-01',
+        '2024-01-31',
+        '1r-2n',
+        'A'
+      );
+    
+      const submitButton = nativeElement.querySelector(
+        'button[type="submit"]'
+      ) as HTMLButtonElement;
+
+      expect(submitButton.disabled).toBe(true);
+    });
+    
     // //S'ha de configurar que es retorni si s'ha creat o no la SDA enviant un missatge i comprovant que funciona
     // it('should call the createSda function and display the success message on successful creation', () => {
     //   spyOn(component, 'createSda').and.callThrough();
@@ -240,5 +257,5 @@ describe('CreateSdaComponent', () => {
     //   const errorMessage = nativeElement.querySelector('p');
     //   expect(errorMessage?.textContent).toContain("Error al crear l'SDA");
     // });
-    // });
-});
+    // }); 
+  });
