@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Constant } from '../Constants/Constant';
 
@@ -13,11 +13,11 @@ export class ValuesService {
   //////////////////
   /**functions to create sda values  */
   //////////////////
-  NewCriteriVal(sdaNom: string, UUUID_CriteriPl: string): Observable<any> {
+  NewCriteriVal(UUID_CriteriPl: string, sdaNom: string): Observable<any> {
     return this.http.post<any>(
       environment.api_url_Competency +
         Constant.API_Competency_END_POINT.newCriteriVal,
-      { sdaNom, UUUID_CriteriPl }
+      { sdaNom, UUID_CriteriPl }
     );
   }
   NewCompetencyDescriptionVal(
@@ -46,26 +46,40 @@ export class ValuesService {
   ): Observable<any> {
     return this.http.post<any>(
       environment.api_url_Competency +
-        Constant.API_Competency_END_POINT.NewSaberCriteri,
+        Constant.API_Competency_END_POINT.NewSabersDescriptionVal,
       { sdaNom, UUID_SabersDescriptionPl }
     );
   }
   /** function to get elements using sda and plantilla */
-  getValBySdaPl(
-    UUID_Sda: string,
-    UUID_CompetencyDescriptionPl: string,
-    tableName: string
-  ): Observable<any> {
-    const params = {
+  // getValBySdaPl(
+  //   UUID_Sda: string,
+  //   UUID_CompetencyDescriptionPl: string,
+  //   tableName: string
+  // ): Observable<any> {
+  //   const params = {
+  //     UUID_Sda,
+  //     UUID_CompetencyDescriptionPl,
+  //     tableName,
+  //   };
+
+  //   return this.http.get<any>(
+  //     `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.getValBySdaPl}`,
+  //     { params }
+  //   );
+  // }
+
+  getValBySdaPl(UUID_Sda: string, UUID_Pl: string, tableName: string) {
+    const body = {
       UUID_Sda,
-      UUID_CompetencyDescriptionPl,
+      UUID_Pl,
       tableName,
     };
-    return this.http.get<any>(
+    return this.http.post<any>(
       `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.getValBySdaPl}`,
-      { params }
+      body
     );
   }
+
   //change bool values
   toggleTreballat(id: string, tableName: string): Observable<any> {
     const params = {

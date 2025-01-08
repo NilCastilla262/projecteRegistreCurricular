@@ -10,18 +10,29 @@ async function getAllSdas(req, res) {
 }
 
 async function getSdaByGroupName(req, res) {
-  const { groupValue } = req.body;
-  console.log("grp " + groupValue);
+  const { groupValue } = req.query; // Use req.query for query parameters
+
+ 
+  // Check if groupValue is provided
+  if (!groupValue) {
+    return res.status(400).json({ error: "Missing 'groupValue' parameter." });
+  }
+
   try {
     const competencies = await sdaQueries.getSdaByGroupName(groupValue);
     res.json(competencies);
   } catch (error) {
-    res.status(500).json({ error: "Failed to retrieve sda by id  " });
+    console.error("Error retrieving SDA by group name:", error.message);
+
+    res.status(500).json({
+      error: "Failed to retrieve SDA by group name.",
+      details: error.message,
+      groupValue,
+    });
   }
 }
 async function newSda(req, res) {
-  console.log("chill bro ");
-
+ 
   const {
     curs,
     groupLetter,
@@ -31,14 +42,7 @@ async function newSda(req, res) {
     uuid_center,
     startDate,
   } = req.body;
-  console.log("within controller : ");
-  console.log(curs);
-  console.log(groupLetter);
-  console.log(endDate);
-  console.log(description);
-  console.log(title);
-  console.log(uuid_center);
-  console.log(startDate);
+
 
   if (
     !curs ||

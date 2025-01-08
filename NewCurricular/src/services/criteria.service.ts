@@ -15,4 +15,6 @@ export class CriteriaService {
         Constant.API_Competency_END_POINT.get_All_Criteria
     );
   }
+
+ 
 }
