@@ -62,25 +62,28 @@ export class CreateSdaComponent {
       groupLetter,
       curs,
     } = this.sda;
-
+  
     const isTitleValid = title && title.trim().length > 0;
     const isDescriptionValid = description && description.trim().length > 0;
     const isStartDateValid = startDate;
     const isEndDateValid = endDate;
+    const areDatesValid =
+      isStartDateValid && isEndDateValid && new Date(startDate) < new Date(endDate);
     const areSubjectsSelected = selectedSubjects.length > 0;
     const isGroupSelected = groupLetter && groupLetter.trim().length > 0;
     const isClassSelected = curs && curs.trim().length > 0;
+  
     const isValid =
       isTitleValid &&
       isDescriptionValid &&
-      isStartDateValid &&
-      isEndDateValid &&
+      areDatesValid &&
       areSubjectsSelected &&
       isGroupSelected &&
       isClassSelected;
-
+  
     return isValid as boolean;
   }
+  
 
   groupIsDisabled() {
     return !this.sda.curs;
@@ -124,8 +127,10 @@ export class CreateSdaComponent {
       console.log('sda uod ', uuid_sda);
       // Use the UUID to create SDA with Plantilla
       await this.createSdaWithPlantilla(uuid_sda);
+      this.sdaCreated = true;
     } catch (error) {
       console.error('Error in createSda:', error);
+      this.sdaCreated=false;
     }
   }
 
