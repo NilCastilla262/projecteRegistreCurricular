@@ -269,7 +269,7 @@ export class CreateSdaComponent {
     this.getAllCompetencyName();
     this.getAllCompetencyType();
     this.getAllCriterias();
-º     this.getAllSabersDescription();
+    this.getAllSabersDescription();
     this.getAllSaberCritaris();
   }
 
