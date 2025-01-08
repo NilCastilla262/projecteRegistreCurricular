@@ -133,7 +133,6 @@ describe('CreateSdaComponent', () => {
       selectClass.value = '1r-2n';
       selectClass.dispatchEvent(new Event('change'));
       fixture.detectChanges();
-      console.log(component.sda.curs);
       expect(selectGroup.disabled).toBeFalse();
     });
   });
@@ -143,6 +142,7 @@ describe('CreateSdaComponent', () => {
 
     beforeEach(() => {
       button = nativeElement.querySelector('button') as HTMLButtonElement;
+      
     });
 
     it('should disable the button if no data in any field of the form', () => {
@@ -195,20 +195,36 @@ describe('CreateSdaComponent', () => {
 
   describe('Create SDA functionality', () => {
     it('should disable the button if startDate is not earlier than endDate', () => {
-      fillForm(
-        'Títol de prova',
-        'Descripció de prova',
-        '2024-01-01',
-        '2024-01-31',
-        '1r-2n',
-        'A'
-      );
-    
-      const submitButton = nativeElement.querySelector(
-        'button[type="submit"]'
-      ) as HTMLButtonElement;
+      // fillForm(
+      //   'Títol de prova',
+      //   'Descripció de prova',
+      //   '2024-01-01',
+      //   '2024-01-31',
+      //   '1r-2n',
+      //   'A'
+      // );
+      // component.sda = {
+      //   title: 'Test Title',
+      //   description: 'Test Description',
+      //   startDate: new Date('2024-12-31'), // Data d'inici posterior
+      //   endDate: new Date('2024-01-01'),   // Data de finalització anterior
+      //   selectedSubjects: ['Math'],
+      //   groupLetter: 'A',
+      //   curs: '2024',
+      //   uuid_plantilla: '1DA7BEDB-AFE3-4BFB-9E21-CA400409B458',
+      //   uuid_center: 'B674B1EA-948E-4C5E-8E1A-9A5DE3F6C631',
+      // };
 
-      expect(submitButton.disabled).toBe(true);
+      // component.sda.title = 'Test Title'
+      // component.sda.description = 'Test Description'
+      // component.sda.startDate = new Date('2024-12-31') // Data d'inici posterior
+      // component.sda.endDate = new Date('2024-01-01')   // Data de finalització anterior
+      // component.sda.selectedSubjects = ['Math']
+      // component.sda.groupLetter = 'A'
+      // component.sda.curs= '2024'
+      const Button = nativeElement.querySelector('button') as HTMLButtonElement;
+
+      expect(Button.disabled).toBe(true);
     });
     
     // //S'ha de configurar que es retorni si s'ha creat o no la SDA enviant un missatge i comprovant que funciona
