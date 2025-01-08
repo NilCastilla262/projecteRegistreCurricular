@@ -139,11 +139,6 @@ async function NewSaberCriteri(sdaNom, UUID_SaberCriteriPl, res) {
 
     // Insert the new Competency Description Value
 
-    console.log(` HERE HEHE ZINA : 
-        INSERT INTO SaberCriteria_Val (UUID, UUID_Sda, UUID_SaberCriteria_Pl, Treballat)
-        VALUES (NEWID(), ${sdaNom} , ${UUID_SaberCriteriPl}, 0)
-      `);
-
     await pool
       .request()
       .input("UUID_Sda", sql.UniqueIdentifier, sdaNom)

@@ -13,7 +13,7 @@ async function getAllSdas() {
 }
 async function getSdaByGroupName(title) {
   try {
-   const pool = await poolPromise;
+    const pool = await poolPromise;
     const result = await pool
       .request()
       .input("title", sql.VarChar, `%${title}%`) // Safe parameterized query
@@ -35,14 +35,13 @@ async function newSda(
   res
 ) {
   try {
-  
     const pool = await poolPromise;
 
     const plantillaResult = await pool
       .request()
       .input("curs", sql.VarChar, curs)
       .query(`SELECT UUID FROM Curs_Pl WHERE Curs LIKE  '%${curs}%' `);
-  
+
     let uuidCurs; // Declare in outer scope
 
     if (plantillaResult.recordset && plantillaResult.recordset.length > 0) {
@@ -73,8 +72,8 @@ async function newSda(
       .input("title", sql.VarChar, title)
       .input("startDate", sql.Date, startDate)
       .input("endDate", sql.Date, endDate).query(`
-        INSERT INTO Sda_Val (UUID, UUID_Plantilla, GroupLetter , description , tittle ,UUID_Center ,active ,   startDate, endDate)
-        VALUES (NEWID(), @uuidPlantilla, @groupLetter , @description ,@title , @uuid_center , 1 ,    @startDate, @endDate)
+        INSERT INTO Sda_Val (UUID, UUID_Plantilla, UUID_Group , description , tittle ,UUID_Center ,active ,   startDate, endDate)
+        VALUES (NEWID(), @uuidPlantilla, 'D4F7A1B8-6F3C-49B9-BA9E-8F1C5A2B9C8E' , @description ,@title , @uuid_center , 1 ,    @startDate, @endDate)
     `);
 
     console.log("created ");
