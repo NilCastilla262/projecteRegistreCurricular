@@ -170,27 +170,32 @@ describe('CreateSdaComponent', () => {
       );
       fixture.detectChanges();
       expect(button.disabled).toBeFalse();
+    }); 
+
+    it('should disable the button after creating an SDA', () => {
+      // Crear un spy que no executa la funció real
+      spyOn(component, 'createSda').and.stub();
+    
+      expect(button.disabled).toBeTrue();
+    
+      fillForm(
+        'Títol de prova',
+        'Descripció de prova',
+        '2024-01-01',
+        '2024-01-31',
+        '1r-2n',
+        'A'
+      );
+    
+      expect(button.disabled).toBeFalse();
+      button.click();
+      fixture.detectChanges();
+      component.sdaCreated = true;
+      expect(component.sdaCreated).toBeTrue();
+      fixture.detectChanges();
+      expect(button.disabled).toBeTrue();
     });
-
-    // it('should disable the button after creating an SDA', () => {
-    //   spyOn(component, 'createSda').and.callThrough();
-    //   expect(button.disabled).toBeTrue();
-    //   fillForm(
-    //     'Títol de prova',
-    //     'Descripció de prova',
-    //     '2024-01-01',
-    //     '2024-01-31',
-    //     '1r-2n',
-    //     'A'
-    //   );
-    //   expect(button.disabled).toBeFalse();
-
-    //   button.click();
-    //   fixture.detectChanges();
-    //   //S'ha de comprovar si s'ha creat la SDA
-    //   //expect(component.sdaCreated).toBeTrue();
-    //   //expect(button.disabled).toBeTrue();
-    // });
+    
   });
 
   describe('Create SDA functionality', () => {
