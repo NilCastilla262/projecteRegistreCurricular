@@ -1,4 +1,8 @@
+const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+
+// Use a secret key (ensure this is stored securely)
+const SECRET_KEY = process.env.JWT_SECRET || "your-secret-key";
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -16,11 +20,23 @@ const login = async (req, res) => {
       return res.status(401).json({ message: "Contraseña incorrecta" });
     }
 
-    // Simulating a "token" as a string (this is just an example and should not be used in production)
-    const token = "simulated-token-" + user.id;
+    // Generate a JWT
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username: user.username,
+        type: user.type,
+      },
+      SECRET_KEY,
+      { expiresIn: "1h" } // Token expiration time
+    );
 
-    // Respond with the "token" and user information
-    res.status(200).json({ token, type: user.type, username: user.username });
+    // Respond with the token and user information
+    res.status(200).json({
+      token,
+      type: user.type,
+      username: user.username,
+    });
   } catch (error) {
     console.error("Error en el servidor:", error.message);
     res.status(500).json({ message: "Error en el servidor", error });

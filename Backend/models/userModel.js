@@ -11,15 +11,7 @@ class User {
   }
 
   // Method to generate a JWT
-  static generateJWT(user) {
-    const token = jwt.sign(
-      { id: user.id, type: user.type },
-      process.env.JWT_SECRET,  // Use the secret key from the .env file
-      { expiresIn: "1h" }
-    );
-    return token;
-  }
-
+  
   // Static method to get a user by their email from the database
   static async getUserByEmail(email) {
     try {
