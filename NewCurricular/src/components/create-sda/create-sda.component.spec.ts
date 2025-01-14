@@ -233,29 +233,31 @@ describe('CreateSdaComponent', () => {
     });
     
     // //S'ha de configurar que es retorni si s'ha creat o no la SDA enviant un missatge i comprovant que funciona
-    // it('should call the createSda function and display the success message on successful creation', () => {
-    //   spyOn(component, 'createSda').and.callThrough();
+    it('should call the createSda function and display the success message on successful creation', () => {
+      spyOn(component, 'createSda').and.stub();
 
-    //   fillForm(
-    //     'Títol de prova',
-    //     'Descripció de prova',
-    //     '2024-01-01',
-    //     '2024-01-31',
-    //     '1r-2n',
-    //     'A'
-    //   );
+      fillForm(
+        'Títol de prova',
+        'Descripció de prova',
+        '2024-01-01',
+        '2024-01-31',
+        '1r-2n',
+        'A'
+      );
 
-    //   const button = nativeElement.querySelector('button') as HTMLButtonElement;
-    //   button.click();
-    //   fixture.detectChanges();
+      const button = nativeElement.querySelector('button') as HTMLButtonElement;
+      button.click();
+      fixture.detectChanges();
 
-    //   expect(component.createSda).toHaveBeenCalled();
+      expect(component.createSda).toHaveBeenCalled();
+      component.sdaCreated = true;
+      fixture.detectChanges();
+      expect(component.sdaCreated).toBeTrue();
 
-    //   //expect(component.sdaCreated).toBeTrue();
-
-    //   const successMessage = nativeElement.querySelector('p');
-    //   //expect(successMessage?.textContent).toContain('SDA Creat correctament');
+      const successMessage = nativeElement.querySelector('p');
+      expect(successMessage?.textContent).toContain('SDA Creat correctament');
     });
+  });
 
     // it('should display an error message when the button click fails', () => {
     //   spyOn(component, 'performCreateSda').and.returnValue(false);
