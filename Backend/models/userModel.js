@@ -1,36 +1,31 @@
-// const { Sequelize, DataTypes } = require("sequelize");
-// const sequelize = require("../config/db");
+const jwt = require("jsonwebtoken");
+const { sql, poolPromise } = require("../config/db"); // Import 'sql' and 'poolPromise'
 
-// const User = sequelize.define(
-//   "UserTable",
-//   {
-//     UUID: {
-//       type: DataTypes.UUID,
-//       allowNull: false,
-//       primaryKey: true,
-//     },
-//     Type: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//     },
-//     username: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//     },
-//     email: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//       unique: true,
-//     },
-//     password: {
-//       type: DataTypes.STRING,
-//       allowNull: false,
-//     },
-//   },
-//   {
-//     tableName: "UserTable",
-//     timestamps: false, // Asume que no hay columnas de createdAt/updatedAt
-//   }
-// );
+class User {
+  constructor(id, username, email, password, type = "user") {
+    this.id = id;
+    this.username = username;
+    this.email = email;
+    this.password = password;  // Store the password directly (not hashed)
+    this.type = type;
+  }
 
-// module.exports = User;
+  // Method to generate a JWT
+  
+  // Static method to get a user by their email from the database
+  static async getUserByEmail(email) {
+    try {
+      const pool = await poolPromise;
+      const result = await pool.request()
+        .input("email", sql.VarChar, email)
+        .query("SELECT * FROM UserTable WHERE email = @email");
+
+      return result.recordset[0];  // Return the first user found
+    } catch (error) {
+      console.error("Error querying the database:", error.message);
+      throw error;
+    }
+  }
+}
+
+module.exports = User;

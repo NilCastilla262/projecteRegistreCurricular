@@ -170,61 +170,66 @@ describe('CreateSdaComponent', () => {
       );
       fixture.detectChanges();
       expect(button.disabled).toBeFalse();
+    }); 
+
+    it('should disable the button after creating an SDA', () => {
+      // Crear un spy que no executa la funció real
+      spyOn(component, 'createSda').and.stub();
+    
+      expect(button.disabled).toBeTrue();
+    
+      fillForm(
+        'Títol de prova',
+        'Descripció de prova',
+        '2024-01-01',
+        '2024-01-31',
+        '1r-2n',
+        'A'
+      );
+    
+      expect(button.disabled).toBeFalse();
+      button.click();
+      fixture.detectChanges();
+      component.sdaCreated = true;
+      expect(component.sdaCreated).toBeTrue();
+      fixture.detectChanges();
+      expect(button.disabled).toBeTrue();
     });
-
-    // it('should disable the button after creating an SDA', () => {
-    //   spyOn(component, 'createSda').and.callThrough();
-    //   expect(button.disabled).toBeTrue();
-    //   fillForm(
-    //     'Títol de prova',
-    //     'Descripció de prova',
-    //     '2024-01-01',
-    //     '2024-01-31',
-    //     '1r-2n',
-    //     'A'
-    //   );
-    //   expect(button.disabled).toBeFalse();
-
-    //   button.click();
-    //   fixture.detectChanges();
-    //   //S'ha de comprovar si s'ha creat la SDA
-    //   //expect(component.sdaCreated).toBeTrue();
-    //   //expect(button.disabled).toBeTrue();
-    // });
+    
   });
 
   describe('Create SDA functionality', () => {
     it('should disable the button if startDate is not earlier than endDate', () => {
-      // fillForm(
-      //   'Títol de prova',
-      //   'Descripció de prova',
-      //   '2024-01-01',
-      //   '2024-01-31',
-      //   '1r-2n',
-      //   'A'
-      // );
-      // component.sda = {
-      //   title: 'Test Title',
-      //   description: 'Test Description',
-      //   startDate: new Date('2024-12-31'), // Data d'inici posterior
-      //   endDate: new Date('2024-01-01'),   // Data de finalització anterior
-      //   selectedSubjects: ['Math'],
-      //   groupLetter: 'A',
-      //   curs: '2024',
-      //   uuid_plantilla: '1DA7BEDB-AFE3-4BFB-9E21-CA400409B458',
-      //   uuid_center: 'B674B1EA-948E-4C5E-8E1A-9A5DE3F6C631',
-      // };
+      fillForm(
+        'Títol de prova',
+        'Descripció de prova',
+        '2024-01-01',
+        '2024-01-31',
+        '1r-2n',
+        'A'
+      );
+      component.sda = {
+        title: 'Test Title',
+        description: 'Test Description',
+        startDate: new Date('2024-12-31'),
+        endDate: new Date('2024-01-01'), 
+        selectedSubjects: ['Math'],
+        groupLetter: 'A',
+        curs: '2024',
+        uuid_plantilla: '1DA7BEDB-AFE3-4BFB-9E21-CA400409B458',
+        uuid_center: 'B674B1EA-948E-4C5E-8E1A-9A5DE3F6C631',
+      };
 
-      // component.sda.title = 'Test Title'
-      // component.sda.description = 'Test Description'
-      // component.sda.startDate = new Date('2024-12-31') // Data d'inici posterior
-      // component.sda.endDate = new Date('2024-01-01')   // Data de finalització anterior
-      // component.sda.selectedSubjects = ['Math']
-      // component.sda.groupLetter = 'A'
-      // component.sda.curs= '2024'
+      component.sda.title = 'Test Title'
+      component.sda.description = 'Test Description'
+      component.sda.startDate = new Date('2024-12-31')
+      component.sda.endDate = new Date('2024-01-01')  
+      component.sda.selectedSubjects = ['Math']
+      component.sda.groupLetter = 'A'
+      component.sda.curs= '2024'
       const Button = nativeElement.querySelector('button') as HTMLButtonElement;
 
-      expect(Button.disabled).toBe(true);
+      expect(Button.disabled).toBeTrue;
     });
     
     // //S'ha de configurar que es retorni si s'ha creat o no la SDA enviant un missatge i comprovant que funciona

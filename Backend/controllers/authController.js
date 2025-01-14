@@ -1,32 +1,44 @@
-const User = require("../models/userModel");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
+
+// Use a secret key (ensure this is stored securely)
+const SECRET_KEY = process.env.JWT_SECRET || "your-secret-key";
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Verifica si el usuario existe
-    const user = await User.findOne({ where: { email } });
+    // Query the database for the user by email
+    const user = await User.getUserByEmail(email);
+
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
-    // Compara la contraseña
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    // Directly compare the provided password with the stored password (without hashing)
+    if (password !== user.password) {
       return res.status(401).json({ message: "Contraseña incorrecta" });
     }
 
-    // Genera un token JWT
+    // Generate a JWT
     const token = jwt.sign(
-      { id: user.UUID, type: user.Type },
-      "secreto_super_seguro",
-      { expiresIn: "1h" }
+      {
+        id: user.id,
+        username: user.username,
+        type: user.type,
+      },
+      SECRET_KEY,
+      { expiresIn: "1h" } // Token expiration time
     );
 
-    res.status(200).json({ token, type: user.Type, username: user.username });
+    // Respond with the token and user information
+    res.status(200).json({
+      token,
+      type: user.type,
+      username: user.username,
+    });
   } catch (error) {
+    console.error("Error en el servidor:", error.message);
     res.status(500).json({ message: "Error en el servidor", error });
   }
 };
