@@ -1,7 +1,7 @@
 const viewsQueries = require("../models/viewsQueries");
 
 async function GetViewSaberCriteriaVal(req, res) {
-  const { UUID_Sda } = req.body;
+  const { UUID_Sda } = req.query; // Use req.query for GET parameters
 
   // Validate input
   if (!UUID_Sda) {
@@ -29,7 +29,7 @@ async function GetViewSaberCriteriaVal(req, res) {
 }
 
 async function GetViewSabersDescriptionVal(req, res) {
-  const { UUID_Sda } = req.body;
+  const { UUID_Sda } = req.query;
 
   // Validate input
   if (!UUID_Sda) {
@@ -57,7 +57,7 @@ async function GetViewSabersDescriptionVal(req, res) {
 }
 
 async function GetViewCriteriaVal(req, res) {
-  const { UUID_Sda } = req.body;
+  const { UUID_Sda } = req.query;
 
   // Validate input
   if (!UUID_Sda) {
@@ -83,7 +83,7 @@ async function GetViewCriteriaVal(req, res) {
 }
 
 async function GetViewCompetencyDescriptionVal(req, res) {
-  const { UUID_Sda } = req.body;
+  const { UUID_Sda } = req.query;
 
   // Validate input
   if (!UUID_Sda) {

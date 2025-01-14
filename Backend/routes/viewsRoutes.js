@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const viewsController = require("../controllers/viewsController");
 router.get("/GetViewSaberCriteriaVal", viewsController.GetViewSaberCriteriaVal);
+router.post(
+  "/GetViewSaberCriteriaVal",
+  viewsController.GetViewSaberCriteriaVal
+);
 router.get("/GetViewCriteriaVal", viewsController.GetViewCriteriaVal);
 router.get(
   "/GetViewCompetencyDescriptionVal",

@@ -8,6 +8,9 @@ async function GetViewSaberCriteriaVal(UUID_SDA) {
       .query(
         `SELECT * from ViewSaberCriteriaVal where uuid_sda ='${UUID_SDA}'`
       );
+    console.log(
+      `SELECT * from ViewSaberCriteriaVal where uuid_sda ='${UUID_SDA}'`
+    );
     return result.recordset;
   } catch (error) {
     console.error("Query failed:", error.message);

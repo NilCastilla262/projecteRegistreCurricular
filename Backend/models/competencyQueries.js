@@ -350,31 +350,54 @@ async function getSaberCriteriaById(UUID_SaberCriteri, res) {
   }
 }
 
-async function toggleTreballatByIdAndTable(tableName, id) {
-  //   console.log(`
-  //     UPDATE ${tableName}
-  // SET treballat = CASE
-  //                WHEN treballat = 1 THEN 0
-  //                ELSE 1
-  //               END
-  // WHERE UUID = '${id}'
-
-  // `);
+async function toggleTreballatByIdAndTable(tableName, UUID_Sda, UUID_Pl) {
   try {
     const pool = await poolPromise;
+    let result = "";
+    console.log("tablename ", tableName);
 
-    const result = await pool.request().query(
-      `
-         UPDATE ${tableName}
+    if (tableName === "CD") {
+      result = await pool.request().query(
+        `UPDATE CompetencyDescription_Val
     SET treballat = CASE
                     WHEN treballat = 1 THEN 0
                     ELSE 1
                    END
-    WHERE UUID = '${id}'
-
-    `
-    );
-    return result.recordset;
+    WHERE UUID_Sda = '${UUID_Sda}'
+	and UUID_CompetencyDescription_Pl = '${UUID_Pl}'`
+      );
+    } else if (tableName === "CC") {
+      result = await pool.request().query(
+        `UPDATE Criteria_Val
+    SET treballat = CASE
+                    WHEN treballat = 1 THEN 0
+                    ELSE 1
+                   END
+    WHERE UUID_Sda = '${UUID_Sda}'
+	and UUID_Criteria_Pl = '${UUID_Pl}' `
+      );
+    } else if (tableName === "SD") {
+      result = await pool.request().query(
+        `UPDATE SabersDescription_Val
+    SET treballat = CASE
+                    WHEN treballat = 1 THEN 0
+                    ELSE 1
+                   END
+    WHERE UUID_Sda = '${UUID_Sda}'
+	and UUID_SabersDescription_Pl = '${UUID_Pl}' `
+      );
+    } else if (tableName === "SC") {
+      result = await pool.request().query(
+        `UPDATE SaberCriteria_Val
+    SET treballat = CASE
+                    WHEN treballat = 1 THEN 0
+                    ELSE 1
+                   END
+    WHERE UUID_Sda = '${UUID_Sda}'
+	and UUID_SaberCriteria_Pl = '${UUID_Pl}' `
+      );
+    }
+    console.log("toggled ");
   } catch (error) {
     console.error("Query failed:", error.message);
     throw error;

@@ -308,20 +308,25 @@ async function getSaberCriteriaById(req, res) {
 /////////////////////////
 
 async function toggleTreballat(req, res) {
-  const { tableName, id } = req.body;
+  console.log("fk");
+  const { tableName, UUID_Sda, UUID_Pl } = req.body;
 
   // Validate input
-  if (!tableName || !id) {
+  if (!tableName || !UUID_Sda || !UUID_Pl) {
     return res.status(400).json({
-      error: "Missing required query parameters: tableName or id",
+      error:
+        "Missing required query parameters: tableName  ,UUID_Pl or UUID_Sda",
     });
+  } else {
+    console.log("received ", UUID_Pl, UUID_Sda, tableName);
   }
 
   try {
     // Call the toggle function
     const updatedRow = await competencyQueries.toggleTreballatByIdAndTable(
       tableName,
-      id
+      UUID_Sda,
+      UUID_Pl
     );
 
     // Return the updated row
@@ -341,11 +346,9 @@ async function getValBySdaPl(req, res) {
   // Validate input
   if (!UUID_Pl || !UUID_Sda || !tableName) {
     return res.status(400).json({
-      error:
-        "Missing required field:  UUID_Pl , UUID_Sda ,tableName",
+      error: "Missing required field:  UUID_Pl , UUID_Sda ,tableName",
     });
   }
-
   try {
     // Fetch competency description
     const competencyDescription = await competencyQueries.getValBySdaPl(
