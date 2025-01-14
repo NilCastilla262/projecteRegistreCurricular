@@ -17,6 +17,7 @@ export const Constant = {
     newSda: 'newSda',
     getAllSdas: 'getAllSdas',
     getSdaByGroupName: 'getSdaByGroupName',
+    getSdasByUser: 'getSdasByUser',
   },
   API_VIEWS_END_POINT: {
     GetViewCompetencyDescriptionVal: 'GetViewCompetencyDescriptionVal',

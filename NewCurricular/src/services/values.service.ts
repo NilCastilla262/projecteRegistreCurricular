@@ -125,11 +125,6 @@ export class ValuesService {
         if (!response) {
           console.warn('No response body received.');
         }
-      }),
-      catchError((error) => {
-        console.error('Error occurred during HTTP request:', error);
-        alert('An error occurred. Please check the console for details.');
-        return throwError(error);
       })
     );
   }

@@ -7,6 +7,7 @@ import { CriteriaService } from '../../services/criteria.service';
 import { SabersService } from '../../services/sabers.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { ValuesService } from '../../services/values.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-sda',
@@ -16,7 +17,7 @@ import { ValuesService } from '../../services/values.service';
   styleUrls: ['./create-sda.component.css'],
 })
 export class CreateSdaComponent {
-  constructor(private sdaService: SdaService) {}
+  constructor(private sdaService: SdaService, private router: Router) {}
   sdaCreated?: boolean;
 
   sda: Sda = new Sda();
@@ -62,17 +63,19 @@ export class CreateSdaComponent {
       groupLetter,
       curs,
     } = this.sda;
-  
+
     const isTitleValid = title && title.trim().length > 0;
     const isDescriptionValid = description && description.trim().length > 0;
     const isStartDateValid = startDate;
     const isEndDateValid = endDate;
     const areDatesValid =
-      isStartDateValid && isEndDateValid && new Date(startDate) < new Date(endDate);
+      isStartDateValid &&
+      isEndDateValid &&
+      new Date(startDate) < new Date(endDate);
     const areSubjectsSelected = selectedSubjects.length > 0;
     const isGroupSelected = groupLetter && groupLetter.trim().length > 0;
     const isClassSelected = curs && curs.trim().length > 0;
-  
+
     const isValid =
       isTitleValid &&
       isDescriptionValid &&
@@ -80,10 +83,9 @@ export class CreateSdaComponent {
       areSubjectsSelected &&
       isGroupSelected &&
       isClassSelected;
-  
+
     return isValid as boolean;
   }
-  
 
   groupIsDisabled() {
     return !this.sda.curs;
@@ -127,10 +129,13 @@ export class CreateSdaComponent {
       console.log('sda uod ', uuid_sda);
       // Use the UUID to create SDA with Plantilla
       await this.createSdaWithPlantilla(uuid_sda);
+
+      this.router.navigate(['/show-sda'], { state: { uuid: uuid_sda } });
+
       this.sdaCreated = true;
     } catch (error) {
       console.error('Error in createSda:', error);
-      this.sdaCreated=false;
+      this.sdaCreated = false;
     }
   }
 
@@ -214,7 +219,6 @@ export class CreateSdaComponent {
                 saberDescription.UUID
               );
               saberCriteria.forEach((saberCriteri) => {
-
                 this.ValuesService.NewSaberCriteri(
                   uuid_sda,
                   saberCriteri.UUID
