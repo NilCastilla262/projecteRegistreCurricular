@@ -27,18 +27,3 @@ app.use("/api/Criteria", CriteriaRoutes);
 app.use("/api/Sda", SdaRoutes);
 app.use("/api/Elements", elementsRoutes);
 app.use("/api/Views", viewsRoutes);
-
-/* //Routes
-const cursRoutes = require("./routes/cursRoutes");
-const userRoutes = require("./routes/userRoutes");
-const groupTableRoutes = require("./routes/groupTableRoutes");
-const plantillaRoutes = require("./routes/plantillaRoutes");
-const vectorsRoutes = require("./routes/vectorsRoutes");
- */
-/*/ // Query Routes
-app.use("/api/Curs", cursRoutes);
-app.use("/api/User", userRoutes);
-app.use("/api/GroupTable", groupTableRoutes);
-app.use("/api/Plantilla", plantillaRoutes);
-app.use("/api/Vectors", vectorsRoutes);
- */
