@@ -12,7 +12,6 @@ async function getAllSdas(req, res) {
 async function getSdaByGroupName(req, res) {
   const { groupValue } = req.query; // Use req.query for query parameters
 
- 
   // Check if groupValue is provided
   if (!groupValue) {
     return res.status(400).json({ error: "Missing 'groupValue' parameter." });
@@ -32,7 +31,6 @@ async function getSdaByGroupName(req, res) {
   }
 }
 async function newSda(req, res) {
- 
   const {
     curs,
     groupLetter,
@@ -42,7 +40,6 @@ async function newSda(req, res) {
     uuid_center,
     startDate,
   } = req.body;
-
 
   if (
     !curs ||
@@ -75,8 +72,30 @@ async function newSda(req, res) {
   }
 }
 
+async function getSdasByUser(req, res) {
+  const { UserName } = req.body; // Use req.query for query parameters
+  // Check if groupValue is provided
+  if (!UserName) {
+    return res.status(400).json({ error: "Missing 'UserName' parameter." });
+  }
+
+  try {
+    const sdas = await sdaQueries.getSdasByUser(UserName);
+    res.json(sdas);
+  } catch (error) {
+    console.error("Error retrieving SDAs by user name:", error.message);
+
+    res.status(500).json({
+      error: "Failed to retrieve SDAs by user name.",
+      details: error.message,
+      UserName,
+    });
+  }
+}
+
 module.exports = {
   getAllSdas,
   getSdaByGroupName,
   newSda,
+  getSdasByUser,
 };

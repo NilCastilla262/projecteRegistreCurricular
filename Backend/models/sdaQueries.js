@@ -95,8 +95,35 @@ async function newSda(
     throw error;
   }
 }
+
+async function getSdasByUser(UserName) {
+  try {
+    const query = `
+      SELECT s.* 
+      FROM Sda_Val s 
+      JOIN RelacioUserGroup r ON s.UUID_Group = r.UUID_Group 
+      JOIN UserTable u ON r.UUID_User = u.UUID 
+      WHERE u.Username = @UserName
+    `;
+    console.log("Executing query:", query);
+
+    const pool = await poolPromise;
+
+    const result = await pool
+      .request()
+      .input("UserName", UserName) // Use parameterized query to prevent SQL injection
+      .query(query);
+
+    return result.recordset;
+  } catch (error) {
+    console.error("Query failed: getSdasByUser", error.message);
+    throw error;
+  }
+}
+
 module.exports = {
   getAllSdas,
   getSdaByGroupName,
   newSda,
+  getSdasByUser,
 };
