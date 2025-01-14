@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Constant } from '../Constants/Constant';
 
@@ -81,14 +81,56 @@ export class ValuesService {
   }
 
   //change bool values
-  toggleTreballat(id: string, tableName: string): Observable<any> {
+  /*   toggleTreballat(
+    tableName: string,
+    UUID_Sda: string,
+    UUID_Pl: string
+  ): Observable<any> {
     const params = {
-      id,
       tableName,
+      UUID_Sda,
+      UUID_Pl,
     };
-    return this.http.put<any>(
+    console.log(
+      'req',
+      this.http.post<any>(
+        `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.toggleTreballat}`,
+        { params }
+      )
+    );
+    console.log(
+      `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.toggleTreballat}`
+    );
+    console.log({ params });
+    return this.http.post<any>(
       `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.toggleTreballat}`,
-      { params }
+      { tableName, UUID_Sda, UUID_Pl }
+    );
+  } */
+  toggleTreballat(
+    tableName: string,
+    UUID_Sda: string,
+    UUID_Pl: string
+  ): Observable<any> {
+    const params = { tableName, UUID_Sda, UUID_Pl };
+
+    console.log('Request parameters:', params);
+
+    const url = `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.toggleTreballat}`;
+    console.log('Request URL:', url);
+
+    return this.http.post<any>(url, params).pipe(
+      tap((response) => {
+        console.log('Response received:', response);
+        if (!response) {
+          console.warn('No response body received.');
+        }
+      }),
+      catchError((error) => {
+        console.error('Error occurred during HTTP request:', error);
+        alert('An error occurred. Please check the console for details.');
+        return throwError(error);
+      })
     );
   }
 }

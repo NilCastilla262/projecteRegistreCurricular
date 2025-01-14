@@ -61,7 +61,9 @@ competencyName) {
   } }
 </div>
 } } -->
-<div class="competency-types">
+<br />
+
+<!-- <div class="competency-types">
   @for (competencyType of this.competencyTypesList; track competencyType) {
   <div class="competency-type">
     <h1 style="color: cadetblue">
@@ -119,6 +121,9 @@ competencyName) {
                 <p class="saber-criteri">
                   SabCriteri: {{ Sabercriteri.Description }}
                 </p>
+                HERE :
+                <input type="checkbox" [checked]="Sabercriteri.Treballat" />
+
                 }
               </div>
             </div>
@@ -131,3 +136,172 @@ competencyName) {
   </div>
   }
 </div>
+ -->
+
+<!-- LOOKS GOOD
+<br />
+<div>
+  @for (competencyType of this.competencyTypesList; track competencyType) {
+  <div class="competency-type">
+    <h1 style="color: cadetblue">
+      Comp Type: {{ competencyType.Description }}
+    </h1>
+    <div class="content">
+      @for (competencyName of filterCompetencyNameById(competencyType.UUID);
+      track competencyName) {
+      <div class="competency-name">
+        <h2 style="color: greenyellow">
+          COMP NAME : {{ competencyName.Description }}
+        </h2>
+
+        <div class="content">
+          <div class="descriptions-criteria">
+            @for (competencyDescription of
+            filterCompetencyDescriptionById(competencyName.UUID); track
+            competencyDescription) {
+            <div class="description" style="color: blue; font-size: 25px">
+              Comp-D :
+              <input
+                type="checkbox"
+                [checked]="competencyDescription.Treballat"
+              />
+              CompDescription: {{ competencyDescription.Descripcion }}
+
+              <div class="criteria">
+                criteria @for (criteri of
+                filterCriteriaById(competencyDescription.UUID_ElementPl); track
+                criteri) {
+                <p
+                  class="comp-criteri"
+                  style="font-size: medium; color: cadetblue"
+                >
+                  Comp-Critari :
+                  <input type="checkbox" [checked]="criteri.Treballat" />
+                  CompCriteri: {{ criteri.Description }}
+                </p>
+                }
+              </div>
+            </div>
+            }
+          </div>
+          <div class="sabers">
+            Sabers Description : @for (SaberDescription of
+            filterSabersDescriptionById(competencyName.UUID); track
+            SaberDescription) {
+            <div class="saber-description">
+              <h3 style="color: blue">
+                <input type="checkbox" [checked]="SaberDescription.Treballat" />
+
+                SabersDescription : {{ SaberDescription.Description }}
+              </h3>
+              <div class="saber-criteria">
+                saber Criteria @for (Sabercriteri of
+                filterSaberCriteriaById(SaberDescription.UUID_ElementPl); track
+                Sabercriteri) {
+                <p class="saber-criteri">
+                  SabCriteri: {{ Sabercriteri.Description }}
+                </p>
+                HERE :
+                <input type="checkbox" [checked]="Sabercriteri.Treballat" />
+
+                }
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div> -->
+
+LAST CHANCE
+
+<section class="Container">
+  @for (competencyType of this.competencyTypesList; track competencyType) {
+
+  <section class="competency-type">
+    <h1 style="color: cadetblue">
+      Competency Type: {{ competencyType.Description }}
+    </h1>
+    @for (competencyName of filterCompetencyNameById(competencyType.UUID); track
+    competencyName) {
+    <section class="competency-name">
+      <h2 style="color: greenyellow">
+        Competency Name : {{ competencyName.Description }}
+      </h2>
+
+      @for (competencyDescription of
+      filterCompetencyDescriptionById(competencyName.UUID); track
+      competencyDescription) {
+      <section class="competency-description">
+        <h3 style="color: red" [id]="competencyDescription.UUID_ElementPl">
+          <input
+            type="checkbox"
+            [checked]="competencyDescription.Treballat"
+            (change)="
+              onCheckboxChange(
+                $event,
+                competencyDescription.UUID_ElementPl,
+                'CD'
+              )
+            "
+          />
+
+          Competency Description: {{ competencyDescription.Descripcion }}
+        </h3>
+
+        @for (criteri of
+        filterCriteriaById(competencyDescription.UUID_ElementPl); track criteri)
+        {
+        <section class="competency-criteria">
+          <h4 style="color: darkgreen" [id]="criteri.UUID_ElementPl">
+            <input
+              type="checkbox"
+              [checked]="criteri.Treballat"
+              (change)="onCheckboxChange($event, criteri.UUID_ElementPl, 'CC')"
+            />
+            Competency Criteri: {{ criteri.Description }}
+          </h4>
+        </section>
+        }
+      </section>
+      } @for (SaberDescription of
+      filterSabersDescriptionById(competencyName.UUID); track SaberDescription)
+      {
+      <section class="sabers-description">
+        <h3 style="color: red" [id]="SaberDescription.UUID_ElementPl">
+          <input
+            type="checkbox"
+            [checked]="SaberDescription.Treballat"
+            (change)="
+              onCheckboxChange($event, SaberDescription.UUID_ElementPl, 'SD')
+            "
+          />
+          Sabers Description : {{ SaberDescription.Description }}
+        </h3>
+        @for (Sabercriteri of
+        filterSaberCriteriaById(SaberDescription.UUID_ElementPl); track
+        Sabercriteri) {
+        <section class="sabers-criteria">
+          <h4 style="color: brown" [id]="Sabercriteri.UUID_ElementPl">
+            <input
+              type="checkbox"
+              [checked]="Sabercriteri.Treballat"
+              (change)="
+                onCheckboxChange($event, Sabercriteri.UUID_ElementPl, 'SC')
+              "
+            />
+            Saber Criteri: {{ Sabercriteri.Description }}
+          </h4>
+        </section>
+        }
+      </section>
+      }
+    </section>
+    }
+  </section>
+  }
+</section>

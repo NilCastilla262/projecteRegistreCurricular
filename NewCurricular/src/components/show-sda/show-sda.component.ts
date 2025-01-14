@@ -1,102 +1,3 @@
-// import { Component, inject, OnInit } from '@angular/core';
-// import { forkJoin } from 'rxjs';
-// import { CompetencyService } from '../../services/competency.service';
-// import { CriteriaService } from '../../services/criteria.service';
-// import { SabersService } from '../../services/sabers.service';
-
-// @Component({
-//   selector: 'app-show-sda',
-//   standalone: true,
-//   imports: [],
-//   templateUrl: './show-sda.component.html',
-//   styleUrls: ['./show-sda.component.css'], // Fixed styleUrl to styleUrls
-// })
-// export class ShowSdaComponent implements OnInit {
-//   competencyDescriptionList: any[] = [];
-//   sabersDescriptionList: any[] = [];
-//   saberCritarisList: any[] = [];
-//   competencyNamesList: any[] = [];
-//   competencyTypesList: any[] = [];
-//   CriteriesList: any[] = [];
-
-//   competencyService = inject(CompetencyService);
-//   criteriaService = inject(CriteriaService);
-//   sabersService = inject(SabersService);
-
-//   ngOnInit(): void {
-//     // Load all data before rendering
-//     this.loadData();
-//   }
-
-//   loadData(): void {
-//     forkJoin({
-//       competencyDescriptions:
-//         this.competencyService.getAllCompetencyDescription(),
-//       competencyNames: this.competencyService.getAllCompetencyName(),
-//       competencyTypes: this.competencyService.getAllCompetencyType(),
-//       criterias: this.criteriaService.getAllCriteries(),
-//       sabersDescriptions: this.sabersService.getAllSabersDescription(),
-//       saberCriterias: this.sabersService.getAllSaberCritaris(),
-//     }).subscribe({
-//       next: (results) => {
-//         // Populate component variables with fetched data
-//         this.fillData(results);
-//         console.log('All data loaded successfully', results);
-//       },
-//       error: (error) => {
-//         console.error('Error loading data:', error);
-//       },
-//     });
-//   }
-
-//   fillData(results: {
-//     competencyDescriptions: any[];
-//     competencyNames: any[];
-//     competencyTypes: any[];
-//     criterias: any[];
-//     sabersDescriptions: any[];
-//     saberCriterias: any[];
-//   }): void {
-//     this.competencyDescriptionList = results.competencyDescriptions;
-//     this.competencyNamesList = results.competencyNames;
-//     this.competencyTypesList = results.competencyTypes;
-//     this.CriteriesList = results.criterias;
-//     this.sabersDescriptionList = results.sabersDescriptions;
-//     this.saberCritarisList = results.saberCriterias;
-//   }
-
-//   // Filtering methods remain unchanged
-//   filterCompetencyNameById(typeId: string) {
-//     return this.competencyNamesList.filter(
-//       (item) => item.UUID_CompetencyType === typeId
-//     );
-//   }
-
-//   filterCompetencyDescriptionById(NameId: string) {
-//     return this.competencyDescriptionList.filter(
-//       (item) => item.UUID_CompetencyName === NameId
-//     );
-//   }
-
-//   filterSabersDescriptionById(NameId: string) {
-//     return this.sabersDescriptionList.filter(
-//       (item) => item.UUID_CompetencyName === NameId
-//     );
-//   }
-
-//   filterCriteriaById(DescriptionId: string) {
-//     return this.CriteriesList.filter(
-//       (item) => item.UUID_CompetencyDescription === DescriptionId
-//     );
-//   }
-
-//   filterSaberCriteriaById(saberDescriptionId: string) {
-//     return this.CriteriesList.filter(
-//       (item) => item.UUID_SabersDescription === saberDescriptionId
-//     );
-//   }
-// }
-
 import { Component, inject } from '@angular/core';
 import { CompetencyService } from '../../services/competency.service';
 import { CriteriaService } from '../../services/criteria.service';
@@ -104,6 +5,8 @@ import { SabersService } from '../../services/sabers.service';
 import { ValuesService } from '../../services/values.service';
 import { lastValueFrom, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ViewsService } from '../../services/views.service';
+
 @Component({
   selector: 'app-show-sda',
   standalone: true,
@@ -118,10 +21,15 @@ export class ShowSdaComponent {
   competencyNamesList: any[] = [];
   competencyTypesList: any[] = [];
   CriteriesList: any[] = [];
+  CriteriesListView: any[] = [];
+  saberCritarisListView: any[] = [];
+  competencyDescriptionListView: any[] = [];
+  sabersDescriptionListView: any[] = [];
   competencyService = inject(CompetencyService);
   CriteriaService = inject(CriteriaService);
   SabersService = inject(SabersService);
   ValuesService = inject(ValuesService);
+  ViewsService = inject(ViewsService);
   ngOnInit(): void {
     this.getAllCompetencyDescription();
     this.getAllCompetencyName();
@@ -129,6 +37,10 @@ export class ShowSdaComponent {
     this.getAllCriterias();
     this.getAllSabersDescription();
     this.getAllSaberCritaris();
+    this.GetViewSaberCriteriaVal();
+    this.GetViewCompetencyDescriptionVal();
+    this.GetViewCriteriaVal();
+    this.GetViewSabersDescriptionVal();
   }
 
   async getValBySdaPl(uuid_sda: string, uuid_Pl: string, tableName: string) {
@@ -158,8 +70,6 @@ export class ShowSdaComponent {
     });
   }
 
-  onCheckboxChange() {}
-
   /*   getAllCompetencyNameById(id: string) {
     this.competencyService.getAllCompetencyNameById(id).subscribe({
       next: (data: any[]) => {
@@ -178,30 +88,35 @@ export class ShowSdaComponent {
   }
 
   filterCompetencyDescriptionById(NameId: string) {
-    return this.competencyDescriptionList.filter(
-      (item) => item.UUID_CompetencyName === NameId
+    return this.competencyDescriptionListView.filter(
+      (item) => item.UUID_ParePl === NameId
     );
+    // return this.competencyDescriptionList.filter(
+    //   (item) => item.UUID_CompetencyName === NameId
+    // );
   }
   filterSabersDescriptionById(NameId: string) {
-    /*   console.log(
-      'array filter : ',
-      this.sabersDescriptionList.filter(
-        (item) => item.UUID_CompetencyName === NameId
-      )
-    ); */
-
-    return this.sabersDescriptionList.filter(
-      (item) => item.UUID_CompetencyName === NameId
+    return this.sabersDescriptionListView.filter(
+      (item) => item.UUID_ParePl === NameId
     );
+    // return this.sabersDescriptionList.filter(
+    //   (item) => item.UUID_CompetencyName === NameId
+    // );
   }
   filterCriteriaById(DescriptionId: string) {
-    return this.CriteriesList.filter(
-      (item) => item.UUID_CompetencyDescription === DescriptionId
+    return this.CriteriesListView.filter(
+      (item) => item.UUID_ParePl === DescriptionId
     );
+    // return this.CriteriesList.filter(
+    //   (item) => item.UUID_CompetencyDescription === DescriptionId
+    // );
   }
   filterSaberCriteriaById(saberDescriptionId: string) {
-    return this.saberCritarisList.filter(
-      (item) => item.UUID_SabersDescription === saberDescriptionId
+    // return this.saberCritarisList.filter(
+    //   (item) => item.UUID_SabersDescription === saberDescriptionId
+    // );
+    return this.saberCritarisListView.filter(
+      (item) => item.UUID_ParePl === saberDescriptionId
     );
   }
 
@@ -252,6 +167,71 @@ export class ShowSdaComponent {
       },
       error: (error) => {
         console.error('Error fetching sabers critaris', error); // Handle errors
+      },
+    });
+  }
+  GetViewSaberCriteriaVal() {
+    this.ViewsService.GetViewSaberCriteriaVal(
+      'C57ADA1A-EBD6-4D28-A6A8-30D38F2A7769'
+    ).subscribe({
+      next: (data: any[]) => {
+        this.saberCritarisListView = data; // Assign data to the local variable
+      },
+      error: (error) => {
+        console.error('Error fetching sabers critaris view ', error); // Handle errors
+      },
+    });
+  }
+  GetViewCriteriaVal() {
+    this.ViewsService.GetViewCriteriaVal(
+      'C57ADA1A-EBD6-4D28-A6A8-30D38F2A7769'
+    ).subscribe({
+      next: (data: any[]) => {
+        this.CriteriesListView = data; // Assign data to the local variable
+      },
+      error: (error) => {
+        console.error('Error fetching sabers critaris view ', error); // Handle errors
+      },
+    });
+  }
+  GetViewCompetencyDescriptionVal() {
+    this.ViewsService.GetViewCompetencyDescriptionVal(
+      'C57ADA1A-EBD6-4D28-A6A8-30D38F2A7769'
+    ).subscribe({
+      next: (data: any[]) => {
+        this.competencyDescriptionListView = data; // Assign data to the local variable
+      },
+      error: (error) => {
+        console.error('Error fetching sabers critaris view ', error); // Handle errors
+      },
+    });
+  }
+  GetViewSabersDescriptionVal() {
+    this.ViewsService.GetViewSabersDescriptionVal(
+      'C57ADA1A-EBD6-4D28-A6A8-30D38F2A7769'
+    ).subscribe({
+      next: (data: any[]) => {
+        this.sabersDescriptionListView = data; // Assign data to the local variable
+      },
+      error: (error) => {
+        console.error('Error fetching sabers critaris view ', error); // Handle errors
+      },
+    });
+  }
+
+  onCheckboxChange(event: Event, id: string, code: string): void {
+    this.ValuesService.toggleTreballat(
+      code,
+      'C57ADA1A-EBD6-4D28-A6A8-30D38F2A7769', // Replace with actual UUID_Sda if needed
+      id
+    ).subscribe({
+      next: (response) => {
+        console.log('Toggle operation successful:', response);
+        // Add any UI update logic here if needed
+      },
+      error: (error) => {
+        console.error('Error during toggle operation:', error);
+        alert('Failed to toggle. Please try again.');
       },
     });
   }

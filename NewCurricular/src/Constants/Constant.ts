@@ -18,6 +18,12 @@ export const Constant = {
     getAllSdas: 'getAllSdas',
     getSdaByGroupName: 'getSdaByGroupName',
   },
+  API_VIEWS_END_POINT: {
+    GetViewCompetencyDescriptionVal: 'GetViewCompetencyDescriptionVal',
+    GetViewCriteriaVal: 'GetViewCriteriaVal',
+    GetViewSaberCriteriaVal: 'GetViewSaberCriteriaVal',
+    GetViewSabersDescriptionVal: 'GetViewSabersDescriptionVal',
+  },
 };
 
 //   getAllCompetencyDescription(): Observable<any> {
