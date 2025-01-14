@@ -232,7 +232,6 @@ describe('CreateSdaComponent', () => {
       expect(Button.disabled).toBeTrue;
     });
     
-    // //S'ha de configurar que es retorni si s'ha creat o no la SDA enviant un missatge i comprovant que funciona
     it('should call the createSda function and display the success message on successful creation', () => {
       spyOn(component, 'createSda').and.stub();
 
@@ -259,26 +258,27 @@ describe('CreateSdaComponent', () => {
     });
   });
 
-    // it('should display an error message when the button click fails', () => {
-    //   spyOn(component, 'performCreateSda').and.returnValue(false);
+    it('should display an error message when the button click fails', () => {
+      spyOn(component, 'createSda').and.stub();
 
-    //   fillForm(
-    //     'Títol de prova',
-    //     'Descripció de prova',
-    //     '2024-01-01',
-    //     '2024-01-31',
-    //     '1r-2n',
-    //     'A'
-    //   );
+      fillForm(
+        'Títol de prova',
+        'Descripció de prova',
+        '2024-01-01',
+        '2024-01-31',
+        '1r-2n',
+        'A'
+      );
 
-    //   const button = nativeElement.querySelector('button') as HTMLButtonElement;
-    //   button.click();
-    //   fixture.detectChanges();
+      const button = nativeElement.querySelector('button') as HTMLButtonElement;
+      button.click();
+      component.sdaCreated = false;
+      fixture.detectChanges();
+      expect(component.createSda).toHaveBeenCalled();
 
-    //   expect(component.sdaCreated).toBeFalse();
+      expect(component.sdaCreated).toBeFalse();
 
-    //   const errorMessage = nativeElement.querySelector('p');
-    //   expect(errorMessage?.textContent).toContain("Error al crear l'SDA");
-    // });
-    // }); 
+      const errorMessage = nativeElement.querySelector('p');
+      expect(errorMessage?.textContent).toContain("Error al crear l'SDA");
+    });
   });
