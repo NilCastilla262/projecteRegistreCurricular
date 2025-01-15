@@ -94,4 +94,30 @@ describe('ViewsService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(dummyData); // Respond with the dummy data
   });
+
+  it('should fetch criteria data', () => {
+    const dummyData = [
+      {
+        Criteria: 'Analyze and interpret historical trends.',
+        UUID_Sda: 'B2345678-C890-2345-D678-E9012345F678',
+      },
+      {
+        Criteria: 'Apply critical thinking in decision-making scenarios.',
+        UUID_Sda: 'B2345678-C890-2345-D678-E9012345F678',
+      },
+    ];
+
+    const UUID_Sda = 'some-uuid-value'; // Use any UUID you want for testing
+
+    viewsService.GetViewCriteriaVal(UUID_Sda).subscribe((data) => {
+      expect(data).toEqual(dummyData);
+    });
+
+    const req = httpTestingController.expectOne(
+      `${environment.api_url_views}${Constant.API_VIEWS_END_POINT.GetViewCriteriaVal}?UUID_Sda=${UUID_Sda}`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(dummyData); // Respond with the dummy data
+  });
 });
