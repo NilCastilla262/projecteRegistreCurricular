@@ -67,4 +67,31 @@ describe('ViewsService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(dummyData); // Respond with the dummy data
   });
+  it('should fetch sabers description data', () => {
+    const dummyData = [
+      {
+        Descripcion:
+          'Understanding various mathematical concepts to solve problems.',
+        UUID_Sda: 'A1234567-B890-1234-C567-D8901234E567',
+      },
+      {
+        Descripcion:
+          'Exploring the artistic heritage of different cultures and epochs.',
+        UUID_Sda: 'A1234567-B890-1234-C567-D8901234E567',
+      },
+    ];
+
+    const UUID_Sda = 'some-uuid-value'; // Use any UUID you want for testing
+
+    viewsService.GetViewSabersDescriptionVal(UUID_Sda).subscribe((data) => {
+      expect(data).toEqual(dummyData);
+    });
+
+    const req = httpTestingController.expectOne(
+      `${environment.api_url_views}${Constant.API_VIEWS_END_POINT.GetViewSabersDescriptionVal}?UUID_Sda=${UUID_Sda}`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(dummyData); // Respond with the dummy data
+  });
 });
