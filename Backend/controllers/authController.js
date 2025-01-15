@@ -1,26 +1,31 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
 
-// Use a secret key (ensure this is stored securely)
-const SECRET_KEY = process.env.JWT_SECRET || "your-secret-key";
+// Usa una clave secreta definida en las variables de entorno
+const SECRET_KEY = process.env.JWT_SECRET || "default-secret-key"; // Cambiar en producción
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Query the database for the user by email
+    // Verificar que el email y contraseña hayan sido proporcionados
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email y contraseña son requeridos." });
+    }
+
+    // Buscar el usuario por email
     const user = await User.getUserByEmail(email);
 
     if (!user) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      return res.status(404).json({ message: "Usuario no encontrado." });
     }
 
-    // Directly compare the provided password with the stored password (without hashing)
+    // Comparar la contraseña proporcionada con la almacenada (sin hashing)
     if (password !== user.password) {
-      return res.status(401).json({ message: "Contraseña incorrecta" });
+      return res.status(401).json({ message: "Contraseña incorrecta." });
     }
 
-    // Generate a JWT
+    // Generar un token JWT
     const token = jwt.sign(
       {
         id: user.id,
@@ -28,10 +33,10 @@ const login = async (req, res) => {
         type: user.type,
       },
       SECRET_KEY,
-      { expiresIn: "1h" } // Token expiration time
+      { expiresIn: "1h" } // Tiempo de expiración del token
     );
 
-    // Respond with the token and user information
+    // Responder con el token y los datos del usuario
     res.status(200).json({
       token,
       type: user.type,
@@ -39,7 +44,7 @@ const login = async (req, res) => {
     });
   } catch (error) {
     console.error("Error en el servidor:", error.message);
-    res.status(500).json({ message: "Error en el servidor", error });
+    res.status(500).json({ message: "Error interno del servidor." });
   }
 };
 

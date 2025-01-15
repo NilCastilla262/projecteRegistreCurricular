@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const { sql, poolPromise } = require("../config/db"); // Import 'sql' and 'poolPromise'
 
 class User {
@@ -6,13 +5,11 @@ class User {
     this.id = id;
     this.username = username;
     this.email = email;
-    this.password = password;  // Store the password directly (not hashed)
+    this.password = password; // Se recomienda usar contraseñas hasheadas para producción.
     this.type = type;
   }
 
-  // Method to generate a JWT
-  
-  // Static method to get a user by their email from the database
+  // Método estático para obtener un usuario por email
   static async getUserByEmail(email) {
     try {
       const pool = await poolPromise;
@@ -20,10 +17,16 @@ class User {
         .input("email", sql.VarChar, email)
         .query("SELECT * FROM UserTable WHERE email = @email");
 
-      return result.recordset[0];  // Return the first user found
+      // Si no se encuentra el usuario, devolver null
+      if (!result.recordset || result.recordset.length === 0) {
+        return null;
+      }
+
+      // Retornar el primer usuario encontrado
+      return result.recordset[0];
     } catch (error) {
-      console.error("Error querying the database:", error.message);
-      throw error;
+      console.error("Error al consultar la base de datos:", error.message);
+      throw new Error("Error interno al obtener el usuario.");
     }
   }
 }
