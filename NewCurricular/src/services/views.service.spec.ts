@@ -120,4 +120,32 @@ describe('ViewsService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(dummyData); // Respond with the dummy data
   });
+
+  it('should fetch saber criteria data', () => {
+    const dummyData = [
+      {
+        Saber: 'Understanding economic models.',
+        Criteria: 'Evaluate the impact of economic policies.',
+        UUID_Sda: 'C3456789-D901-3456-E789-F0123456G789',
+      },
+      {
+        Saber: 'Understanding linguistic diversity.',
+        Criteria: 'Analyze the implications of multilingualism.',
+        UUID_Sda: 'C3456789-D901-3456-E789-F0123456G789',
+      },
+    ];
+
+    const UUID_Sda = 'some-uuid-value'; // Use any UUID you want for testing
+
+    viewsService.GetViewSaberCriteriaVal(UUID_Sda).subscribe((data) => {
+      expect(data).toEqual(dummyData);
+    });
+
+    const req = httpTestingController.expectOne(
+      `${environment.api_url_views}${Constant.API_VIEWS_END_POINT.GetViewSaberCriteriaVal}?UUID_Sda=${UUID_Sda}`
+    );
+
+    expect(req.request.method).toBe('GET');
+    req.flush(dummyData); // Respond with the dummy data
+  });
 });
