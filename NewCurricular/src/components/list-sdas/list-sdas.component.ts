@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './list-sdas.component.css'
 })
 export class ListSdasComponent {
-
+  
 }
