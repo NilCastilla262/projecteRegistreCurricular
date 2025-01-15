@@ -85,6 +85,12 @@ async function GetViewCriteriaVal(req, res) {
 async function GetViewCompetencyDescriptionVal(req, res) {
   const { UUID_Sda } = req.query;
 
+  console.log("sda test bro ", UUID_Sda);
+
+  if (!UUID_Sda) {
+    UUID_Sda = req.body;
+  }
+
   // Validate input
   if (!UUID_Sda) {
     return res.status(400).json({

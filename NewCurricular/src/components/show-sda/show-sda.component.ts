@@ -6,6 +6,7 @@ import { ValuesService } from '../../services/values.service';
 import { lastValueFrom, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ViewsService } from '../../services/views.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-sda',
@@ -30,6 +31,10 @@ export class ShowSdaComponent {
   SabersService = inject(SabersService);
   ValuesService = inject(ValuesService);
   ViewsService = inject(ViewsService);
+  sdaUUID: string = '';
+
+  constructor(private router: Router) {}
+
   ngOnInit(): void {
     this.getAllCompetencyDescription();
     this.getAllCompetencyName();
@@ -41,10 +46,14 @@ export class ShowSdaComponent {
     this.GetViewCompetencyDescriptionVal();
     this.GetViewCriteriaVal();
     this.GetViewSabersDescriptionVal();
+
+    const navigation = this.router.getCurrentNavigation();
+    this.sdaUUID = navigation?.extras.state?.['uuid'] || null;
   }
 
   async getValBySdaPl(uuid_sda: string, uuid_Pl: string, tableName: string) {
-    const sda = '55FA98B1-DE38-4CEB-9AFC-599ADEED8048';
+    //const sda = '55FA98B1-DE38-4CEB-9AFC-599ADEED8048';
+    const sda = this.sdaUUID;
     const pl = '5195BAB9-1DC3-4083-B5BC-0BDAA9C0579B';
     const table = 'SaberCriteria_Val';
 

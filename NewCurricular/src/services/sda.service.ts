@@ -43,4 +43,13 @@ export class SdaService {
 
     return this.http.get<any>(url); // Query parameters are included in the URL
   }
+
+  getSdasByUser(userName: string): Observable<any> {
+    return this.http.get<any>(
+      environment.api_url_Sda + Constant.API_Competency_END_POINT.getSdasByUser,
+      {
+        params: { userName },
+      }
+    );
+  }
 }

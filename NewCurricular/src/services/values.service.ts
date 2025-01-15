@@ -50,23 +50,6 @@ export class ValuesService {
       { sdaNom, UUID_SabersDescriptionPl }
     );
   }
-  /** function to get elements using sda and plantilla */
-  // getValBySdaPl(
-  //   UUID_Sda: string,
-  //   UUID_CompetencyDescriptionPl: string,
-  //   tableName: string
-  // ): Observable<any> {
-  //   const params = {
-  //     UUID_Sda,
-  //     UUID_CompetencyDescriptionPl,
-  //     tableName,
-  //   };
-
-  //   return this.http.get<any>(
-  //     `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.getValBySdaPl}`,
-  //     { params }
-  //   );
-  // }
 
   getValBySdaPl(UUID_Sda: string, UUID_Pl: string, tableName: string) {
     const body = {
@@ -80,33 +63,6 @@ export class ValuesService {
     );
   }
 
-  //change bool values
-  /*   toggleTreballat(
-    tableName: string,
-    UUID_Sda: string,
-    UUID_Pl: string
-  ): Observable<any> {
-    const params = {
-      tableName,
-      UUID_Sda,
-      UUID_Pl,
-    };
-    console.log(
-      'req',
-      this.http.post<any>(
-        `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.toggleTreballat}`,
-        { params }
-      )
-    );
-    console.log(
-      `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.toggleTreballat}`
-    );
-    console.log({ params });
-    return this.http.post<any>(
-      `${environment.api_url_Competency}${Constant.API_Competency_END_POINT.toggleTreballat}`,
-      { tableName, UUID_Sda, UUID_Pl }
-    );
-  } */
   toggleTreballat(
     tableName: string,
     UUID_Sda: string,
@@ -125,11 +81,6 @@ export class ValuesService {
         if (!response) {
           console.warn('No response body received.');
         }
-      }),
-      catchError((error) => {
-        console.error('Error occurred during HTTP request:', error);
-        alert('An error occurred. Please check the console for details.');
-        return throwError(error);
       })
     );
   }

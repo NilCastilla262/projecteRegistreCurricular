@@ -237,8 +237,9 @@ LAST CHANCE
       filterCompetencyDescriptionById(competencyName.UUID); track
       competencyDescription) {
       <section class="competency-description">
-        <h3 style="color: red" [id]="competencyDescription.UUID_ElementPl">
+        <h3 style="color: red">
           <input
+            [id]="competencyDescription.UUID_ElementPl"
             type="checkbox"
             [checked]="competencyDescription.Treballat"
             (change)="
@@ -249,21 +250,27 @@ LAST CHANCE
               )
             "
           />
-
-          Competency Description: {{ competencyDescription.Descripcion }}
+          <label for="{{ competencyDescription.UUID_ElementPl }}">
+            Competency Description:
+            {{ competencyDescription.Descripcion }}</label
+          >
         </h3>
 
         @for (criteri of
         filterCriteriaById(competencyDescription.UUID_ElementPl); track criteri)
         {
         <section class="competency-criteria">
-          <h4 style="color: darkgreen" [id]="criteri.UUID_ElementPl">
+          <h4 style="color: darkgreen">
             <input
+              [id]="criteri.UUID_ElementPl"
               type="checkbox"
               [checked]="criteri.Treballat"
               (change)="onCheckboxChange($event, criteri.UUID_ElementPl, 'CC')"
             />
-            Competency Criteri: {{ criteri.Description }}
+
+            <label for="{{ criteri.UUID_ElementPl }}">
+              Competency Criteri: {{ criteri.Description }}
+            </label>
           </h4>
         </section>
         }
@@ -272,29 +279,36 @@ LAST CHANCE
       filterSabersDescriptionById(competencyName.UUID); track SaberDescription)
       {
       <section class="sabers-description">
-        <h3 style="color: red" [id]="SaberDescription.UUID_ElementPl">
+        <h3 style="color: red">
           <input
+            [id]="SaberDescription.UUID_ElementPl"
             type="checkbox"
             [checked]="SaberDescription.Treballat"
             (change)="
               onCheckboxChange($event, SaberDescription.UUID_ElementPl, 'SD')
             "
           />
-          Sabers Description : {{ SaberDescription.Description }}
+          <label for="{{ SaberDescription.UUID_ElementPl }}">
+            Sabers Description : {{ SaberDescription.Description }}
+          </label>
         </h3>
         @for (Sabercriteri of
         filterSaberCriteriaById(SaberDescription.UUID_ElementPl); track
         Sabercriteri) {
         <section class="sabers-criteria">
-          <h4 style="color: brown" [id]="Sabercriteri.UUID_ElementPl">
+          <h4 style="color: brown">
             <input
+              [id]="Sabercriteri.UUID_ElementPl"
               type="checkbox"
               [checked]="Sabercriteri.Treballat"
               (change)="
                 onCheckboxChange($event, Sabercriteri.UUID_ElementPl, 'SC')
               "
             />
-            Saber Criteri: {{ Sabercriteri.Description }}
+
+            <label for="{{ Sabercriteri.UUID_ElementPl }}">
+              Saber Criteri: {{ Sabercriteri.Description }}
+            </label>
           </h4>
         </section>
         }
