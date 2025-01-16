@@ -1,15 +1,15 @@
-const { sql, poolPromise } = require("../config/db"); // Import 'sql' and 'poolPromise'
+const { sql, poolPromise } = require("../config/db");
 
 class User {
   constructor(id, username, email, password, type = "user") {
     this.id = id;
     this.username = username;
     this.email = email;
-    this.password = password; // Se recomienda usar contraseñas hasheadas para producción.
+    this.password = password;
     this.type = type;
   }
 
-  // Método estático para obtener un usuario por email
+  // Static method to get a user by their email from the database
   static async getUserByEmail(email) {
     try {
       const pool = await poolPromise;
@@ -17,16 +17,10 @@ class User {
         .input("email", sql.VarChar, email)
         .query("SELECT * FROM UserTable WHERE email = @email");
 
-      // Si no se encuentra el usuario, devolver null
-      if (!result.recordset || result.recordset.length === 0) {
-        return null;
-      }
-
-      // Retornar el primer usuario encontrado
-      return result.recordset[0];
+      return result.recordset[0]; // Return the first user found
     } catch (error) {
-      console.error("Error al consultar la base de datos:", error.message);
-      throw new Error("Error interno al obtener el usuario.");
+      console.error("Error querying the database:", error.message);
+      throw error;
     }
   }
 }
