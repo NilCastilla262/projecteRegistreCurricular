@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { SdaService } from '../../services/sda.service';
+import { By } from '@angular/platform-browser';
 
 describe('ListSdasComponent', () => {
   let component: ListSdasComponent;
@@ -34,19 +35,28 @@ describe('ListSdasComponent', () => {
 
   it('should render buttons with correct IDs and titles', () => {
     const mockData = [
-      { UUID: 'btn-1', tittle: 'Title 1' },
-      { UUID: 'btn-2', tittle: 'Title 2' },
-      { UUID: 'btn-3', tittle: 'Title 3' },
+      { uuid: 'btn-1', tittle: 'Title 1' },
+      { uuid: 'btn-2', tittle: 'Title 2' },
+      { uuid: 'btn-3', tittle: 'Title 3' },
     ];
 
+    // Assign mock data to the component's sdas property
+    component.sdas = mockData;
+
+    // Trigger change detection to re-render the DOM
+    fixture.detectChanges();
+
+    // Query all button elements
     const buttons = compiled.querySelectorAll('button');
-    expect(buttons.length).toBe(mockData.length); // Ensure the number of buttons matches the mock data
+
+    // Assert that the number of buttons matches the mock data
+    expect(buttons.length).toBe(mockData.length);
 
     // Iterate over mock data and validate each button
     mockData.forEach((item, index) => {
       const button = buttons[index];
-      expect(button.id).toBe(item.UUID); // Check ID
-      expect(button.textContent).toBe(item.tittle); // Check title
+      expect(button.id).toBe(item.uuid); // Check ID
+      expect(button.textContent?.trim()).toBe(item.tittle); // Check title
     });
   });
 });
