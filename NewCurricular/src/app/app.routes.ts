@@ -13,7 +13,7 @@ import { SaMainComponent } from '../components/SuperAdmin/sa-main/sa-main.compon
 import { ShowSdaComponent } from '../components/show-sda/show-sda.component';
 import { CreateSdaComponent } from '../components/create-sda/create-sda.component';
 import { CreateCenterFormComponent } from '../components/SuperAdmin/create-center-form/create-center-form.component';
-//import { ListSdasComponent } from '../components/list-sdas/list-sdas.component';
+import { ListSdasComponent } from '../components/list-sdas/list-sdas.component';
 
 export const routes: Routes = [
   {
@@ -85,8 +85,8 @@ export const routes: Routes = [
     path: 'create-center-form',
     component: CreateCenterFormComponent,
   },
-  /*  {
+  {
     path: 'list-sdas',
     component: ListSdasComponent,
-  }, */
+  },
 ];

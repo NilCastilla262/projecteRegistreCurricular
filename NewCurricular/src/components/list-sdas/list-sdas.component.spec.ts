@@ -1,15 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListSdasComponent } from './list-sdas.component';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { SdaService } from '../../services/sda.service';
 
 describe('ListSdasComponent', () => {
   let component: ListSdasComponent;
   let fixture: ComponentFixture<ListSdasComponent>;
   let compiled: HTMLElement;
+  let service: SdaService;
+  let httpTestingController: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ListSdasComponent],
+      providers: [SdaService, provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListSdasComponent);
@@ -40,9 +49,4 @@ describe('ListSdasComponent', () => {
       expect(button.textContent).toBe(item.tittle); // Check title
     });
   });
-
-
-  
-
-
 });

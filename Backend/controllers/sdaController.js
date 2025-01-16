@@ -75,6 +75,10 @@ async function newSda(req, res) {
 async function getSdasByUser(req, res) {
   const { userName } = req.query; // Extract userName from query parameters
 
+  if (!userName) {
+    userName = req.body;
+  }
+
   // Check if userName is provided
   if (!userName) {
     return res
