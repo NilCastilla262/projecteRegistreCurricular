@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CreateSdaComponent } from './create-sda.component';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NgFor } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
@@ -281,4 +281,42 @@ describe('CreateSdaComponent', () => {
       const errorMessage = nativeElement.querySelector('p');
       expect(errorMessage?.textContent).toContain("Error al crear l'SDA");
     });
+  //   it('should navigate to the new sda when created', () => {
+  //       const router = TestBed.inject(Router);
+  // const navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
+  //     //spyOn(component, 'createNewSda').and.stub();
+  //     const testUUID = '67358564-18F9-49FE-B80B-1610A18A652F';
+
+  //     fillForm(
+  //       'Títol de prova',
+  //       'Descripció de prova',
+  //       '2024-01-01',
+  //       '2024-01-31',
+  //       '1r-2n',
+  //       'A'
+  //     );
+  //     const button = nativeElement.querySelector('button') as HTMLButtonElement;
+  //     button.click();
+  //     fixture.detectChanges();
+  //     //expect(component.createSda).toHaveBeenCalled();
+  //     component.createSda();
+  //     expect(component.sdaCreated).toBeTruthy;
+
+      
+  //     console.log("Sda created ? "+component.sdaCreated);
+  //   });
+  it('should navigate to the correct URL after creating an SDA', () => {
+    const router = TestBed.inject(Router);
+    const navigateSpy = spyOn(router, 'navigateByUrl').and.stub();
+  
+    const testUUID = '67358564-18F9-49FE-B80B-1610A18A652F';
+    component.sdaCreated = true;
+    component.uuidSda = testUUID;
+  
+    component.redirectToSda();
+  
+    const expectedUrl = `http://localhost:4200/show-sda?UUID_Sda=${testUUID}`;
+    expect(navigateSpy).toHaveBeenCalledWith(expectedUrl);
+  });
+  
   });

@@ -130,9 +130,10 @@ export class CreateSdaComponent {
       // Use the UUID to create SDA with Plantilla
       await this.createSdaWithPlantilla(uuid_sda);
 
+      this.sdaCreated = true;
+
       this.router.navigate(['/show-sda'], { state: { uuid: uuid_sda } });
 
-      this.sdaCreated = true;
     } catch (error) {
       console.error('Error in createSda:', error);
       this.sdaCreated = false;
